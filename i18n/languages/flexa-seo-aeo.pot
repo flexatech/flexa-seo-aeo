@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-21T06:52:08+00:00\n"
+"POT-Creation-Date: 2026-08-21T11:19:09+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: flexa-seo-aeo\n"
@@ -239,33 +239,45 @@ msgctxt "block keyword"
 msgid "links"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:651
+#: apps/admin/src/features/settings/MigrationPane.tsx:173
+msgid "%1$d / %2$d processed"
+msgstr ""
+
+#: apps/admin/src/features/settings/MigrationPane.tsx:41
+msgid "%1$s: migrated %2$d, skipped %3$d."
+msgstr ""
+
+#: apps/admin/src/features/settings/MigrationPane.tsx:114
+msgid "%d post(s) with data to import."
+msgstr ""
+
+#: apps/admin/src/features/settings/SettingsPage.tsx:652
 msgid ""
 "A short description answer engines can quote. Shown at the top of llms.txt."
 msgstr ""
 
-#: apps/admin/src/features/settings/sections.ts:78
-#: apps/admin/src/features/settings/sections.ts:81
+#: apps/admin/src/features/settings/sections.ts:80
+#: apps/admin/src/features/settings/sections.ts:83
 msgid "AEO Core"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:297
+#: apps/admin/src/features/settings/SettingsPage.tsx:298
 msgid "AEO schema"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:337
+#: apps/admin/src/features/settings/SettingsPage.tsx:338
 msgid "AEO-first SEO for WordPress"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:246
+#: apps/admin/src/features/settings/SettingsPage.tsx:247
 msgid "Add <image:image> entries to the XML sitemap."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:282
+#: apps/admin/src/features/settings/SettingsPage.tsx:283
 msgid "Advertise a Markdown variant of each page to AI crawlers."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:281
+#: apps/admin/src/features/settings/SettingsPage.tsx:282
 msgid "Agent Readiness"
 msgstr ""
 
@@ -273,34 +285,45 @@ msgstr ""
 msgid "All settings were reset to defaults."
 msgstr ""
 
-#: apps/admin/src/features/settings/sections.ts:79
+#: apps/admin/src/features/settings/sections.ts:81
 msgid "Answer-engine optimization"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:605
+#: apps/admin/src/features/settings/SettingsPage.tsx:606
 msgid ""
 "Appended to the virtual robots.txt. The sitemap line is added automatically."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:212
+#: apps/admin/src/features/settings/SettingsPage.tsx:213
 msgid "Auto-fill missing image alt attributes."
 msgstr ""
 
-#: apps/admin/src/features/settings/sections.ts:98
+#: apps/admin/src/features/settings/sections.ts:108
 msgid "Back up your configuration or move it between sites."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:691
+#: apps/admin/src/features/settings/MigrationPane.tsx:65
+msgid ""
+"Back up your database first. This copies titles, descriptions, canonical "
+"URLs, social tags, and robots settings into Flexa AEO. Without “Overwrite”, "
+"only empty Flexa fields are filled — your existing edits are kept."
+msgstr ""
+
+#: apps/admin/src/features/settings/SettingsPage.tsx:692
 msgid "Brand name"
 msgstr ""
 
-#: apps/admin/src/features/settings/sections.ts:86
-#: apps/admin/src/features/settings/sections.ts:89
+#: apps/admin/src/features/settings/sections.ts:88
+#: apps/admin/src/features/settings/sections.ts:91
 msgid "Branding"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:204
+#: apps/admin/src/features/settings/SettingsPage.tsx:205
 msgid "Breadcrumbs"
+msgstr ""
+
+#: apps/admin/src/features/settings/sections.ts:100
+msgid "Bring your existing SEO meta over from Yoast SEO or Rank Math."
 msgstr ""
 
 #: apps/admin/src/features/settings/DangerZone.tsx:113
@@ -311,25 +334,29 @@ msgstr ""
 msgid "Command palette"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:350
+#: apps/admin/src/features/settings/SettingsPage.tsx:351
 msgid ""
 "Configure how Flexa AEO optimizes your site for search and answer engines."
 msgstr ""
 
-#: apps/admin/src/features/settings/sections.ts:42
+#: apps/admin/src/features/settings/sections.ts:44
 msgid "Control the <title>, meta description, and homepage defaults."
+msgstr ""
+
+#: apps/admin/src/features/settings/MigrationPane.tsx:79
+msgid "Could not read migration sources."
 msgstr ""
 
 #: apps/admin/src/features/settings/ToolsPane.tsx:100
 msgid "Could not read the file."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:604
+#: apps/admin/src/features/settings/SettingsPage.tsx:605
 msgid "Custom robots.txt rules"
 msgstr ""
 
-#: apps/admin/src/features/settings/sections.ts:102
-#: apps/admin/src/features/settings/sections.ts:105
+#: apps/admin/src/features/settings/sections.ts:112
+#: apps/admin/src/features/settings/sections.ts:115
 msgid "Danger Zone"
 msgstr ""
 
@@ -337,37 +364,41 @@ msgstr ""
 msgid "Danger zone"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:497
+#: apps/admin/src/features/settings/SettingsPage.tsx:498
 msgid "Default share image"
 msgstr ""
 
-#: apps/admin/src/features/settings/sections.ts:103
+#: apps/admin/src/features/settings/sections.ts:113
 msgid "Destructive actions"
 msgstr ""
 
-#: apps/admin/src/features/settings/sections.ts:39
+#: apps/admin/src/features/settings/sections.ts:41
 msgid "Document titles and descriptions"
+msgstr ""
+
+#: apps/admin/src/features/settings/MigrationPane.tsx:189
+msgid "Done — migrated %1$d, skipped %2$d."
 msgstr ""
 
 #: apps/admin/src/features/settings/ToolsPane.tsx:116
 msgid "Download the current configuration as a JSON file."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:298
+#: apps/admin/src/features/settings/SettingsPage.tsx:299
 msgid "Emit Article / FAQPage / WebSite JSON-LD tuned for answer engines."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:311
+#: apps/admin/src/features/settings/SettingsPage.tsx:312
 msgid ""
 "Emit Product / Offer JSON-LD (price, availability, rating) + OG product tags "
 "for AI shopping."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:205
+#: apps/admin/src/features/settings/SettingsPage.tsx:206
 msgid "Enable breadcrumb trail + BreadcrumbList schema."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:253
+#: apps/admin/src/features/settings/SettingsPage.tsx:254
 msgid "Enable the [flexa_sitemap] shortcode."
 msgstr ""
 
@@ -379,15 +410,15 @@ msgstr ""
 msgid "Export settings"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:222
+#: apps/admin/src/features/settings/SettingsPage.tsx:223
 msgid "Facebook / LinkedIn / chat-app preview tags."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:144
+#: apps/admin/src/features/settings/SettingsPage.tsx:145
 msgid "Failed to load settings:"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:334
+#: apps/admin/src/features/settings/SettingsPage.tsx:335
 msgid "Flexa AEO – AI SEO"
 msgstr ""
 
@@ -395,23 +426,23 @@ msgstr ""
 msgid "Go to section"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:252
+#: apps/admin/src/features/settings/SettingsPage.tsx:253
 msgid "HTML sitemap"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:449
+#: apps/admin/src/features/settings/SettingsPage.tsx:450
 msgid "Homepage description"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:432
+#: apps/admin/src/features/settings/SettingsPage.tsx:433
 msgid "Homepage title"
 msgstr ""
 
-#: apps/admin/src/features/settings/sections.ts:50
+#: apps/admin/src/features/settings/sections.ts:52
 msgid "How pages look when shared to social and chat apps."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:211
+#: apps/admin/src/features/settings/SettingsPage.tsx:212
 msgid "Image alt text"
 msgstr ""
 
@@ -419,12 +450,16 @@ msgstr ""
 msgid "Import"
 msgstr ""
 
-#: apps/admin/src/features/settings/sections.ts:97
+#: apps/admin/src/features/settings/sections.ts:107
 msgid "Import & Export"
 msgstr ""
 
-#: apps/admin/src/features/settings/sections.ts:95
+#: apps/admin/src/features/settings/sections.ts:105
 msgid "Import & export settings"
+msgstr ""
+
+#: apps/admin/src/features/settings/sections.ts:97
+msgid "Import from Yoast & Rank Math"
 msgstr ""
 
 #: apps/admin/src/features/settings/ToolsPane.tsx:139
@@ -435,28 +470,28 @@ msgstr ""
 msgid "Importing…"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:245
+#: apps/admin/src/features/settings/SettingsPage.tsx:246
 msgid "Include images"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:563
+#: apps/admin/src/features/settings/SettingsPage.tsx:564
 msgid "Included post types"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:579
+#: apps/admin/src/features/settings/SettingsPage.tsx:580
 msgid "Included taxonomies"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:262
+#: apps/admin/src/features/settings/SettingsPage.tsx:263
 msgid "IndexNow"
 msgstr ""
 
-#: apps/admin/src/features/settings/sections.ts:71
+#: apps/admin/src/features/settings/sections.ts:73
 msgid "IndexNow & robots.txt"
 msgstr ""
 
-#: apps/admin/src/features/settings/sections.ts:70
-#: apps/admin/src/features/settings/sections.ts:73
+#: apps/admin/src/features/settings/sections.ts:72
+#: apps/admin/src/features/settings/sections.ts:75
 msgid "Indexing"
 msgstr ""
 
@@ -464,39 +499,56 @@ msgstr ""
 msgid "Jump to a section or action…"
 msgstr ""
 
-#: apps/admin/src/features/settings/sections.ts:55
+#: apps/admin/src/features/settings/sections.ts:57
 msgid "Knowledge graph identity"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:433
+#: apps/admin/src/features/settings/SettingsPage.tsx:434
 msgid "Leave blank to use %%sitename%% %%sep%% %%tagline%%."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:137
+#: apps/admin/src/features/settings/SettingsPage.tsx:138
 msgid "Loading settings…"
 msgstr ""
 
-#: apps/admin/src/features/settings/sections.ts:82
+#: apps/admin/src/features/settings/sections.ts:84
 msgid "Make your content first-class for AI answer engines."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:541
+#: apps/admin/src/features/settings/MigrationPane.tsx:142
+#: apps/admin/src/features/settings/sections.ts:96
+msgid "Migrate"
+msgstr ""
+
+#: apps/admin/src/features/settings/sections.ts:99
+msgid "Migrate from another plugin"
+msgstr ""
+
+#: apps/admin/src/features/settings/MigrationPane.tsx:141
+msgid "Migrating…"
+msgstr ""
+
+#: apps/admin/src/features/settings/SettingsPage.tsx:542
 msgid "Name"
+msgstr ""
+
+#: apps/admin/src/features/settings/MigrationPane.tsx:119
+msgid "No data found from this plugin."
 msgstr ""
 
 #: apps/admin/src/components/CommandPalette.tsx:173
 msgid "No matching commands."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:942
+#: apps/admin/src/features/settings/SettingsPage.tsx:945
 msgid "Nothing available."
 msgstr ""
 
-#: apps/admin/src/features/settings/sections.ts:47
+#: apps/admin/src/features/settings/sections.ts:49
 msgid "Open Graph & X cards"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:371
+#: apps/admin/src/features/settings/SettingsPage.tsx:372
 msgid "Open command palette"
 msgstr ""
 
@@ -508,44 +560,48 @@ msgstr ""
 msgid "Opens /sitemap.xml"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:76
-#: apps/admin/src/features/settings/sections.ts:54
-#: apps/admin/src/features/settings/sections.ts:57
+#: apps/admin/src/features/settings/SettingsPage.tsx:77
+#: apps/admin/src/features/settings/sections.ts:56
+#: apps/admin/src/features/settings/sections.ts:59
 msgid "Organization"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:542
+#: apps/admin/src/features/settings/SettingsPage.tsx:543
 msgid ""
 "Organization or person name for the publisher schema. Defaults to the site "
 "title."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:198
+#: apps/admin/src/features/settings/SettingsPage.tsx:199
 msgid "Output the <title> and meta description tags."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:632
+#: apps/admin/src/features/settings/SettingsPage.tsx:633
 msgid "Overrides the site title in llms.txt. Defaults to the site title."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:77
+#: apps/admin/src/features/settings/MigrationPane.tsx:158
+msgid "Overwrite existing Flexa values"
+msgstr ""
+
+#: apps/admin/src/features/settings/SettingsPage.tsx:78
 msgid "Person"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:263
+#: apps/admin/src/features/settings/SettingsPage.tsx:264
 msgid ""
 "Ping IndexNow when content is published or updated for near-instant indexing."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:290
+#: apps/admin/src/features/settings/SettingsPage.tsx:291
 msgid "Plain-text export"
 msgstr ""
 
-#: apps/admin/src/features/settings/sections.ts:74
+#: apps/admin/src/features/settings/sections.ts:76
 msgid "Push instant index signals and tune the virtual robots.txt."
 msgstr ""
 
-#: apps/admin/src/features/settings/sections.ts:90
+#: apps/admin/src/features/settings/sections.ts:92
 msgid "Rename the plugin in wp-admin for a white-label setup."
 msgstr ""
 
@@ -553,7 +609,7 @@ msgstr ""
 msgid "Replace the current configuration from a previously exported file."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:679
+#: apps/admin/src/features/settings/SettingsPage.tsx:680
 msgid "Replace the “Flexa AEO” name in the admin menu and this screen."
 msgstr ""
 
@@ -565,7 +621,7 @@ msgstr ""
 msgid "Reset everything"
 msgstr ""
 
-#: apps/admin/src/features/settings/sections.ts:106
+#: apps/admin/src/features/settings/sections.ts:116
 msgid "Reset everything back to a clean slate."
 msgstr ""
 
@@ -587,39 +643,43 @@ msgid ""
 "overrides. This cannot be undone."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:229
+#: apps/admin/src/features/settings/SettingsPage.tsx:230
 msgid "Rich preview cards on X."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:387
+#: apps/admin/src/features/settings/SettingsPage.tsx:388
 msgid "Save Settings"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:160
+#: apps/admin/src/features/settings/SettingsPage.tsx:161
 msgid "Save failed."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:363
+#: apps/admin/src/features/settings/SettingsPage.tsx:364
 msgid "Save failed:"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:387
+#: apps/admin/src/features/settings/SettingsPage.tsx:388
 msgid "Saving…"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:375
+#: apps/admin/src/features/settings/MigrationPane.tsx:73
+msgid "Scanning for existing SEO data…"
+msgstr ""
+
+#: apps/admin/src/features/settings/SettingsPage.tsx:376
 msgid "Search"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:275
+#: apps/admin/src/features/settings/SettingsPage.tsx:276
 msgid "Serve /llms.txt — a curated map of your content for AI."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:239
+#: apps/admin/src/features/settings/SettingsPage.tsx:240
 msgid "Serve /sitemap.xml and per-type sub-sitemaps."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:291
+#: apps/admin/src/features/settings/SettingsPage.tsx:292
 msgid "Serve ?flexa-aeo=md — clean Markdown of any post."
 msgstr ""
 
@@ -631,45 +691,45 @@ msgstr ""
 msgid "Settings imported."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:159
-#: apps/admin/src/features/settings/SettingsPage.tsx:358
+#: apps/admin/src/features/settings/SettingsPage.tsx:160
+#: apps/admin/src/features/settings/SettingsPage.tsx:359
 msgid "Settings saved."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:692
+#: apps/admin/src/features/settings/SettingsPage.tsx:693
 msgid "Shown when white-label is on. Takes effect after the next page load."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:631
+#: apps/admin/src/features/settings/SettingsPage.tsx:632
 msgid "Site name for AI"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:650
+#: apps/admin/src/features/settings/SettingsPage.tsx:651
 msgid "Site summary for AI"
 msgstr ""
 
-#: apps/admin/src/features/settings/sections.ts:62
-#: apps/admin/src/features/settings/sections.ts:65
+#: apps/admin/src/features/settings/sections.ts:64
+#: apps/admin/src/features/settings/sections.ts:67
 msgid "Sitemaps"
 msgstr ""
 
-#: apps/admin/src/features/settings/sections.ts:46
+#: apps/admin/src/features/settings/sections.ts:48
 msgid "Social"
 msgstr ""
 
-#: apps/admin/src/features/settings/sections.ts:49
+#: apps/admin/src/features/settings/sections.ts:51
 msgid "Social Sharing"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:72
+#: apps/admin/src/features/settings/SettingsPage.tsx:73
 msgid "Summary"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:71
+#: apps/admin/src/features/settings/SettingsPage.tsx:72
 msgid "Summary with large image"
 msgstr ""
 
-#: apps/admin/src/features/settings/sections.ts:66
+#: apps/admin/src/features/settings/sections.ts:68
 msgid "Tell search engines and answer engines what to crawl."
 msgstr ""
 
@@ -677,11 +737,11 @@ msgstr ""
 msgid "The file is not a valid settings object."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:450
+#: apps/admin/src/features/settings/SettingsPage.tsx:451
 msgid "The meta description for your front page."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:527
+#: apps/admin/src/features/settings/SettingsPage.tsx:528
 msgid "This site represents"
 msgstr ""
 
@@ -691,20 +751,20 @@ msgid ""
 "cannot be undone."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:418
+#: apps/admin/src/features/settings/SettingsPage.tsx:419
 msgid "Title separator"
 msgstr ""
 
-#: apps/admin/src/features/settings/sections.ts:38
-#: apps/admin/src/features/settings/sections.ts:41
+#: apps/admin/src/features/settings/sections.ts:40
+#: apps/admin/src/features/settings/sections.ts:43
 msgid "Titles & Meta"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:197
+#: apps/admin/src/features/settings/SettingsPage.tsx:198
 msgid "Titles & meta descriptions"
 msgstr ""
 
-#: apps/admin/src/features/settings/sections.ts:94
+#: apps/admin/src/features/settings/sections.ts:104
 msgid "Tools"
 msgstr ""
 
@@ -712,7 +772,7 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:498
+#: apps/admin/src/features/settings/SettingsPage.tsx:499
 msgid "Used when a page has no featured image (full URL)."
 msgstr ""
 
@@ -724,51 +784,51 @@ msgstr ""
 msgid "View llms.txt"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:564
+#: apps/admin/src/features/settings/SettingsPage.tsx:565
 msgid "Which content types appear in the sitemap and llms.txt."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:580
+#: apps/admin/src/features/settings/SettingsPage.tsx:581
 msgid "Which term archives appear in the sitemap."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:678
+#: apps/admin/src/features/settings/SettingsPage.tsx:679
 msgid "White-label"
 msgstr ""
 
-#: apps/admin/src/features/settings/sections.ts:87
+#: apps/admin/src/features/settings/sections.ts:89
 msgid "White-label the plugin"
 msgstr ""
 
-#: apps/admin/src/features/settings/sections.ts:58
+#: apps/admin/src/features/settings/sections.ts:60
 msgid "Who publishes this site, for the schema knowledge graph."
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:310
+#: apps/admin/src/features/settings/SettingsPage.tsx:311
 msgid "WooCommerce product schema"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:228
+#: apps/admin/src/features/settings/SettingsPage.tsx:229
 msgid "X (Twitter) Cards"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:480
+#: apps/admin/src/features/settings/SettingsPage.tsx:481
 msgid "X Card type"
 msgstr ""
 
-#: apps/admin/src/features/settings/sections.ts:63
+#: apps/admin/src/features/settings/sections.ts:65
 msgid "XML & HTML sitemaps"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:238
+#: apps/admin/src/features/settings/SettingsPage.tsx:239
 msgid "XML sitemap"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:705
+#: apps/admin/src/features/settings/SettingsPage.tsx:706
 msgid "e.g. Acme SEO"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:274
+#: apps/admin/src/features/settings/SettingsPage.tsx:275
 msgid "llms.txt"
 msgstr ""
 

@@ -32,6 +32,7 @@ import { cn } from "@/lib/cn";
 import { __ } from "@/lib/i18n";
 import { useUiStore } from "@/lib/store";
 import { DangerZone } from "./DangerZone";
+import { MigrationPane } from "./MigrationPane";
 import { SECTIONS, type SectionId, type SectionMeta } from "./sections";
 import { ToolsPane } from "./ToolsPane";
 import { type SettingsData, useSaveSettings, useSettings } from "./useSettings";
@@ -708,6 +709,8 @@ export function SettingsPage() {
                                 </div>
                             </div>
                         )}
+
+                        {active === "migrate" && <MigrationPane />}
 
                         {active === "tools" && (
                             <ToolsPane current={form} onImported={setForm} />

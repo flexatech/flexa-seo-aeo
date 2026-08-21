@@ -25,6 +25,7 @@ final class RegisterFacade {
 	public function register_routes(): void {
 		( new SettingsController() )->register_routes();
 		( new PostMetaController() )->register_routes();
+		( new MigrationController() )->register_routes();
 
 		do_action( 'flexa_seo_aeo/rest/register_routes' );
 	}

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Flexa\SeoAeo\Cli;
 
+use Flexa\SeoAeo\Services\Migration\LegacyMapper;
+use Flexa\SeoAeo\Services\Migration\Migrator;
 use Flexa\SeoAeo\Support\Resetter;
 use Flexa\SeoAeo\Support\Settings;
 use WP_CLI;
@@ -14,6 +16,7 @@ defined( 'ABSPATH' ) || exit;
  * WP-CLI commands for Flexa AEO.
  *
  *     wp flexa-seo-aeo status
+ *     wp flexa-seo-aeo migrate --source=<yoast|rankmath|all> [--overwrite] [--dry-run]
  *     wp flexa-seo-aeo reset [--yes]
  *     wp flexa-seo-aeo ping
  */
@@ -76,6 +79,84 @@ final class PluginCommand {
 			],
 			[ 'module', 'enabled' ]
 		);
+	}
+
+	/**
+	 * Import per-post SEO meta from another plugin into Flexa AEO.
+	 *
+	 * ## OPTIONS
+	 *
+	 * [--source=<source>]
+	 * : Which plugin to migrate from. One of: yoast, rankmath, all.
+	 * ---
+	 * default: all
+	 * options:
+	 *   - yoast
+	 *   - rankmath
+	 *   - all
+	 * ---
+	 *
+	 * [--overwrite]
+	 * : Overwrite existing Flexa values. By default only empty fields are filled.
+	 *
+	 * [--dry-run]
+	 * : Report how many posts each source has, without writing anything.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp flexa-seo-aeo migrate --source=yoast
+	 *     wp flexa-seo-aeo migrate --source=all --overwrite
+	 *
+	 * @param array<int, string>    $args
+	 * @param array<string, string> $assoc
+	 * @when after_wp_load
+	 */
+	public function migrate( array $args, array $assoc ): void {
+		unset( $args );
+
+		$source    = isset( $assoc['source'] ) ? (string) $assoc['source'] : 'all';
+		$overwrite = isset( $assoc['overwrite'] );
+		$dry_run   = isset( $assoc['dry-run'] );
+
+		$sources = 'all' === $source ? LegacyMapper::source_ids() : [ $source ];
+		foreach ( $sources as $candidate ) {
+			if ( ! LegacyMapper::is_source( $candidate ) ) {
+				WP_CLI::error( sprintf( 'Unknown source "%s". Use yoast, rankmath, or all.', $candidate ) );
+			}
+		}
+
+		$migrator = Migrator::instance();
+
+		if ( $dry_run ) {
+			foreach ( $migrator->sources() as $info ) {
+				if ( in_array( $info['id'], $sources, true ) ) {
+					WP_CLI::log( sprintf( '%s: %d post(s) with data to migrate.', $info['label'], $info['count'] ) );
+				}
+			}
+			WP_CLI::success( 'Dry run complete — nothing was written.' );
+			return;
+		}
+
+		foreach ( $sources as $candidate ) {
+			$label    = LegacyMapper::label( $candidate );
+			$offset   = 0;
+			$migrated = 0;
+			$skipped  = 0;
+
+			do {
+				$result = $migrator->migrate( $candidate, $overwrite, $offset, 100 );
+
+				$migrated += $result['migrated'];
+				$skipped  += $result['skipped'];
+				$offset    = $result['next_offset'];
+
+				if ( $result['total'] > 0 ) {
+					WP_CLI::log( sprintf( 'Migrating %s: %d/%d', $label, min( $offset, $result['total'] ), $result['total'] ) );
+				}
+			} while ( ! $result['done'] );
+
+			WP_CLI::success( sprintf( '%s: migrated %d, skipped %d.', $label, $migrated, $skipped ) );
+		}
 	}
 
 	/**

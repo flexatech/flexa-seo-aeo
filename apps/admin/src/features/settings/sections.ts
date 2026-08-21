@@ -1,4 +1,5 @@
 import {
+    ArrowLeftRight,
     Bot,
     Building2,
     Network,
@@ -20,6 +21,7 @@ export type SectionId =
     | "indexing"
     | "aeo"
     | "branding"
+    | "migrate"
     | "tools"
     | "danger";
 
@@ -88,6 +90,14 @@ export const SECTIONS: SectionMeta[] = [
         icon: Palette,
         paneTitle: __("Branding"),
         paneSubtitle: __("Rename the plugin in wp-admin for a white-label setup."),
+    },
+    {
+        id: "migrate",
+        title: __("Migrate"),
+        subtitle: __("Import from Yoast & Rank Math"),
+        icon: ArrowLeftRight,
+        paneTitle: __("Migrate from another plugin"),
+        paneSubtitle: __("Bring your existing SEO meta over from Yoast SEO or Rank Math."),
     },
     {
         id: "tools",
