@@ -1,0 +1,18 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "flexa-seo-aeo/sitemap",
+    "version": "1.0.0",
+    "title": "Flexa AEO Sitemap",
+    "category": "widgets",
+    "icon": "list-view",
+    "description": "An HTML sitemap of your published content, grouped by type. Rendered server-side so it always reflects the live site.",
+    "textdomain": "flexa-seo-aeo",
+    "keywords": ["sitemap", "seo", "aeo", "links"],
+    "supports": {
+        "html": false,
+        "align": ["wide", "full"],
+        "spacing": { "margin": true, "padding": true }
+    },
+    "editorScript": "flexa-seo-aeo-sitemap-block"
+}

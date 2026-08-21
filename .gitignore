@@ -1,0 +1,36 @@
+# Dependencies
+/vendor/
+/node_modules/
+
+# Build output (regenerated with `pnpm build`)
+/assets/dist/
+
+# Local dev marker for the Vite HMR server
+/apps/admin/.dev
+
+# PHP tooling caches / reports
+.phpunit.result.cache
+/.phpcs-cache
+clover.xml
+coverage/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.log
+*~
+.idea/
+.vscode/
+*.code-workspace
+
+# Compiled translation catalogs (the .pot template is committed; per-locale
+# .mo/.json are build artifacts)
+/i18n/languages/*.mo
+/i18n/languages/*-*.json
+
+# Temp POT fragments from `pnpm i18n:pot`
+/i18n/languages/_*.pot
+
+# Release artifacts
+/build/
+*.zip

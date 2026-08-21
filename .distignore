@@ -1,0 +1,49 @@
+# Files and directories excluded from the distributed plugin ZIP.
+# The human-readable React source (apps/admin/src) and its build config are
+# kept on purpose so the compiled assets/dist bundle has published source
+# (WP.org "human-readable code" requirement). Only dev-only tooling, tests,
+# dependencies, and the local Vite HMR shim are stripped.
+
+# Version control / CI
+/.git
+/.github
+/.gitignore
+/.gitattributes
+/.editorconfig
+/.distignore
+
+# Build tooling / output (not part of the shipped plugin)
+/release.sh
+/build
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.log
+*.map
+
+# PHP dev dependencies (runtime has none; the bootstrap autoloads src/ via a
+# spl_autoload_register fallback when vendor/ is absent).
+/vendor
+/composer.json
+/composer.lock
+
+# JS dependencies + lockfile (source ships; run `pnpm install` to rebuild).
+/node_modules
+/pnpm-lock.yaml
+
+# QA / analysis config
+/phpcs.xml.dist
+/phpstan.neon.dist
+/phpunit.xml
+/phpunit.xml.dist
+/tests
+/tools
+
+# Project docs (not needed at runtime)
+/docs
+
+# Dev-only Vite HMR shim — enqueues a localhost module URL and must never
+# ship (WP.org "calling files remotely"). Prod uses the built manifest.
+/src/Admin/dev-server.php
+/apps/admin/.dev

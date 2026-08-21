@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<ruleset name="Flexa AEO">
+	<description>
+		Coding standards for Flexa AEO. WordPress style, adapted to the plugin's
+		deliberate house conventions: PSR-4 PascalCase filenames, short-array
+		syntax, slash-separated hook names, and sparse docblocks.
+	</description>
+
+	<!-- Scan the plugin, PHP only. -->
+	<file>.</file>
+	<arg name="extensions" value="php"/>
+	<arg name="basepath" value="."/>
+	<arg name="parallel" value="8"/>
+	<arg name="colors"/>
+	<arg value="ps"/>
+
+	<!-- Never scan build output, dependencies, the JS app, or the phpstan
+	     bootstrap (whose literal constant defines duplicate the real ones). -->
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/apps/*</exclude-pattern>
+	<exclude-pattern>*/assets/*</exclude-pattern>
+	<exclude-pattern>*/tests/phpstan-constants.php</exclude-pattern>
+	<!-- Dev-only Vite HMR shim; excluded from production builds via .distignore
+	     and intentionally enqueues version-less module URLs. -->
+	<exclude-pattern>*/src/Admin/dev-server.php</exclude-pattern>
+
+	<!--
+		Base on WordPress-Extra (Core + Extra analysis). WordPress-Docs is
+		intentionally NOT included: the codebase keeps docblocks sparse by
+		design (only non-trivial logic / array shapes get them).
+	-->
+	<rule ref="WordPress-Extra">
+		<!-- PSR-4 autoloading: one PascalCase class per file (Schema.php), not
+		     the WP class-schema.php convention. -->
+		<exclude name="WordPress.Files.FileName"/>
+		<!-- Short array syntax [] is the house style everywhere. -->
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
+		<!-- Slash-separated hook names (flexa_seo_aeo/domain/event) are a
+		     deliberate lineage convention, not a mistake. -->
+		<exclude name="WordPress.NamingConventions.ValidHookName"/>
+	</rule>
+
+	<!-- Single text domain for all i18n calls. -->
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="flexa-seo-aeo"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Plugin prefixes for globals, hooks, and constants. -->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="flexa_seo_aeo"/>
+				<element value="Flexa\SeoAeo"/>
+				<element value="FLEXA_SEO_AEO"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Template partials are `include`d inside a render method, so their
+	     variables are method-local at runtime, not truly global — the
+	     prefix sniff can't see that and false-positives on every one. -->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<exclude-pattern>*/templates/*</exclude-pattern>
+	</rule>
+
+	<!-- The DOM extension exposes camelCase properties (childNodes, nodeName,
+	     …); reading them is not a house-style violation. -->
+	<rule ref="WordPress.NamingConventions.ValidVariableName">
+		<properties>
+			<property name="allowed_custom_properties" type="array">
+				<element value="childNodes"/>
+				<element value="nodeName"/>
+				<element value="nodeValue"/>
+				<element value="nodeType"/>
+				<element value="textContent"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Target runtime: WP 6.4+, PHP 8.2+ only. -->
+	<config name="minimum_wp_version" value="6.4"/>
+	<config name="testVersion" value="8.2-"/>
+	<rule ref="PHPCompatibilityWP"/>
+</ruleset>

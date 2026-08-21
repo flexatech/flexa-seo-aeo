@@ -1,0 +1,23 @@
+includes:
+	- vendor/szepeviktor/phpstan-wordpress/extension.neon
+
+parameters:
+	level: 6
+	paths:
+		- src
+		- uninstall.php
+	# The FLEXA_SEO_AEO_* constants are defined in the main plugin file *after*
+	# an early `return` (the PHP-version guard), so phpstan's scan treats them
+	# as conditional. This bootstrap re-declares them with literal values.
+	# WooCommerce and WP-CLI ship no autoloaded symbols here; the commerce
+	# bridge (Actions\Woo\*) and the CLI command only run when those are active,
+	# so load their published stubs to keep both analysable at level 6.
+	bootstrapFiles:
+		- tests/phpstan-constants.php
+		- vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php
+		- vendor/php-stubs/wp-cli-stubs/wp-cli-stubs.php
+	# Trust our own PHPDoc array-shape/`list<>` annotations without phpstan
+	# re-flagging the guards that defend against a corrupt runtime value
+	# (`is_string()` on a documented string, `array_values()` on a documented
+	# list, etc.) — the phpstan-wordpress recommended setting.
+	treatPhpDocTypesAsCertain: false
