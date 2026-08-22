@@ -4,12 +4,15 @@
  * Description:       Privacy-first WordPress SEO built AEO/GEO-first: titles & metas, Open Graph, sitemaps, and native llms.txt / Agent Readiness for AI answer engines.
  * Version:           0.1.0
  * Requires at least: 6.5
+ * Tested up to:      7.1
  * Requires PHP:      8.2
  * Author:            FlexaTech
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       flexa-seo-aeo
  * Domain Path:       /i18n/languages
+ * WC requires at least: 8.0
+ * WC tested up to:   11.0
  */
 
 declare(strict_types=1);

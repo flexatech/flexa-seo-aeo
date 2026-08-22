@@ -2,11 +2,13 @@
 Contributors: flexatech
 Tags: seo, aeo, sitemap, open graph, llms.txt
 Requires at least: 6.5
-Tested up to: 6.6
+Tested up to: 7.1
 Requires PHP: 8.2
 Stable tag: 0.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
+WC requires at least: 8.0
+WC tested up to: 11.0
 
 Privacy-first WordPress SEO built AEO/GEO-first: titles & metas, Open Graph, sitemaps, and native llms.txt / Agent Readiness for AI answer engines.
 
