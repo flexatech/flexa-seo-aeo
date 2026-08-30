@@ -57,6 +57,15 @@ if ( file_exists( FLEXA_SEO_AEO_PATH . 'vendor/autoload.php' ) ) {
 	);
 }
 
+add_action(
+	'before_woocommerce_init',
+	static function (): void {
+		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', FLEXA_SEO_AEO_FILE, true );
+		}
+	}
+);
+
 register_activation_hook( __FILE__, [ \Flexa\SeoAeo\Install\Activator::class, 'activate' ] );
 register_deactivation_hook( __FILE__, [ \Flexa\SeoAeo\Install\Deactivator::class, 'deactivate' ] );
 

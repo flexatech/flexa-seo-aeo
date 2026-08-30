@@ -1,4 +1,4 @@
-=== Flexa AEO – AI SEO & Answer Engine Optimization ===
+=== Flexa SEO - AEO ===
 Contributors: flexatech
 Tags: seo, aeo, sitemap, open graph, llms.txt
 Requires at least: 6.5

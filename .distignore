@@ -42,6 +42,7 @@ Thumbs.db
 
 # Project docs (not needed at runtime)
 /docs
+/.md
 
 # Dev-only Vite HMR shim — enqueues a localhost module URL and must never
 # ship (WP.org "calling files remotely"). Prod uses the built manifest.

@@ -12,6 +12,9 @@
 
 declare(strict_types=1);
 
+// Refuse direct web access, but allow the PHPStan CLI bootstrap (no ABSPATH there).
+defined( 'ABSPATH' ) || 'cli' === PHP_SAPI || exit;
+
 define( 'FLEXA_SEO_AEO_VERSION', '0.1.0' );
 define( 'FLEXA_SEO_AEO_FILE', __FILE__ );
 define( 'FLEXA_SEO_AEO_PATH', dirname( __DIR__ ) . '/' );
