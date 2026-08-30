@@ -199,7 +199,6 @@ final class Migrator {
 			'post_type'           => $this->post_types(),
 			'post_status'         => 'any',
 			'ignore_sticky_posts' => true,
-			'suppress_filters'    => true,
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- One-shot admin migration; the EXISTS scan is intentional and batched.
 			'meta_query'          => $meta_query,
 		];

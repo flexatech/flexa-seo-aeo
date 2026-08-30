@@ -31,7 +31,7 @@ final class Settings {
 		'breadcrumbs',         // Breadcrumb trail + BreadcrumbList schema.
 		'image_seo_alt',       // Auto-fill missing image alt text.
 		'indexnow',            // Ping IndexNow on publish/update for instant indexing.
-		'whitelabel',          // Replace the "Flexa AEO" branding in wp-admin.
+		'whitelabel',          // Replace the "Flexa SEO" branding in wp-admin.
 	];
 
 	/**
@@ -125,7 +125,7 @@ final class Settings {
 	/**
 	 * The admin-facing brand label. When white-label is on and a name is set,
 	 * that name is used everywhere the plugin identifies itself in wp-admin
-	 * (menu, page title, in-app brand strip); otherwise the default "Flexa AEO".
+	 * (menu, page title, in-app brand strip); otherwise the default "Flexa SEO".
 	 */
 	public static function brand_name(): string {
 		$all = self::all();
@@ -136,7 +136,7 @@ final class Settings {
 			}
 		}
 
-		return 'Flexa AEO';
+		return 'Flexa SEO';
 	}
 
 	/**

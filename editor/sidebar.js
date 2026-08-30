@@ -1,5 +1,5 @@
 /**
- * Flexa AEO — block-editor sidebar for per-post SEO/AEO overrides.
+ * Flexa SEO — block-editor sidebar for per-post SEO/AEO overrides.
  *
  * Reads and writes the post meta registered by Domain\PostMetaRepository
  * (the `_flexa_seo_aeo_*` keys, exposed via register_post_meta + show_in_rest).
@@ -99,13 +99,13 @@
 			el(
 				PluginSidebarMoreMenuItem,
 				{ target: SIDEBAR, icon: 'search' },
-				__( 'Flexa AEO', 'flexa-seo-aeo' )
+				__( 'Flexa SEO', 'flexa-seo-aeo' )
 			),
 			el(
 				PluginSidebar,
 				{
 					name: SIDEBAR,
-					title: __( 'Flexa AEO', 'flexa-seo-aeo' ),
+					title: __( 'Flexa SEO', 'flexa-seo-aeo' ),
 					icon: 'search',
 				},
 				el(

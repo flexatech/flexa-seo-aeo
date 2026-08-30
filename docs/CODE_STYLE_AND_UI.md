@@ -1,4 +1,4 @@
-# Flexa AEO — Code Style (distilled)
+# Flexa SEO — Code Style (distilled)
 
 Mirror `../flexa-cache/` exactly when in doubt. This is the short spec.
 

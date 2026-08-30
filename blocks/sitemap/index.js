@@ -1,5 +1,5 @@
 /**
- * Editor script for the Flexa AEO Sitemap block.
+ * Editor script for the Flexa SEO Sitemap block.
  *
  * A dynamic block: the frontend markup is produced by the PHP render_callback
  * (which reuses the same Sitemap service as the XML sitemap), so `save` returns

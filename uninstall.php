@@ -1,6 +1,6 @@
 <?php
 /**
- * Uninstall handler. Removes every trace of Flexa AEO. Runs in isolation (the
+ * Uninstall handler. Removes every trace of Flexa SEO. Runs in isolation (the
  * plugin is NOT bootstrapped during uninstall) so it cannot use the plugin's
  * classes — the option key below is deliberately duplicated from
  * Flexa\SeoAeo\Support\Settings::OPTION_KEY. Keep them in sync.

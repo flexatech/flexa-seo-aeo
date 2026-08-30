@@ -332,7 +332,7 @@ export function SettingsPage() {
                     </span>
                     <div className="fsa:leading-tight">
                         <div className="fsa:text-sm fsa:font-semibold fsa:text-slate-900">
-                            {window.flexaSeoAeo?.brandName || __("Flexa AEO – AI SEO")}
+                            {window.flexaSeoAeo?.brandName || __("Flexa SEO")}
                         </div>
                         <div className="fsa:text-xs fsa:text-slate-500">
                             {__("AEO-first SEO for WordPress")}
@@ -349,7 +349,7 @@ export function SettingsPage() {
                     </h1>
                     <p className="fsa:text-sm fsa:text-slate-600">
                         {__(
-                            "Configure how Flexa AEO optimizes your site for search and answer engines.",
+                            "Configure how Flexa SEO optimizes your site for search and answer engines.",
                         )}
                     </p>
                 </div>
@@ -678,7 +678,7 @@ export function SettingsPage() {
                                             icon: Palette,
                                             title: __("White-label"),
                                             description: __(
-                                                "Replace the “Flexa AEO” name in the admin menu and this screen.",
+                                                "Replace the “Flexa SEO” name in the admin menu and this screen.",
                                             ),
                                             checked: form.whitelabel,
                                             onChange: (v) => setBool("whitelabel", v),

@@ -61,7 +61,7 @@ export function DangerZone() {
                     </h2>
                     <p className="fsa:text-sm fsa:text-red-800">
                         {__(
-                            "Restore every Flexa AEO setting to its default and remove per-post SEO overrides. This cannot be undone.",
+                            "Restore every Flexa SEO setting to its default and remove per-post SEO overrides. This cannot be undone.",
                         )}
                     </p>
                 </div>
@@ -74,7 +74,7 @@ export function DangerZone() {
             <Dialog open={open} onOpenChange={(o) => (o ? setOpen(true) : close())}>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>{__("Reset Flexa AEO?")}</DialogTitle>
+                        <DialogTitle>{__("Reset Flexa SEO?")}</DialogTitle>
                         <DialogDescription>
                             {__(
                                 "This wipes all settings back to defaults and clears stored plugin data. This cannot be undone.",

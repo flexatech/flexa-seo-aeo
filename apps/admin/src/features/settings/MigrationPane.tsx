@@ -63,7 +63,7 @@ export function MigrationPane() {
                 />
                 <p className="fsa:text-xs fsa:text-amber-800">
                     {__(
-                        "Back up your database first. This copies titles, descriptions, canonical URLs, social tags, and robots settings into Flexa AEO. Without “Overwrite”, only empty Flexa fields are filled — your existing edits are kept.",
+                        "Back up your database first. This copies titles, descriptions, canonical URLs, social tags, and robots settings into Flexa SEO. Without “Overwrite”, only empty Flexa fields are filled — your existing edits are kept.",
                     )}
                 </p>
             </div>

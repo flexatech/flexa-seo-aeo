@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       Flexa AEO – AI SEO & Answer Engine Optimization
+ * Plugin Name:       Flexa SEO - AEO
  * Description:       Privacy-first WordPress SEO built AEO/GEO-first: titles & metas, Open Graph, sitemaps, and native llms.txt / Agent Readiness for AI answer engines.
  * Version:           0.1.0
  * Requires at least: 6.5
@@ -24,7 +24,7 @@ if ( version_compare( PHP_VERSION, '8.2', '<' ) ) {
 		'admin_notices',
 		static function (): void {
 			echo '<div class="notice notice-error"><p>';
-			echo esc_html__( 'Flexa AEO requires PHP 8.2 or higher. The plugin has been disabled.', 'flexa-seo-aeo' );
+			echo esc_html__( 'Flexa SEO requires PHP 8.2 or higher. The plugin has been disabled.', 'flexa-seo-aeo' );
 			echo '</p></div>';
 		}
 	);

@@ -7,7 +7,7 @@ namespace Flexa\SeoAeo\Support;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Wipes all Flexa AEO data. Used by the Settings danger zone and the
+ * Wipes all Flexa SEO data. Used by the Settings danger zone and the
  * `wp flexa-seo-aeo reset` CLI command — one helper keeps both paths in sync
  * so they can never drift.
  *

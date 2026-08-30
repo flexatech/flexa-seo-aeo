@@ -13,7 +13,7 @@ use WP_CLI;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * WP-CLI commands for Flexa AEO.
+ * WP-CLI commands for Flexa SEO.
  *
  *     wp flexa-seo-aeo status
  *     wp flexa-seo-aeo migrate --source=<yoast|rankmath|all> [--overwrite] [--dry-run]
@@ -82,7 +82,7 @@ final class PluginCommand {
 	}
 
 	/**
-	 * Import per-post SEO meta from another plugin into Flexa AEO.
+	 * Import per-post SEO meta from another plugin into Flexa SEO.
 	 *
 	 * ## OPTIONS
 	 *
@@ -160,7 +160,7 @@ final class PluginCommand {
 	}
 
 	/**
-	 * Wipe all Flexa AEO settings (danger zone). Routes through the shared
+	 * Wipe all Flexa SEO settings (danger zone). Routes through the shared
 	 * Resetter so CLI and the REST danger zone never drift.
 	 *
 	 * ## OPTIONS
@@ -175,13 +175,13 @@ final class PluginCommand {
 	public function reset( array $args, array $assoc ): void {
 		unset( $args );
 
-		WP_CLI::confirm( 'This will delete all Flexa AEO settings. Continue?', $assoc );
+		WP_CLI::confirm( 'This will delete all Flexa SEO settings. Continue?', $assoc );
 
 		$result = Resetter::reset_all();
 		WP_CLI::success(
 			$result['settings_removed']
-				? 'Flexa AEO settings removed.'
-				: 'No Flexa AEO settings were stored.'
+				? 'Flexa SEO settings removed.'
+				: 'No Flexa SEO settings were stored.'
 		);
 	}
 
@@ -194,6 +194,6 @@ final class PluginCommand {
 	 */
 	public function ping( array $args, array $assoc ): void {
 		unset( $args, $assoc );
-		WP_CLI::success( sprintf( 'Flexa AEO v%s is alive.', FLEXA_SEO_AEO_VERSION ) );
+		WP_CLI::success( sprintf( 'Flexa SEO v%s is alive.', FLEXA_SEO_AEO_VERSION ) );
 	}
 }

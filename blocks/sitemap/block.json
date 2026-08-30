@@ -3,7 +3,7 @@
     "apiVersion": 3,
     "name": "flexa-seo-aeo/sitemap",
     "version": "1.0.0",
-    "title": "Flexa AEO Sitemap",
+    "title": "Flexa SEO Sitemap",
     "category": "widgets",
     "icon": "list-view",
     "description": "An HTML sitemap of your published content, grouped by type. Rendered server-side so it always reflects the live site.",

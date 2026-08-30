@@ -17,14 +17,14 @@ if ( '' !== $stylesheet ) {
 }
 ?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"<?php echo $with_images ? ' xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"' : ''; ?>>
-<?php foreach ( $entries as $entry ) : ?>
+<?php foreach ( $entries as $entry ) : // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Loop var local to this template partial (required from a controller), not a global. ?>
 	<url>
 		<loc><?php echo esc_url( $entry['loc'] ); ?></loc>
 	<?php if ( '' !== $entry['lastmod'] ) : ?>
 		<lastmod><?php echo esc_xml( $entry['lastmod'] ); ?></lastmod>
 <?php endif; ?>
 	<?php if ( $with_images ) : ?>
-		<?php foreach ( $entry['images'] as $image ) : ?>
+		<?php foreach ( $entry['images'] as $image ) : // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Loop var local to this template partial (required from a controller), not a global. ?>
 		<image:image>
 			<image:loc><?php echo esc_url( $image ); ?></image:loc>
 		</image:image>

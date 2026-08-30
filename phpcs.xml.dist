@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<ruleset name="Flexa AEO">
+<ruleset name="Flexa SEO">
 	<description>
-		Coding standards for Flexa AEO. WordPress style, adapted to the plugin's
+		Coding standards for Flexa SEO. WordPress style, adapted to the plugin's
 		deliberate house conventions: PSR-4 PascalCase filenames, short-array
 		syntax, slash-separated hook names, and sparse docblocks.
 	</description>

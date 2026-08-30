@@ -13,7 +13,7 @@ use WP_Post;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Classic-editor "Flexa AEO" metabox for the per-post SEO overrides. The block
+ * Classic-editor "Flexa SEO" metabox for the per-post SEO overrides. The block
  * editor reads the same fields directly through register_post_meta() (a native
  * sidebar ships with the Phase 4 React app); this box guarantees the classic
  * editor is never left without a way to set them. All values flow through
@@ -37,7 +37,7 @@ final class PostMetabox {
 
 		add_meta_box(
 			'flexa-seo-aeo-post-meta',
-			__( 'Flexa AEO — Search & AI', 'flexa-seo-aeo' ),
+			__( 'Flexa SEO — Search & AI', 'flexa-seo-aeo' ),
 			[ $this, 'render' ],
 			$post_type,
 			'normal',
@@ -99,7 +99,12 @@ final class PostMetabox {
 			}
 
 			if ( isset( $_POST[ $input_name ] ) ) {
-				// Repository sanitizes each field by type; unslash the raw value.
+				// Nonce verified above. Each field is sanitized by type in
+				// PostMetaRepository::sanitize_field() (esc_url_raw for URLs,
+				// sanitize_textarea_field for descriptions, sanitize_text_field
+				// otherwise); a blanket sanitizer here would corrupt those, so we
+				// only unslash the raw value at this point.
+				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized per-field by type in PostMetaRepository::sanitize_field().
 				$data[ $field ] = wp_unslash( (string) $_POST[ $input_name ] );
 			}
 		}

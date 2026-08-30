@@ -1,6 +1,6 @@
 {
     "name": "flexatech/flexa-seo-aeo",
-    "description": "Flexa AEO – AI SEO & Answer Engine Optimization for WordPress.",
+    "description": "Flexa SEO – AI SEO & Answer Engine Optimization for WordPress.",
     "type": "wordpress-plugin",
     "license": "GPL v2 or later",
     "require": {

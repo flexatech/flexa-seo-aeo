@@ -1,4 +1,4 @@
-# Flexa AEO — Implementation Plan
+# Flexa SEO — Implementation Plan
 
 > AEO/GEO-first WordPress SEO plugin. Positioning + comparison rationale:
 > `../seopress-vs-rankmath-and-plan.md`. Naming locked in project memory.

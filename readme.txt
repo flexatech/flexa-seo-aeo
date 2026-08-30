@@ -14,7 +14,7 @@ Privacy-first WordPress SEO built AEO/GEO-first: titles & metas, Open Graph, sit
 
 == Description ==
 
-Flexa AEO is a lightweight, privacy-first SEO plugin built **AEO/GEO-first** — it treats Answer Engine Optimization (how AI assistants and answer engines read your site) as a core feature, not a bolt-on. It ships the SEO baseline you expect, plus first-class tooling for AI crawlers, and it never requires a cloud account: your data stays on your site.
+Flexa SEO is a lightweight, privacy-first SEO plugin built **AEO/GEO-first** — it treats Answer Engine Optimization (how AI assistants and answer engines read your site) as a core feature, not a bolt-on. It ships the SEO baseline you expect, plus first-class tooling for AI crawlers, and it never requires a cloud account: your data stays on your site.
 
 **Core SEO**
 
@@ -67,7 +67,7 @@ The `.pot` translation template is regenerated with `pnpm i18n:pot` (PHP + vanil
 
 1. Upload the `flexa-seo-aeo` folder to `/wp-content/plugins/`, or install it through the Plugins screen.
 2. Activate the plugin through the *Plugins* screen in WordPress.
-3. Open **Flexa AEO** in the admin menu to configure titles, social, sitemaps, indexing, and the AEO Core options.
+3. Open **Flexa SEO** in the admin menu to configure titles, social, sitemaps, indexing, and the AEO Core options.
 
 == Frequently Asked Questions ==
 
@@ -77,7 +77,7 @@ No. There is no account and no telemetry. The only outbound request is the optio
 
 = Will it conflict with Yoast, Rank Math, or SEOPress? =
 
-Run one SEO plugin at a time. Flexa AEO can read existing per-post meta from those plugins as a fallback, easing migration.
+Run one SEO plugin at a time. Flexa SEO can read existing per-post meta from those plugins as a fallback, easing migration.
 
 = Does it work without WooCommerce? =
 

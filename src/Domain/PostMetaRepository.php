@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  * fields to the block editor via register_post_meta() and provides a
  * best-effort migration fallback: if this plugin has no value for a field yet,
  * an equivalent key from Yoast / Rank Math / SEOPress is read instead, so a
- * site that switches to Flexa AEO keeps its existing SEO output.
+ * site that switches to Flexa SEO keeps its existing SEO output.
  */
 final class PostMetaRepository {
 	use SingletonTrait;

@@ -44,7 +44,7 @@ final class Metas {
 	public function print_head(): void {
 		$meta = $this->meta();
 
-		echo "\n<!-- Flexa AEO -->\n";
+		echo "\n<!-- Flexa SEO -->\n";
 
 		if ( (bool) Settings::get( 'titles_metas' ) ) {
 			if ( '' !== $meta->description ) {
@@ -89,7 +89,7 @@ final class Metas {
 			}
 		}
 
-		echo "<!-- /Flexa AEO -->\n";
+		echo "<!-- /Flexa SEO -->\n";
 	}
 
 	private function meta_tag( string $attr, string $key, string $content ): void {
