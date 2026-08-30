@@ -38,6 +38,14 @@ final class RobotsTxt {
 			}
 		}
 
+		// Append the site owner's custom robots.txt rules — the same "extra
+		// robots rules" field every SEO plugin ships (Yoast, Rank Math, AIOSEO).
+		// This is NOT arbitrary code insertion: the value is plain-text crawler
+		// directives (User-agent / Disallow / Allow / Sitemap), sanitized with
+		// sanitize_textarea_field() on save (see Settings::sanitize()), and
+		// emitted by WordPress core through the `robots_txt` filter as a
+		// text/plain document — it is never parsed as HTML/CSS/JS/PHP and cannot
+		// execute. No markup context exists here, so there is nothing to escape.
 		$extra = trim( (string) Settings::get( 'robots_txt' ) );
 		if ( '' !== $extra ) {
 			$lines[] = '';

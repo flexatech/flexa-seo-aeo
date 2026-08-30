@@ -203,6 +203,11 @@ final class Settings {
 		}
 
 		if ( array_key_exists( 'robots_txt', $incoming ) ) {
+			// Plain-text robots.txt directives only (standard SEO-plugin feature).
+			// sanitize_textarea_field() strips any HTML/tags while keeping the
+			// line breaks robots.txt needs; the value is later served as
+			// text/plain via the core `robots_txt` filter (see Actions\RobotsTxt),
+			// so it is not — and cannot become — executable CSS/JS/PHP.
 			$clean['robots_txt'] = sanitize_textarea_field( (string) $incoming['robots_txt'] );
 		}
 
