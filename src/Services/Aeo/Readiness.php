@@ -45,7 +45,7 @@ final class Readiness {
 	 * @return array{
 	 *     score: int,
 	 *     grade: string,
-	 *     checks: list<array{id: string, label: string, status: string, weight: int, hint: string}>
+	 *     checks: list<array{id: string, label: string, status: string, weight: int, hint: string, fix: array{label: string, scope: string, patch: array<string, mixed>}|null}>
 	 * }
 	 */
 	public function report( WP_Post $post ): array {
@@ -64,9 +64,9 @@ final class Readiness {
 
 		/**
 		 * Filters the readiness checks for a post before they are scored. Add-ons
-		 * (or Pro) can append their own `{id,label,status,weight,hint}` rows.
+		 * (or Pro) can append their own `{id,label,status,weight,hint,fix}` rows.
 		 *
-		 * @param list<array{id: string, label: string, status: string, weight: int, hint: string}> $checks
+		 * @param list<array{id: string, label: string, status: string, weight: int, hint: string, fix: array{label: string, scope: string, patch: array<string, mixed>}|null}> $checks
 		 * @param WP_Post                                                                            $post
 		 */
 		$checks = array_values( (array) apply_filters( 'flexa_seo_aeo/aeo/readiness_checks', $checks, $post ) );
@@ -123,7 +123,7 @@ final class Readiness {
 	}
 
 	/**
-	 * @return array{id: string, label: string, status: string, weight: int, hint: string}
+	 * @return array{id: string, label: string, status: string, weight: int, hint: string, fix: array{label: string, scope: string, patch: array<string, mixed>}|null}
 	 */
 	private function check_structured_data(): array {
 		$enabled = (bool) Settings::get_aeo( 'schema' );
@@ -131,12 +131,15 @@ final class Readiness {
 		$hint    = $enabled
 			? __( 'JSON-LD is emitted for this post so engines can lift facts out as structured data.', 'flexa-seo-aeo' )
 			: __( 'Enable AEO Core → Structured data so this post ships an Article/WebPage JSON-LD graph.', 'flexa-seo-aeo' );
+		$fix     = $enabled
+			? null
+			: $this->fix( __( 'Enable structured data', 'flexa-seo-aeo' ), [ 'aeo' => [ 'schema' => true ] ] );
 
-		return $this->row( 'structured_data', __( 'Structured data', 'flexa-seo-aeo' ), $status, 20, $hint );
+		return $this->row( 'structured_data', __( 'Structured data', 'flexa-seo-aeo' ), $status, 20, $hint, $fix );
 	}
 
 	/**
-	 * @return array{id: string, label: string, status: string, weight: int, hint: string}
+	 * @return array{id: string, label: string, status: string, weight: int, hint: string, fix: array{label: string, scope: string, patch: array<string, mixed>}|null}
 	 */
 	private function check_meta_description( WP_Post $post ): array {
 		$meta        = PostMetaRepository::instance()->get( $post->ID );
@@ -164,7 +167,7 @@ final class Readiness {
 	}
 
 	/**
-	 * @return array{id: string, label: string, status: string, weight: int, hint: string}
+	 * @return array{id: string, label: string, status: string, weight: int, hint: string, fix: array{label: string, scope: string, patch: array<string, mixed>}|null}
 	 */
 	private function check_answer_first( string $paragraph ): array {
 		$length = $this->length( $paragraph );
@@ -188,7 +191,7 @@ final class Readiness {
 
 	/**
 	 * @param list<string> $headings
-	 * @return array{id: string, label: string, status: string, weight: int, hint: string}
+	 * @return array{id: string, label: string, status: string, weight: int, hint: string, fix: array{label: string, scope: string, patch: array<string, mixed>}|null}
 	 */
 	private function check_question_headings( array $headings ): array {
 		$questions = 0;
@@ -214,7 +217,7 @@ final class Readiness {
 	}
 
 	/**
-	 * @return array{id: string, label: string, status: string, weight: int, hint: string}
+	 * @return array{id: string, label: string, status: string, weight: int, hint: string, fix: array{label: string, scope: string, patch: array<string, mixed>}|null}
 	 */
 	private function check_faq( WP_Post $post ): array {
 		$status = $this->has_faq_blocks( $post ) ? 'pass' : 'warn';
@@ -226,7 +229,7 @@ final class Readiness {
 	}
 
 	/**
-	 * @return array{id: string, label: string, status: string, weight: int, hint: string}
+	 * @return array{id: string, label: string, status: string, weight: int, hint: string, fix: array{label: string, scope: string, patch: array<string, mixed>}|null}
 	 */
 	private function check_llms_txt( WP_Post $post ): array {
 		if ( ! (bool) Settings::get_aeo( 'enabled' ) ) {
@@ -235,7 +238,8 @@ final class Readiness {
 				__( 'Listed in llms.txt', 'flexa-seo-aeo' ),
 				'fail',
 				10,
-				__( 'Turn on AEO Core → llms.txt so this content is advertised to language models.', 'flexa-seo-aeo' )
+				__( 'Turn on AEO Core → llms.txt so this content is advertised to language models.', 'flexa-seo-aeo' ),
+				$this->fix( __( 'Enable llms.txt', 'flexa-seo-aeo' ), [ 'aeo' => [ 'enabled' => true ] ] )
 			);
 		}
 
@@ -262,7 +266,7 @@ final class Readiness {
 	}
 
 	/**
-	 * @return array{id: string, label: string, status: string, weight: int, hint: string}
+	 * @return array{id: string, label: string, status: string, weight: int, hint: string, fix: array{label: string, scope: string, patch: array<string, mixed>}|null}
 	 */
 	private function check_markdown_alternate(): array {
 		$advertised = (bool) Settings::get_aeo( 'agent_readiness' );
@@ -279,11 +283,23 @@ final class Readiness {
 			$hint   = __( 'Enable AEO Core → Agent Readiness to serve a clean Markdown rendering for AI agents.', 'flexa-seo-aeo' );
 		}
 
-		return $this->row( 'markdown_alternate', __( 'Markdown alternate', 'flexa-seo-aeo' ), $status, 10, $hint );
+		$fix = 'pass' === $status
+			? null
+			: $this->fix(
+				__( 'Enable Markdown alternate', 'flexa-seo-aeo' ),
+				[
+					'aeo' => [
+						'agent_readiness'   => true,
+						'plain_text_export' => true,
+					],
+				]
+			);
+
+		return $this->row( 'markdown_alternate', __( 'Markdown alternate', 'flexa-seo-aeo' ), $status, 10, $hint, $fix );
 	}
 
 	/**
-	 * @return array{id: string, label: string, status: string, weight: int, hint: string}
+	 * @return array{id: string, label: string, status: string, weight: int, hint: string, fix: array{label: string, scope: string, patch: array<string, mixed>}|null}
 	 */
 	private function check_depth( int $words ): array {
 		if ( $words >= 300 ) {
@@ -301,15 +317,35 @@ final class Readiness {
 	}
 
 	/**
-	 * @return array{id: string, label: string, status: string, weight: int, hint: string}
+	 * @param array{label: string, scope: string, patch: array<string, mixed>}|null $fix
+	 * @return array{id: string, label: string, status: string, weight: int, hint: string, fix: array{label: string, scope: string, patch: array<string, mixed>}|null}
 	 */
-	private function row( string $id, string $label, string $status, int $weight, string $hint ): array {
+	private function row( string $id, string $label, string $status, int $weight, string $hint, ?array $fix = null ): array {
 		return [
 			'id'     => $id,
 			'label'  => $label,
 			'status' => $status,
 			'weight' => $weight,
 			'hint'   => $hint,
+			'fix'    => $fix,
+		];
+	}
+
+	/**
+	 * A one-click "enable this site-wide setting" remedy, attached to a check
+	 * whose only blocker is a global AEO toggle being off. The dashboard and the
+	 * editor sidebar POST the `patch` to /settings (which partial-merges it) and
+	 * then rescan. Returned as null when the fix isn't a simple toggle — e.g. a
+	 * per-post exclusion or a content gap — so the UI shows only the hint.
+	 *
+	 * @param array<string, mixed> $patch A partial settings payload for POST /settings.
+	 * @return array{label: string, scope: string, patch: array<string, mixed>}
+	 */
+	private function fix( string $label, array $patch ): array {
+		return [
+			'label' => $label,
+			'scope' => 'site',
+			'patch' => $patch,
 		];
 	}
 

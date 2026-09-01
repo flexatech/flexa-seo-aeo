@@ -16,7 +16,6 @@ import {
     Search,
     Share2,
     ShoppingBag,
-    Sparkles,
     Tag,
     Tags,
     Type,
@@ -251,7 +250,7 @@ export function SettingsPage() {
         {
             icon: List,
             title: __("HTML sitemap"),
-            description: __("Enable the [flexa_sitemap] shortcode."),
+            description: __("Enable the [flexa_seo_aeo_sitemap] shortcode."),
             checked: form.html_sitemap,
             onChange: (v) => setBool("html_sitemap", v),
         },
@@ -323,24 +322,7 @@ export function SettingsPage() {
     const taxonomies = window.flexaSeoAeo?.taxonomies ?? {};
 
     return (
-        <div className="fsa:min-h-full fsa:bg-slate-50">
-            {/* Brand strip */}
-            <div className="fsa:border-b fsa:border-slate-200 fsa:bg-white">
-                <div className="fsa:mx-auto fsa:flex fsa:max-w-6xl fsa:items-center fsa:gap-4 fsa:px-6 fsa:py-3">
-                    <span className="fsa:flex fsa:h-10 fsa:w-10 fsa:shrink-0 fsa:items-center fsa:justify-center fsa:rounded-lg fsa:bg-brand-500 fsa:text-white fsa:shadow-sm">
-                        <Sparkles className="fsa:h-5 fsa:w-5" aria-hidden />
-                    </span>
-                    <div className="fsa:leading-tight">
-                        <div className="fsa:text-sm fsa:font-semibold fsa:text-slate-900">
-                            {window.flexaSeoAeo?.brandName || __("Flexa SEO")}
-                        </div>
-                        <div className="fsa:text-xs fsa:text-slate-500">
-                            {__("AEO-first SEO for WordPress")}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+        <>
             {/* Page header */}
             <div className="fsa:mx-auto fsa:flex fsa:max-w-6xl fsa:flex-wrap fsa:items-start fsa:justify-between fsa:gap-4 fsa:px-6 fsa:pt-8 fsa:pb-6">
                 <div className="fsa:space-y-1">
@@ -724,7 +706,7 @@ export function SettingsPage() {
                     </div>
                 </main>
             </div>
-        </div>
+        </>
     );
 }
 

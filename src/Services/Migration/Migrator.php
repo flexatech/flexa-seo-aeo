@@ -7,7 +7,6 @@ namespace Flexa\SeoAeo\Services\Migration;
 use Flexa\SeoAeo\Domain\PostMeta;
 use Flexa\SeoAeo\Domain\PostMetaRepository;
 use Flexa\SeoAeo\Support\SingletonTrait;
-use WP_Query;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -72,22 +71,8 @@ final class Migrator {
 			return $result;
 		}
 
-		$query = new WP_Query(
-			$this->query_args(
-				$source,
-				[
-					'fields'         => 'ids',
-					'posts_per_page' => $batch,
-					'offset'         => $offset,
-					'orderby'        => 'ID',
-					'order'          => 'ASC',
-					'no_found_rows'  => false,
-				]
-			)
-		);
-
-		$ids   = array_map( 'intval', $query->posts );
-		$total = (int) $query->found_posts;
+		$ids   = $this->detect_ids( $source, $offset, $batch );
+		$total = $this->count( $source );
 		$keys  = LegacyMapper::legacy_keys( $source );
 		$repo  = PostMetaRepository::instance();
 
@@ -165,45 +150,81 @@ final class Migrator {
 		return $out;
 	}
 
+	/**
+	 * Count posts carrying any of the source's sentinel meta keys.
+	 *
+	 * A single indexed scan of `postmeta.meta_key` with one JOIN and `DISTINCT`.
+	 * The previous WP_Query approach OR'd an `EXISTS` clause per key, which
+	 * WP_Query expands into one self-JOIN on `wp_postmeta` per key; combined with
+	 * `SQL_CALC_FOUND_ROWS` + `GROUP BY`, that produced a Cartesian blow-up that
+	 * could pin a MySQL/PHP-FPM worker for many minutes on a large site (and, with
+	 * a small pool, take the whole site down with 504s). This form never joins the
+	 * meta table more than once.
+	 */
 	private function count( string $source ): int {
-		$query = new WP_Query(
-			$this->query_args(
-				$source,
-				[
-					'fields'         => 'ids',
-					'posts_per_page' => 1,
-					'no_found_rows'  => false,
-				]
-			)
+		$keys  = LegacyMapper::sentinel_keys( $source );
+		$types = $this->post_types();
+		if ( [] === $keys || [] === $types ) {
+			return 0;
+		}
+
+		global $wpdb;
+		$key_ph  = implode( ', ', array_fill( 0, count( $keys ), '%s' ) );
+		$type_ph = implode( ', ', array_fill( 0, count( $types ), '%s' ) );
+
+		// phpcs:disable WordPress.DB.PreparedSQL, WordPress.DB.PreparedSQLPlaceholders, WordPress.DB.DirectDatabaseQuery
+		$sql = $wpdb->prepare(
+			"SELECT COUNT( DISTINCT pm.post_id )
+			 FROM {$wpdb->postmeta} pm
+			 INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+			 WHERE pm.meta_key IN ( {$key_ph} )
+			 AND p.post_type IN ( {$type_ph} )
+			 AND p.post_status NOT IN ( 'trash', 'auto-draft' )",
+			...array_merge( $keys, $types )
 		);
 
-		return (int) $query->found_posts;
+		$count = (int) $wpdb->get_var( $sql );
+		// phpcs:enable WordPress.DB.PreparedSQL, WordPress.DB.PreparedSQLPlaceholders, WordPress.DB.DirectDatabaseQuery
+
+		return $count;
 	}
 
 	/**
-	 * Build WP_Query args that match every post carrying data from the source.
+	 * The ascending post IDs (one batch) that carry data from the source. Same
+	 * single-JOIN `meta_key IN (…)` scan as {@see self::count()}, paged with
+	 * LIMIT/OFFSET so a batch is always bounded.
 	 *
-	 * @param array<string, mixed> $extra
-	 * @return array<string, mixed>
+	 * @return list<int>
 	 */
-	private function query_args( string $source, array $extra ): array {
-		$meta_query = [ 'relation' => 'OR' ];
-		foreach ( LegacyMapper::sentinel_keys( $source ) as $key ) {
-			$meta_query[] = [
-				'key'     => $key,
-				'compare' => 'EXISTS',
-			];
+	private function detect_ids( string $source, int $offset, int $limit ): array {
+		$keys  = LegacyMapper::sentinel_keys( $source );
+		$types = $this->post_types();
+		if ( [] === $keys || [] === $types ) {
+			return [];
 		}
 
-		$base = [
-			'post_type'           => $this->post_types(),
-			'post_status'         => 'any',
-			'ignore_sticky_posts' => true,
-			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- One-shot admin migration; the EXISTS scan is intentional and batched.
-			'meta_query'          => $meta_query,
-		];
+		global $wpdb;
+		$key_ph  = implode( ', ', array_fill( 0, count( $keys ), '%s' ) );
+		$type_ph = implode( ', ', array_fill( 0, count( $types ), '%s' ) );
+		$args    = array_merge( $keys, $types, [ $limit, $offset ] );
 
-		return array_merge( $base, $extra );
+		// phpcs:disable WordPress.DB.PreparedSQL, WordPress.DB.PreparedSQLPlaceholders, WordPress.DB.DirectDatabaseQuery
+		$sql = $wpdb->prepare(
+			"SELECT DISTINCT pm.post_id
+			 FROM {$wpdb->postmeta} pm
+			 INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+			 WHERE pm.meta_key IN ( {$key_ph} )
+			 AND p.post_type IN ( {$type_ph} )
+			 AND p.post_status NOT IN ( 'trash', 'auto-draft' )
+			 ORDER BY pm.post_id ASC
+			 LIMIT %d OFFSET %d",
+			...$args
+		);
+
+		$ids = $wpdb->get_col( $sql );
+		// phpcs:enable WordPress.DB.PreparedSQL, WordPress.DB.PreparedSQLPlaceholders, WordPress.DB.DirectDatabaseQuery
+
+		return array_map( 'intval', $ids );
 	}
 
 	/**

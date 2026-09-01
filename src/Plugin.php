@@ -35,6 +35,13 @@ final class Plugin {
 			Rest\RegisterFacade::instance()->register();
 		}
 
+		// Keep the dashboard's cached health report in step with settings: the
+		// technical checklist reads live from the settings toggles.
+		if ( class_exists( Services\Aeo\SiteAudit::class ) ) {
+			add_action( 'flexa_seo_aeo/settings/updated', [ Services\Aeo\SiteAudit::class, 'flush' ] );
+			add_action( 'flexa_seo_aeo/data_reset', [ Services\Aeo\SiteAudit::class, 'purge' ] );
+		}
+
 		// Phase 1 — per-post SEO overrides (block-editor meta + classic metabox)
 		// and the frontend <head> output (title, meta, OG, Twitter).
 		if ( class_exists( Domain\PostMetaRepository::class ) ) {

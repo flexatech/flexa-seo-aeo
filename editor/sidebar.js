@@ -77,6 +77,13 @@
 			var editor = select( 'core/editor' );
 			return editor.isSavingPost() && ! editor.isAutosavingPost();
 		}, [] );
+		// Whether the current user can change global settings (manage_options).
+		// The one-click fixes flip a site-wide toggle via the settings endpoint,
+		// so an author who can edit the post but not settings sees the hint only.
+		var canManageSettings = useSelect( function ( select ) {
+			var core = select( 'core' );
+			return !! ( core && core.canUser && core.canUser( 'update', 'settings' ) );
+		}, [] );
 
 		var reportState = useState( null );
 		var report = reportState[ 0 ];
@@ -84,6 +91,10 @@
 		var loadingState = useState( false );
 		var loading = loadingState[ 0 ];
 		var setLoading = loadingState[ 1 ];
+		// The check id whose site-wide fix is currently being applied.
+		var applyingState = useState( null );
+		var applying = applyingState[ 0 ];
+		var setApplying = applyingState[ 1 ];
 		var wasSaving = useRef( false );
 
 		function load() {
@@ -98,6 +109,27 @@
 				} )
 				.catch( function () {
 					setLoading( false );
+				} );
+		}
+
+		// Apply a one-click site-wide fix: POST the toggle patch to the settings
+		// endpoint (which partial-merges it), then re-score this post.
+		function applyFix( check ) {
+			if ( ! check || ! check.fix || ! apiFetch ) {
+				return;
+			}
+			setApplying( check.id );
+			apiFetch( {
+				path: '/flexa-seo-aeo/v1/settings',
+				method: 'POST',
+				data: check.fix.patch,
+			} )
+				.then( function () {
+					setApplying( null );
+					load();
+				} )
+				.catch( function () {
+					setApplying( null );
 				} );
 		}
 
@@ -181,7 +213,27 @@
 							'span',
 							{ style: { display: 'block', color: '#64748b', fontSize: '12px', marginTop: '2px' } },
 							check.hint
-						)
+						),
+						check.fix && canManageSettings
+							? el(
+									comp.Button,
+									{
+										variant: 'secondary',
+										isSmall: true,
+										isBusy: applying === check.id,
+										disabled: applying === check.id,
+										onClick: function () {
+											applyFix( check );
+										},
+										style: { marginTop: '6px' },
+									},
+									applying === check.id
+										? __( 'Enabling…', 'flexa-seo-aeo' )
+										: check.fix.label +
+												' · ' +
+												__( 'site-wide', 'flexa-seo-aeo' )
+							  )
+							: null
 					)
 				);
 			} );

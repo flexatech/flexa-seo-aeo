@@ -4,7 +4,7 @@ Tags: seo, schema, sitemap, aeo, woocommerce
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.1.0
+Stable tag: 0.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 WC requires at least: 8.0
@@ -23,6 +23,7 @@ AI answer engines (ChatGPT, Perplexity, Claude, Google AI Overviews) now decide 
 * A live **0–100 readiness score** with a letter grade for the post you're editing, refreshed on every save.
 * An **actionable checklist** across eight signals answer engines rely on: structured data, a concise meta description, an answer-first opening paragraph, question-style headings, FAQ/Q&A blocks, `llms.txt` inclusion, a Markdown alternate for crawlers, and content depth.
 * Each item comes with a plain-English fix — so writers know *exactly* what to change to become citable, no guesswork and no external tool.
+* A site-wide **health Dashboard** rolls those scores up across your content: overall SEO / AEO / Technical scores, an issues overview, health breakdowns, prioritised actions, and a "Pages needing attention" list where each page reveals what to fix — with a one-click **Enable site-wide** button on the checks that are just a settings toggle away (structured data, llms.txt, Markdown alternate).
 * Extensible via the `flexa_seo_aeo/aeo/readiness_checks` filter for themes and add-ons.
 
 This turns "AEO" from a file you generate once into a workflow your team improves post by post — the gap the crowded llms.txt category leaves wide open.
@@ -32,7 +33,7 @@ This turns "AEO" from a file you generate once into a workflow your team improve
 * Title & meta description templating with a token engine (site, post, term, author, date, pagination variables).
 * JSON-LD structured data (`@graph`): Article / BlogPosting / WebPage, WebSite + SearchAction, Organization / Person publisher, and automatic FAQPage from core FAQ blocks.
 * Open Graph and Twitter Card tags, canonical URLs, and configurable robots directives (AEO-friendly defaults: `max-snippet:-1`, `max-image-preview:large`).
-* XML sitemaps (index + per-type sub-sitemaps, image entries) with a branded XSL stylesheet, plus an HTML sitemap shortcode `[flexa_sitemap]` and a sitemap block.
+* XML sitemaps (index + per-type sub-sitemaps, image entries) with a branded XSL stylesheet, plus an HTML sitemap shortcode `[flexa_seo_aeo_sitemap]` and a sitemap block.
 * Per-post editing in a classic metabox **and** a Gutenberg editor sidebar, with one-click **migration from Yoast / Rank Math / SEOPress** (and read-fallback so nothing breaks mid-move).
 * `robots.txt` management and optional **IndexNow** ping on publish/update (see *External services* below).
 
@@ -104,6 +105,13 @@ Run one SEO plugin at a time. Flexa SEO can read existing per-post meta from tho
 Yes. WooCommerce product schema is an optional layer that activates only when WooCommerce is installed.
 
 == Changelog ==
+
+= 0.2.0 =
+* New: **SEO/AEO health Dashboard** — overall SEO, AEO and Technical scores, an issues overview, SEO & AEO health breakdowns, prioritised recommended actions, and a "Pages needing attention" list. Each listed page expands to show exactly which readiness checks fail (with a plain-English fix), links straight to the editor, and can be re-scanned on its own after an edit — no full site scan needed.
+* New: **one-click "Enable site-wide" fix** — readiness checks that fail only because a global toggle is off (structured data, llms.txt, Markdown alternate) get a Fix button on the dashboard and in the block-editor sidebar; it flips the setting and re-scores your pages. Shown only to users who can manage settings. No AI, no external calls.
+* New: score trend — a lightweight history of your SEO/AEO scores, captured each time you run a scan (no cron, no external analytics).
+* Fix: migration source detection could run an extremely slow database query on large sites (a multi-key meta lookup), which under a small PHP-FPM pool could tie up all workers. Rewritten as a single indexed query so opening the plugin — and running a migration — stays fast.
+* Improved: the plugin now opens on the Dashboard, with a Dashboard / Settings switch in the header.
 
 = 0.1.0 =
 * Initial release: **Answer-Engine Readiness Score** (per-post 0–100 grade + actionable checklist in the block editor), title/meta templating, Open Graph & Twitter, canonical & robots, XML/HTML sitemaps, robots.txt, IndexNow, llms.txt, Agent Readiness Markdown export, JSON-LD schema (Article/WebPage/WebSite/Organization/FAQ), one-click migration from Yoast/Rank Math/SEOPress, optional WooCommerce Product schema, and a React admin app.

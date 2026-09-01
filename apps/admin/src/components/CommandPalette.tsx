@@ -2,6 +2,7 @@ import {
     CornerDownLeft,
     ExternalLink,
     FileText,
+    LayoutDashboard,
     Network,
     Search,
     type LucideIcon,
@@ -34,17 +35,30 @@ export function CommandPalette() {
     const [query, setQuery] = useState("");
     const [index, setIndex] = useState(0);
     const inputRef = useRef<HTMLInputElement>(null);
-    const setActive = useUiStore((s) => s.setActiveSection);
+    const openSection = useUiStore((s) => s.openSection);
+    const setView = useUiStore((s) => s.setView);
 
     const commands = useMemo<Command[]>(() => {
         const home = window.flexaSeoAeo?.homeUrl ?? "/";
         const goto = (id: SectionId) => () => {
-            setActive(id);
+            openSection(id);
             setOpen(false);
         };
         const openUrl = (url: string) => () => {
             window.open(url, "_blank", "noopener");
             setOpen(false);
+        };
+
+        const dashboardCommand: Command = {
+            id: "goto:dashboard",
+            label: __("Dashboard"),
+            hint: __("Go to the health overview"),
+            icon: LayoutDashboard,
+            keywords: "dashboard overview health score scan",
+            run: () => {
+                setView("dashboard");
+                setOpen(false);
+            },
         };
 
         const navCommands: Command[] = SECTIONS.map((s) => ({
@@ -75,8 +89,8 @@ export function CommandPalette() {
             },
         ];
 
-        return [...navCommands, ...linkCommands];
-    }, [setActive]);
+        return [dashboardCommand, ...navCommands, ...linkCommands];
+    }, [openSection, setView, setOpen]);
 
     const filtered = useMemo(() => {
         const q = query.trim().toLowerCase();

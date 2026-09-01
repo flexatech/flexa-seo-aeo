@@ -11,7 +11,7 @@ use Flexa\SeoAeo\Support\SingletonTrait;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Human-readable sitemap exposed through the `[flexa_sitemap]` shortcode. Reuses
+ * Human-readable sitemap exposed through the `[flexa_seo_aeo_sitemap]` shortcode. Reuses
  * the same {@see SitemapService} tree as the XML sitemap so the two never drift.
  * The Gutenberg block wrapper is deferred to the Phase 4 admin/build step; the
  * shortcode works in the classic editor, widgets, and block "Shortcode" blocks.
@@ -24,7 +24,7 @@ final class HtmlSitemap {
 			return;
 		}
 
-		add_shortcode( 'flexa_sitemap', [ $this, 'render' ] );
+		add_shortcode( 'flexa_seo_aeo_sitemap', [ $this, 'render' ] );
 	}
 
 	/**

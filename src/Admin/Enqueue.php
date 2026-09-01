@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Flexa\SeoAeo\Admin;
 
+use Flexa\SeoAeo\Support\Capabilities;
 use Flexa\SeoAeo\Support\Settings;
 use Flexa\SeoAeo\Support\SingletonTrait;
 
@@ -52,17 +53,20 @@ final class Enqueue {
 			$handle,
 			'flexaSeoAeo',
 			[
-				'restUrl'    => esc_url_raw( rest_url( FLEXA_SEO_AEO_REST_NAMESPACE . '/' ) ),
-				'restNonce'  => wp_create_nonce( 'wp_rest' ),
-				'version'    => FLEXA_SEO_AEO_VERSION,
-				'pluginUrl'  => esc_url_raw( FLEXA_SEO_AEO_URL ),
-				'homeUrl'    => esc_url_raw( home_url( '/' ) ),
-				'brandName'  => Settings::brand_name(),
-				'locale'     => determine_locale(),
-				'theme'      => $this->detect_admin_theme(),
-				'hasWoo'     => class_exists( 'WooCommerce' ),
-				'postTypes'  => $this->public_objects( 'post_types' ),
-				'taxonomies' => $this->public_objects( 'taxonomies' ),
+				'restUrl'           => esc_url_raw( rest_url( FLEXA_SEO_AEO_REST_NAMESPACE . '/' ) ),
+				'restNonce'         => wp_create_nonce( 'wp_rest' ),
+				'version'           => FLEXA_SEO_AEO_VERSION,
+				'pluginUrl'         => esc_url_raw( FLEXA_SEO_AEO_URL ),
+				'homeUrl'           => esc_url_raw( home_url( '/' ) ),
+				'brandName'         => Settings::brand_name(),
+				'locale'            => determine_locale(),
+				'theme'             => $this->detect_admin_theme(),
+				'hasWoo'            => class_exists( 'WooCommerce' ),
+				// Gates the one-click "Enable site-wide" fix, which POSTs to the
+				// settings endpoint (manage_options) — editors see the hint only.
+				'canManageSettings' => Capabilities::can_manage_settings(),
+				'postTypes'         => $this->public_objects( 'post_types' ),
+				'taxonomies'        => $this->public_objects( 'taxonomies' ),
 			]
 		);
 	}

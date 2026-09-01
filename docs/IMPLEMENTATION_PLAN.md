@@ -42,7 +42,7 @@ Canonical reference: `../flexa-cache/` and `../flexa-media-folders-pro/`.
 
 ### Phase 2 — Sitemaps & indexing — code DONE (phpstan pending vendor)
 - [x] `Services\Sitemap` (pure builder: enabled post types/taxonomies ∩ registered-public, `MAX_PER_PAGE=2000` pagination, per-post `noindex` excluded via `meta_query`, image entries, `entry_url`/`index_url`/`stylesheet_url` with pretty-permalink + query-var fallback) + `Actions\Sitemap\Router` (rewrite `sitemap.xml` / `sitemap.xsl` / `sitemap-(posts|taxonomies)-{subtype}-{page}.xml`, query vars, `template_redirect` render → templates, `X-Robots-Tag: noindex`, real 404 for empty pages). Templates `templates/sitemap/{index,urlset,stylesheet}.php` (escaping + branded XSL browser view).
-- [x] HTML sitemap `[flexa_sitemap]` shortcode (`Actions\Sitemap\HtmlSitemap`, reuses the same `Sitemap::html_tree()`). Gutenberg block wrapper deferred to Phase 4 (needs build step).
+- [x] HTML sitemap `[flexa_seo_aeo_sitemap]` shortcode (`Actions\Sitemap\HtmlSitemap`, reuses the same `Sitemap::html_tree()`). Gutenberg block wrapper deferred to Phase 4 (needs build step).
 - [x] robots.txt filter (`Actions\RobotsTxt`: `Sitemap:` line + custom `robots_txt` append, skipped on non-public sites) + IndexNow (`Services\IndexNow` submit + auto key, `Actions\IndexNow` publish/update ping + `/{key}.txt` rewrite + flush-on-toggle).
 - [x] Settings extended: `indexnow` toggle, `robots_txt`, `indexnow_key` (schema/coerce/sanitize).
 - [ ] **Deferred:** Google Indexing API ping (needs OAuth service-account) → Pro/later. Sitemap image entries currently featured-image only (content-image extraction later).

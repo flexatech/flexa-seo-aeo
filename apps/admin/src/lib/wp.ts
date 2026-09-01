@@ -18,6 +18,11 @@ export interface PluginGlobal {
     theme: AppTheme;
     /** Whether WooCommerce is active — gates the commerce AEO toggle. */
     hasWoo: boolean;
+    /**
+     * Whether the current user can change global settings (manage_options) —
+     * gates the one-click "Enable site-wide" fix on the dashboard.
+     */
+    canManageSettings: boolean;
     /** Public post types as `slug => label`, for the sitemap multi-select. */
     postTypes: Record<string, string>;
     /** Public taxonomies as `slug => label`, for the sitemap multi-select. */

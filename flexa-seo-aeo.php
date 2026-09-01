@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name:       Flexa SEO - AEO
- * Description:       Privacy-first WordPress SEO built AEO/GEO-first: titles & metas, Open Graph, sitemaps, and native llms.txt / Agent Readiness for AI answer engines.
- * Version:           0.1.0
+ * Description:       Complete WordPress SEO — schema, sitemaps, meta, Open Graph — plus a per-post Answer-Engine Readiness score and a site health dashboard for AI search.
+ * Version:           0.2.0
  * Requires at least: 6.5
  * Tested up to:      7.1
  * Requires PHP:      8.2
@@ -31,7 +31,7 @@ if ( version_compare( PHP_VERSION, '8.2', '<' ) ) {
 	return;
 }
 
-define( 'FLEXA_SEO_AEO_VERSION', '0.1.0' );
+define( 'FLEXA_SEO_AEO_VERSION', '0.2.0' );
 define( 'FLEXA_SEO_AEO_FILE', __FILE__ );
 define( 'FLEXA_SEO_AEO_PATH', plugin_dir_path( __FILE__ ) );
 define( 'FLEXA_SEO_AEO_URL', plugin_dir_url( __FILE__ ) );

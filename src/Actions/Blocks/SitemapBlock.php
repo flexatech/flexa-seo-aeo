@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * Registers the `flexa-seo-aeo/sitemap` dynamic block. It's the Gutenberg
- * wrapper around the same HTML sitemap as the `[flexa_sitemap]` shortcode —
+ * wrapper around the same HTML sitemap as the `[flexa_seo_aeo_sitemap]` shortcode —
  * both call {@see HtmlSitemap::render()}, so the block, shortcode, and XML
  * sitemap can never drift. Gated by the `html_sitemap` toggle, same as the
  * shortcode.
