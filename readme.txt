@@ -1,6 +1,6 @@
 === Flexa SEO - AEO ===
 Contributors: flexatech
-Tags: seo, aeo, sitemap, open graph, llms.txt
+Tags: seo, schema, sitemap, aeo, woocommerce
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.2
@@ -10,25 +10,37 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 WC requires at least: 8.0
 WC tested up to: 11.0
 
-Privacy-first WordPress SEO built AEO/GEO-first: titles & metas, Open Graph, sitemaps, and native llms.txt / Agent Readiness for AI answer engines.
+Complete WordPress SEO — schema, sitemaps, meta, Open Graph — plus an Answer-Engine Readiness score that grades every post for AI search.
 
 == Description ==
 
-Flexa SEO is a lightweight, privacy-first SEO plugin built **AEO/GEO-first** — it treats Answer Engine Optimization (how AI assistants and answer engines read your site) as a core feature, not a bolt-on. It ships the SEO baseline you expect, plus first-class tooling for AI crawlers, and it never requires a cloud account: your data stays on your site.
+Flexa SEO is a complete, privacy-first SEO plugin: title & meta templating, JSON-LD schema, XML sitemaps, Open Graph, `robots.txt`, IndexNow, and one-click migration from Yoast, Rank Math and SEOPress. It covers the SEO baseline you expect — and then goes one step further than any of them.
+
+**What makes it different: the Answer-Engine Readiness Score**
+
+AI answer engines (ChatGPT, Perplexity, Claude, Google AI Overviews) now decide whether your content gets *quoted* — not just ranked. Dozens of plugins will generate an `llms.txt` file and stop there. Flexa SEO is the only one that **measures and scores how quotable each post actually is**, right in the block editor:
+
+* A live **0–100 readiness score** with a letter grade for the post you're editing, refreshed on every save.
+* An **actionable checklist** across eight signals answer engines rely on: structured data, a concise meta description, an answer-first opening paragraph, question-style headings, FAQ/Q&A blocks, `llms.txt` inclusion, a Markdown alternate for crawlers, and content depth.
+* Each item comes with a plain-English fix — so writers know *exactly* what to change to become citable, no guesswork and no external tool.
+* Extensible via the `flexa_seo_aeo/aeo/readiness_checks` filter for themes and add-ons.
+
+This turns "AEO" from a file you generate once into a workflow your team improves post by post — the gap the crowded llms.txt category leaves wide open.
 
 **Core SEO**
 
 * Title & meta description templating with a token engine (site, post, term, author, date, pagination variables).
+* JSON-LD structured data (`@graph`): Article / BlogPosting / WebPage, WebSite + SearchAction, Organization / Person publisher, and automatic FAQPage from core FAQ blocks.
 * Open Graph and Twitter Card tags, canonical URLs, and configurable robots directives (AEO-friendly defaults: `max-snippet:-1`, `max-image-preview:large`).
-* Per-post editing in a classic metabox **and** a Gutenberg editor sidebar, with migration-read fallback for existing Yoast / Rank Math / SEOPress meta.
 * XML sitemaps (index + per-type sub-sitemaps, image entries) with a branded XSL stylesheet, plus an HTML sitemap shortcode `[flexa_sitemap]` and a sitemap block.
+* Per-post editing in a classic metabox **and** a Gutenberg editor sidebar, with one-click **migration from Yoast / Rank Math / SEOPress** (and read-fallback so nothing breaks mid-move).
 * `robots.txt` management and optional **IndexNow** ping on publish/update (see *External services* below).
 
-**AEO / GEO core (the differentiator)**
+**AI answer-engine tooling**
 
 * Native **`/llms.txt`** endpoint describing your site for large language models.
 * **Agent Readiness** — advertises a Markdown alternate of each post (`?flexa-aeo=md`) via a `Link` header and `<link rel="alternate">`, and serves a clean, token-cheap Markdown rendering for AI crawlers and coding agents.
-* Structured data (JSON-LD `@graph`): Article / BlogPosting / WebPage, WebSite + SearchAction, Organization / Person publisher, and automatic FAQPage from core FAQ blocks.
+* No cloud account and no per-request AI fees: the readiness score and every AEO feature run entirely on your own server.
 
 **WooCommerce (optional)**
 
@@ -71,6 +83,14 @@ The `.pot` translation template is regenerated with `pnpm i18n:pot` (PHP + vanil
 
 == Frequently Asked Questions ==
 
+= What is the Answer-Engine Readiness Score? =
+
+It is a per-post grade (0–100) shown in the block-editor sidebar that measures how ready the post is to be quoted by AI answer engines. It checks eight signals — structured data, meta description, an answer-first opening, question-style headings, FAQ blocks, llms.txt inclusion, a Markdown alternate, and content depth — and gives a plain-English fix for each. It runs entirely on your server, with no AI account or API key.
+
+= How is this different from the many llms.txt plugins? =
+
+Most of those generate a single `llms.txt` file and stop. Flexa SEO does that too, but its focus is *measuring and improving* how quotable each page is, post by post, plus a full SEO baseline (schema, sitemaps, meta, migration). The readiness score is the workflow those file-only tools don't offer.
+
 = Does this plugin require an account or send my data anywhere? =
 
 No. There is no account and no telemetry. The only outbound request is the optional IndexNow ping, which you enable yourself and which sends only changed public URLs (see *External services*).
@@ -86,4 +106,4 @@ Yes. WooCommerce product schema is an optional layer that activates only when Wo
 == Changelog ==
 
 = 0.1.0 =
-* Initial release: title/meta templating, Open Graph & Twitter, canonical & robots, XML/HTML sitemaps, robots.txt, IndexNow, llms.txt, Agent Readiness Markdown export, JSON-LD schema (Article/WebPage/WebSite/Organization/FAQ), optional WooCommerce Product schema, and a React admin app.
+* Initial release: **Answer-Engine Readiness Score** (per-post 0–100 grade + actionable checklist in the block editor), title/meta templating, Open Graph & Twitter, canonical & robots, XML/HTML sitemaps, robots.txt, IndexNow, llms.txt, Agent Readiness Markdown export, JSON-LD schema (Article/WebPage/WebSite/Organization/FAQ), one-click migration from Yoast/Rank Math/SEOPress, optional WooCommerce Product schema, and a React admin app.

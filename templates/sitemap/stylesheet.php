@@ -31,6 +31,11 @@ echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
 				<title><?php echo $fsa_title; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></title>
 				<meta charset="UTF-8"/>
 				<meta name="robots" content="noindex,follow"/>
+				<!--
+				Inline style is required: this is an XSLT stylesheet served as application/xslt+xml,
+				not an enqueue-able HTML page. An XSL transform has no wp_head / wp_enqueue_scripts,
+				so the CSS cannot be enqueued. WP core, Yoast and Rank Math inline sitemap CSS the same way.
+				-->
 				<style>
 					body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#1e293b;margin:0;padding:2rem;background:#f8fafc}
 					.wrap{max-width:1000px;margin:0 auto}

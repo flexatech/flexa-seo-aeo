@@ -44,6 +44,10 @@ final class Schema {
 			return;
 		}
 
+		// This is a Schema.org structured-data block: JSON-LD MUST be emitted
+		// inline as <script type="application/ld+json"> and cannot be enqueued.
+		// The payload is JSON encoded with JSON_HEX_TAG|JSON_HEX_AMP (see above),
+		// so `</script>` can never form.
 		printf(
 			"<script type=\"application/ld+json\">%s</script>\n",
 			$json // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

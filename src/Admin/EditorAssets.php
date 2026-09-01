@@ -35,6 +35,7 @@ final class EditorAssets {
 				'wp-components',
 				'wp-data',
 				'wp-core-data',
+				'wp-api-fetch',
 				'wp-i18n',
 			],
 			FLEXA_SEO_AEO_VERSION,

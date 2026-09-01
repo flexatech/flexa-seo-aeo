@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-30T04:48:24+00:00\n"
+"POT-Creation-Date: 2026-09-01T02:29:17+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: flexa-seo-aeo\n"
@@ -43,7 +43,7 @@ msgstr ""
 msgid "Flexa SEO — Search & AI"
 msgstr ""
 
-#: src/Admin/PostMetabox.php:55 editor/sidebar.js:116
+#: src/Admin/PostMetabox.php:55 editor/sidebar.js:297
 msgid "SEO title"
 msgstr ""
 
@@ -51,7 +51,8 @@ msgstr ""
 msgid "Leave blank to use the default title template."
 msgstr ""
 
-#: src/Admin/PostMetabox.php:56 editor/sidebar.js:121
+#: src/Admin/PostMetabox.php:56 src/Services/Aeo/Readiness.php:151
+#: src/Services/Aeo/Readiness.php:163 editor/sidebar.js:302
 msgid "Meta description"
 msgstr ""
 
@@ -59,7 +60,7 @@ msgstr ""
 msgid "Leave blank to use the excerpt."
 msgstr ""
 
-#: src/Admin/PostMetabox.php:57 editor/sidebar.js:126
+#: src/Admin/PostMetabox.php:57 editor/sidebar.js:307
 msgid "Canonical URL"
 msgstr ""
 
@@ -67,15 +68,15 @@ msgstr ""
 msgid "Override only if this content canonicalises elsewhere."
 msgstr ""
 
-#: src/Admin/PostMetabox.php:59 editor/sidebar.js:132
+#: src/Admin/PostMetabox.php:59 editor/sidebar.js:313
 msgid "Robots"
 msgstr ""
 
-#: src/Admin/PostMetabox.php:60 editor/sidebar.js:135
+#: src/Admin/PostMetabox.php:60 editor/sidebar.js:316
 msgid "No index"
 msgstr ""
 
-#: src/Admin/PostMetabox.php:61 editor/sidebar.js:140
+#: src/Admin/PostMetabox.php:61 editor/sidebar.js:321
 msgid "No follow"
 msgstr ""
 
@@ -95,7 +96,7 @@ msgstr ""
 msgid "Social image URL"
 msgstr ""
 
-#: src/Admin/PostMetabox.php:67 editor/sidebar.js:152
+#: src/Admin/PostMetabox.php:67 editor/sidebar.js:333
 msgid "Falls back to the featured image."
 msgstr ""
 
@@ -107,12 +108,154 @@ msgstr ""
 msgid "You do not have permission to update settings."
 msgstr ""
 
-#: src/Rest/PostMetaController.php:52
+#: src/Rest/PostMetaController.php:52 src/Rest/ReadinessController.php:48
 msgid "Post not found."
 msgstr ""
 
-#: src/Rest/PostMetaController.php:60
+#: src/Rest/PostMetaController.php:60 src/Rest/ReadinessController.php:56
 msgid "You cannot edit this post."
+msgstr ""
+
+#: src/Services/Aeo/Readiness.php:132
+msgid ""
+"JSON-LD is emitted for this post so engines can lift facts out as structured "
+"data."
+msgstr ""
+
+#: src/Services/Aeo/Readiness.php:133
+msgid ""
+"Enable AEO Core → Structured data so this post ships an Article/WebPage JSON-"
+"LD graph."
+msgstr ""
+
+#: src/Services/Aeo/Readiness.php:135
+msgid "Structured data"
+msgstr ""
+
+#: src/Services/Aeo/Readiness.php:154
+msgid ""
+"Add a meta description — answer engines often quote it verbatim as the "
+"summary."
+msgstr ""
+
+#: src/Services/Aeo/Readiness.php:160
+msgid "A concise summary is in place for engines to quote."
+msgstr ""
+
+#: src/Services/Aeo/Readiness.php:161
+msgid ""
+"Aim for roughly 50–160 characters so the summary is neither truncated nor "
+"thin."
+msgstr ""
+
+#: src/Services/Aeo/Readiness.php:174 src/Services/Aeo/Readiness.php:186
+msgid "Answer-first opening"
+msgstr ""
+
+#: src/Services/Aeo/Readiness.php:177
+msgid ""
+"Open with a 2–3 sentence summary that answers the topic directly — engines "
+"favour the lede."
+msgstr ""
+
+#: src/Services/Aeo/Readiness.php:183
+msgid ""
+"The post opens with a self-contained summary an engine can quote as the "
+"answer."
+msgstr ""
+
+#: src/Services/Aeo/Readiness.php:184
+msgid ""
+"Tighten the opening paragraph to a self-contained 40–360 character answer."
+msgstr ""
+
+#: src/Services/Aeo/Readiness.php:210
+msgid ""
+"Question-style headings map cleanly onto the prompts users actually ask."
+msgstr ""
+
+#: src/Services/Aeo/Readiness.php:211
+msgid ""
+"Phrase a few headings as the questions readers ask (e.g. “How does…”, “What "
+"is…?”)."
+msgstr ""
+
+#: src/Services/Aeo/Readiness.php:213
+msgid "Question-style headings"
+msgstr ""
+
+#: src/Services/Aeo/Readiness.php:222
+msgid "FAQ blocks were detected and are emitted as FAQPage structured data."
+msgstr ""
+
+#: src/Services/Aeo/Readiness.php:223
+msgid ""
+"Add a core Details/FAQ block — each question becomes a citable FAQPage entry."
+msgstr ""
+
+#: src/Services/Aeo/Readiness.php:225
+msgid "FAQ / Q&A blocks"
+msgstr ""
+
+#: src/Services/Aeo/Readiness.php:235 src/Services/Aeo/Readiness.php:248
+#: src/Services/Aeo/Readiness.php:257
+msgid "Listed in llms.txt"
+msgstr ""
+
+#: src/Services/Aeo/Readiness.php:238
+msgid ""
+"Turn on AEO Core → llms.txt so this content is advertised to language models."
+msgstr ""
+
+#: src/Services/Aeo/Readiness.php:251
+msgid ""
+"This post is excluded from llms.txt (its type is off or it is set to "
+"noindex)."
+msgstr ""
+
+#: src/Services/Aeo/Readiness.php:260
+msgid "This post is advertised in /llms.txt for language models to discover."
+msgstr ""
+
+#: src/Services/Aeo/Readiness.php:273
+msgid ""
+"A token-cheap Markdown alternate is exposed to AI crawlers via a Link header."
+msgstr ""
+
+#: src/Services/Aeo/Readiness.php:276
+msgid ""
+"Enable both Agent Readiness and the Markdown export so crawlers can find and "
+"fetch it."
+msgstr ""
+
+#: src/Services/Aeo/Readiness.php:279
+msgid ""
+"Enable AEO Core → Agent Readiness to serve a clean Markdown rendering for AI "
+"agents."
+msgstr ""
+
+#: src/Services/Aeo/Readiness.php:282
+msgid "Markdown alternate"
+msgstr ""
+
+#: src/Services/Aeo/Readiness.php:291
+msgid ""
+"There is enough substance here for an engine to treat the page as "
+"authoritative."
+msgstr ""
+
+#: src/Services/Aeo/Readiness.php:294
+msgid ""
+"Thin content is rarely cited — expand toward 300+ words of genuine detail."
+msgstr ""
+
+#: src/Services/Aeo/Readiness.php:297
+msgid ""
+"This post is very short; engines seldom quote pages with little content."
+msgstr ""
+
+#: src/Services/Aeo/Readiness.php:300
+msgid "Content depth"
 msgstr ""
 
 #: src/Services/Metas.php:105
@@ -141,7 +284,7 @@ msgid ""
 "your site."
 msgstr ""
 
-#: views/admin-app.php:11 editor/sidebar.js:102 editor/sidebar.js:108
+#: views/admin-app.php:11 editor/sidebar.js:282 editor/sidebar.js:288
 msgid "Flexa SEO"
 msgstr ""
 
@@ -149,61 +292,93 @@ msgstr ""
 msgid "No published content to list yet."
 msgstr ""
 
-#: editor/sidebar.js:113
+#: editor/sidebar.js:51
+msgid "Excellent"
+msgstr ""
+
+#: editor/sidebar.js:52
+msgid "Good"
+msgstr ""
+
+#: editor/sidebar.js:53
+msgid "Fair"
+msgstr ""
+
+#: editor/sidebar.js:54
+msgid "Needs work"
+msgstr ""
+
+#: editor/sidebar.js:125
+msgid "Scoring…"
+msgstr ""
+
+#: editor/sidebar.js:126
+msgid "Save the post to calculate its readiness score."
+msgstr ""
+
+#: editor/sidebar.js:209
+msgid "Re-check readiness"
+msgstr ""
+
+#: editor/sidebar.js:215
+msgid "Answer-Engine Readiness"
+msgstr ""
+
+#: editor/sidebar.js:294
 msgid "Search Appearance"
 msgstr ""
 
-#: editor/sidebar.js:117
+#: editor/sidebar.js:298
 msgid "Overrides the computed <title>. Supports %%tokens%%."
 msgstr ""
 
-#: editor/sidebar.js:122
+#: editor/sidebar.js:303
 msgid "The snippet search and answer engines may show."
 msgstr ""
 
-#: editor/sidebar.js:127
+#: editor/sidebar.js:308
 msgid "Leave blank to use this post’s permalink."
 msgstr ""
 
-#: editor/sidebar.js:136
+#: editor/sidebar.js:317
 msgid ""
 "Ask engines not to index this page (also excludes it from the sitemap and "
 "llms.txt)."
 msgstr ""
 
-#: editor/sidebar.js:141
+#: editor/sidebar.js:322
 msgid "Ask engines not to follow links on this page."
 msgstr ""
 
-#: editor/sidebar.js:146
+#: editor/sidebar.js:327
 msgid "Open Graph"
 msgstr ""
 
-#: editor/sidebar.js:147
+#: editor/sidebar.js:328
 msgid "OG title"
 msgstr ""
 
-#: editor/sidebar.js:148
+#: editor/sidebar.js:329
 msgid "OG description"
 msgstr ""
 
-#: editor/sidebar.js:151
+#: editor/sidebar.js:332
 msgid "OG image URL"
 msgstr ""
 
-#: editor/sidebar.js:157
+#: editor/sidebar.js:338
 msgid "X (Twitter)"
 msgstr ""
 
-#: editor/sidebar.js:158
+#: editor/sidebar.js:339
 msgid "Card title"
 msgstr ""
 
-#: editor/sidebar.js:159
+#: editor/sidebar.js:340
 msgid "Card description"
 msgstr ""
 
-#: editor/sidebar.js:160
+#: editor/sidebar.js:341
 msgid "Card image URL"
 msgstr ""
 

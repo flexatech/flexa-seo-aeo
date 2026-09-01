@@ -1,0 +1,434 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Flexa\SeoAeo\Services\Aeo;
+
+use Flexa\SeoAeo\Domain\PostMetaRepository;
+use Flexa\SeoAeo\Services\Sitemap as SitemapService;
+use Flexa\SeoAeo\Support\Settings;
+use Flexa\SeoAeo\Support\SingletonTrait;
+use WP_Post;
+
+defined( 'ABSPATH' ) || exit;
+
+/**
+ * Answer-Engine Readiness scorer — the plugin's flagship AEO surface.
+ *
+ * Where the rest of the ecosystem stops at *generating* an llms.txt file, this
+ * scores how well an individual post is prepared to be quoted by AI answer
+ * engines (ChatGPT, Perplexity, Claude, Gemini) and returns an actionable
+ * checklist. It reads real signals — structured data, an answer-first summary,
+ * question-style headings, FAQ blocks, llms.txt inclusion, a Markdown alternate,
+ * and content depth — and weights them into a 0–100 score. Pure analysis: it
+ * takes a post, returns a nested array; JSON encoding + escaping happen at the
+ * REST/editor boundary.
+ */
+final class Readiness {
+	use SingletonTrait;
+
+	/**
+	 * Grade cut-offs, high to low. The first threshold a score meets wins.
+	 *
+	 * @var array<string, int>
+	 */
+	private const GRADES = [
+		'excellent' => 85,
+		'good'      => 70,
+		'fair'      => 50,
+		'poor'      => 0,
+	];
+
+	/**
+	 * Build the full readiness report for a post.
+	 *
+	 * @return array{
+	 *     score: int,
+	 *     grade: string,
+	 *     checks: list<array{id: string, label: string, status: string, weight: int, hint: string}>
+	 * }
+	 */
+	public function report( WP_Post $post ): array {
+		$content = $this->analyze( $post );
+
+		$checks = [
+			$this->check_structured_data(),
+			$this->check_meta_description( $post ),
+			$this->check_answer_first( $content['first_paragraph'] ),
+			$this->check_question_headings( $content['headings'] ),
+			$this->check_faq( $post ),
+			$this->check_llms_txt( $post ),
+			$this->check_markdown_alternate(),
+			$this->check_depth( $content['words'] ),
+		];
+
+		/**
+		 * Filters the readiness checks for a post before they are scored. Add-ons
+		 * (or Pro) can append their own `{id,label,status,weight,hint}` rows.
+		 *
+		 * @param list<array{id: string, label: string, status: string, weight: int, hint: string}> $checks
+		 * @param WP_Post                                                                            $post
+		 */
+		$checks = array_values( (array) apply_filters( 'flexa_seo_aeo/aeo/readiness_checks', $checks, $post ) );
+
+		$score = $this->score( $checks );
+
+		return [
+			'score'  => $score,
+			'grade'  => $this->grade( $score ),
+			'checks' => $checks,
+		];
+	}
+
+	/**
+	 * Weighted score: each check contributes its full weight when it passes, half
+	 * when it warns, nothing when it fails. Normalised to the total weight so the
+	 * result is always 0–100 even after a filter adds or removes rows.
+	 *
+	 * @param list<array{status: string, weight: int}> $checks
+	 */
+	private function score( array $checks ): int {
+		$earned = 0.0;
+		$total  = 0;
+
+		foreach ( $checks as $check ) {
+			$weight  = max( 0, (int) $check['weight'] );
+			$total  += $weight;
+			$earned += $weight * $this->factor( (string) $check['status'] );
+		}
+
+		if ( 0 === $total ) {
+			return 0;
+		}
+
+		return (int) round( $earned / $total * 100 );
+	}
+
+	private function factor( string $status ): float {
+		return match ( $status ) {
+			'pass'  => 1.0,
+			'warn'  => 0.5,
+			default => 0.0,
+		};
+	}
+
+	private function grade( int $score ): string {
+		foreach ( self::GRADES as $grade => $threshold ) {
+			if ( $score >= $threshold ) {
+				return $grade;
+			}
+		}
+
+		return 'poor';
+	}
+
+	/**
+	 * @return array{id: string, label: string, status: string, weight: int, hint: string}
+	 */
+	private function check_structured_data(): array {
+		$enabled = (bool) Settings::get_aeo( 'schema' );
+		$status  = $enabled ? 'pass' : 'fail';
+		$hint    = $enabled
+			? __( 'JSON-LD is emitted for this post so engines can lift facts out as structured data.', 'flexa-seo-aeo' )
+			: __( 'Enable AEO Core → Structured data so this post ships an Article/WebPage JSON-LD graph.', 'flexa-seo-aeo' );
+
+		return $this->row( 'structured_data', __( 'Structured data', 'flexa-seo-aeo' ), $status, 20, $hint );
+	}
+
+	/**
+	 * @return array{id: string, label: string, status: string, weight: int, hint: string}
+	 */
+	private function check_meta_description( WP_Post $post ): array {
+		$meta        = PostMetaRepository::instance()->get( $post->ID );
+		$description = '' !== $meta->description
+			? $meta->description
+			: wp_strip_all_tags( (string) get_the_excerpt( $post ) );
+
+		$length = $this->length( $description );
+		if ( 0 === $length ) {
+			return $this->row(
+				'meta_description',
+				__( 'Meta description', 'flexa-seo-aeo' ),
+				'fail',
+				15,
+				__( 'Add a meta description — answer engines often quote it verbatim as the summary.', 'flexa-seo-aeo' )
+			);
+		}
+
+		$status = ( $length >= 50 && $length <= 160 ) ? 'pass' : 'warn';
+		$hint   = 'pass' === $status
+			? __( 'A concise summary is in place for engines to quote.', 'flexa-seo-aeo' )
+			: __( 'Aim for roughly 50–160 characters so the summary is neither truncated nor thin.', 'flexa-seo-aeo' );
+
+		return $this->row( 'meta_description', __( 'Meta description', 'flexa-seo-aeo' ), $status, 15, $hint );
+	}
+
+	/**
+	 * @return array{id: string, label: string, status: string, weight: int, hint: string}
+	 */
+	private function check_answer_first( string $paragraph ): array {
+		$length = $this->length( $paragraph );
+		if ( 0 === $length ) {
+			return $this->row(
+				'answer_first',
+				__( 'Answer-first opening', 'flexa-seo-aeo' ),
+				'fail',
+				15,
+				__( 'Open with a 2–3 sentence summary that answers the topic directly — engines favour the lede.', 'flexa-seo-aeo' )
+			);
+		}
+
+		$status = ( $length >= 40 && $length <= 360 ) ? 'pass' : 'warn';
+		$hint   = 'pass' === $status
+			? __( 'The post opens with a self-contained summary an engine can quote as the answer.', 'flexa-seo-aeo' )
+			: __( 'Tighten the opening paragraph to a self-contained 40–360 character answer.', 'flexa-seo-aeo' );
+
+		return $this->row( 'answer_first', __( 'Answer-first opening', 'flexa-seo-aeo' ), $status, 15, $hint );
+	}
+
+	/**
+	 * @param list<string> $headings
+	 * @return array{id: string, label: string, status: string, weight: int, hint: string}
+	 */
+	private function check_question_headings( array $headings ): array {
+		$questions = 0;
+		foreach ( $headings as $heading ) {
+			if ( $this->is_question( $heading ) ) {
+				++$questions;
+			}
+		}
+
+		if ( $questions >= 2 ) {
+			$status = 'pass';
+		} elseif ( 1 === $questions ) {
+			$status = 'warn';
+		} else {
+			$status = 'fail';
+		}
+
+		$hint = 'pass' === $status
+			? __( 'Question-style headings map cleanly onto the prompts users actually ask.', 'flexa-seo-aeo' )
+			: __( 'Phrase a few headings as the questions readers ask (e.g. “How does…”, “What is…?”).', 'flexa-seo-aeo' );
+
+		return $this->row( 'question_headings', __( 'Question-style headings', 'flexa-seo-aeo' ), $status, 15, $hint );
+	}
+
+	/**
+	 * @return array{id: string, label: string, status: string, weight: int, hint: string}
+	 */
+	private function check_faq( WP_Post $post ): array {
+		$status = $this->has_faq_blocks( $post ) ? 'pass' : 'warn';
+		$hint   = 'pass' === $status
+			? __( 'FAQ blocks were detected and are emitted as FAQPage structured data.', 'flexa-seo-aeo' )
+			: __( 'Add a core Details/FAQ block — each question becomes a citable FAQPage entry.', 'flexa-seo-aeo' );
+
+		return $this->row( 'faq', __( 'FAQ / Q&A blocks', 'flexa-seo-aeo' ), $status, 10, $hint );
+	}
+
+	/**
+	 * @return array{id: string, label: string, status: string, weight: int, hint: string}
+	 */
+	private function check_llms_txt( WP_Post $post ): array {
+		if ( ! (bool) Settings::get_aeo( 'enabled' ) ) {
+			return $this->row(
+				'llms_txt',
+				__( 'Listed in llms.txt', 'flexa-seo-aeo' ),
+				'fail',
+				10,
+				__( 'Turn on AEO Core → llms.txt so this content is advertised to language models.', 'flexa-seo-aeo' )
+			);
+		}
+
+		$included = in_array( (string) get_post_type( $post ), SitemapService::instance()->post_types(), true );
+		$meta     = PostMetaRepository::instance()->get( $post->ID );
+
+		if ( ! $included || $meta->noindex ) {
+			return $this->row(
+				'llms_txt',
+				__( 'Listed in llms.txt', 'flexa-seo-aeo' ),
+				'warn',
+				10,
+				__( 'This post is excluded from llms.txt (its type is off or it is set to noindex).', 'flexa-seo-aeo' )
+			);
+		}
+
+		return $this->row(
+			'llms_txt',
+			__( 'Listed in llms.txt', 'flexa-seo-aeo' ),
+			'pass',
+			10,
+			__( 'This post is advertised in /llms.txt for language models to discover.', 'flexa-seo-aeo' )
+		);
+	}
+
+	/**
+	 * @return array{id: string, label: string, status: string, weight: int, hint: string}
+	 */
+	private function check_markdown_alternate(): array {
+		$advertised = (bool) Settings::get_aeo( 'agent_readiness' );
+		$served     = (bool) Settings::get_aeo( 'plain_text_export' );
+
+		if ( $advertised && $served ) {
+			$status = 'pass';
+			$hint   = __( 'A token-cheap Markdown alternate is exposed to AI crawlers via a Link header.', 'flexa-seo-aeo' );
+		} elseif ( $served || $advertised ) {
+			$status = 'warn';
+			$hint   = __( 'Enable both Agent Readiness and the Markdown export so crawlers can find and fetch it.', 'flexa-seo-aeo' );
+		} else {
+			$status = 'fail';
+			$hint   = __( 'Enable AEO Core → Agent Readiness to serve a clean Markdown rendering for AI agents.', 'flexa-seo-aeo' );
+		}
+
+		return $this->row( 'markdown_alternate', __( 'Markdown alternate', 'flexa-seo-aeo' ), $status, 10, $hint );
+	}
+
+	/**
+	 * @return array{id: string, label: string, status: string, weight: int, hint: string}
+	 */
+	private function check_depth( int $words ): array {
+		if ( $words >= 300 ) {
+			$status = 'pass';
+			$hint   = __( 'There is enough substance here for an engine to treat the page as authoritative.', 'flexa-seo-aeo' );
+		} elseif ( $words >= 100 ) {
+			$status = 'warn';
+			$hint   = __( 'Thin content is rarely cited — expand toward 300+ words of genuine detail.', 'flexa-seo-aeo' );
+		} else {
+			$status = 'fail';
+			$hint   = __( 'This post is very short; engines seldom quote pages with little content.', 'flexa-seo-aeo' );
+		}
+
+		return $this->row( 'content_depth', __( 'Content depth', 'flexa-seo-aeo' ), $status, 5, $hint );
+	}
+
+	/**
+	 * @return array{id: string, label: string, status: string, weight: int, hint: string}
+	 */
+	private function row( string $id, string $label, string $status, int $weight, string $hint ): array {
+		return [
+			'id'     => $id,
+			'label'  => $label,
+			'status' => $status,
+			'weight' => $weight,
+			'hint'   => $hint,
+		];
+	}
+
+	/**
+	 * Render the post once and pull the three content signals the score needs:
+	 * the first paragraph (answer-first), the heading texts (question headings),
+	 * and the total word count (depth).
+	 *
+	 * @return array{first_paragraph: string, headings: list<string>, words: int}
+	 */
+	private function analyze( WP_Post $post ): array {
+		// WordPress core's own `the_content` filter — not (and cannot be) prefixed.
+		/** @var string $html */
+		$html = apply_filters( 'the_content', $post->post_content ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+		$html = trim( $html );
+
+		$empty = [
+			'first_paragraph' => '',
+			'headings'        => [],
+			'words'           => 0,
+		];
+
+		if ( '' === $html ) {
+			return $empty;
+		}
+
+		$plain          = $this->one_line( wp_strip_all_tags( $html ) );
+		$empty['words'] = '' === $plain ? 0 : count( (array) preg_split( '/\s+/u', $plain, -1, PREG_SPLIT_NO_EMPTY ) );
+
+		$dom  = new \DOMDocument();
+		$prev = libxml_use_internal_errors( true );
+		$dom->loadHTML(
+			'<?xml encoding="UTF-8"?><html><body>' . $html . '</body></html>',
+			LIBXML_NOWARNING | LIBXML_NOERROR
+		);
+		libxml_clear_errors();
+		libxml_use_internal_errors( $prev );
+
+		$first_paragraph = '';
+		foreach ( $dom->getElementsByTagName( 'p' ) as $node ) {
+			$text = $this->one_line( (string) $node->textContent );
+			if ( '' !== $text ) {
+				$first_paragraph = $text;
+				break;
+			}
+		}
+
+		$headings = [];
+		foreach ( [ 'h1', 'h2', 'h3', 'h4' ] as $tag ) {
+			foreach ( $dom->getElementsByTagName( $tag ) as $node ) {
+				$text = $this->one_line( (string) $node->textContent );
+				if ( '' !== $text ) {
+					$headings[] = $text;
+				}
+			}
+		}
+
+		return [
+			'first_paragraph' => $first_paragraph,
+			'headings'        => $headings,
+			'words'           => $empty['words'],
+		];
+	}
+
+	/**
+	 * True when a heading reads like a user's question — it ends with a question
+	 * mark or opens with a common interrogative word.
+	 */
+	private function is_question( string $heading ): bool {
+		$heading = trim( $heading );
+		if ( '' === $heading ) {
+			return false;
+		}
+		if ( str_ends_with( $heading, '?' ) ) {
+			return true;
+		}
+
+		$first = strtolower( (string) strtok( $heading, " \t" ) );
+		$words = [ 'how', 'what', 'why', 'when', 'where', 'which', 'who', 'can', 'does', 'do', 'is', 'are', 'should', 'will' ];
+
+		return in_array( $first, $words, true );
+	}
+
+	/**
+	 * Whether the post contains at least one core Details block (the FAQ source
+	 * the Schema service turns into FAQPage entries).
+	 */
+	private function has_faq_blocks( WP_Post $post ): bool {
+		if ( ! function_exists( 'parse_blocks' ) || ! has_blocks( $post->post_content ) ) {
+			return false;
+		}
+
+		return $this->find_details( parse_blocks( $post->post_content ) );
+	}
+
+	/**
+	 * @param array<int, mixed> $blocks
+	 */
+	private function find_details( array $blocks ): bool {
+		foreach ( $blocks as $block ) {
+			if ( ! is_array( $block ) ) {
+				continue;
+			}
+			if ( 'core/details' === ( $block['blockName'] ?? '' ) ) {
+				return true;
+			}
+			if ( ! empty( $block['innerBlocks'] ) && is_array( $block['innerBlocks'] ) && $this->find_details( $block['innerBlocks'] ) ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private function length( string $text ): int {
+		return (int) mb_strlen( $this->one_line( $text ) );
+	}
+
+	private function one_line( string $text ): string {
+		return trim( (string) preg_replace( '/\s+/', ' ', $text ) );
+	}
+}
