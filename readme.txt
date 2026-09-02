@@ -104,6 +104,15 @@ Run one SEO plugin at a time. Flexa SEO can read existing per-post meta from tho
 
 Yes. WooCommerce product schema is an optional layer that activates only when WooCommerce is installed.
 
+== Screenshots ==
+
+1. Health Dashboard: overall SEO, AEO and Technical SEO scores, an SEO & AEO score trend, and an issues overview (critical, warnings, opportunities, passed).
+2. SEO Health and AEO Health breakdowns, with prioritised recommended actions.
+3. "Pages needing attention" list: per-page AEO score and issue count, expandable to show exactly what to fix, with a link straight to the editor.
+4. Settings: title and meta description templating with the token engine.
+5. Settings: XML and HTML sitemaps, with per-post-type and per-taxonomy inclusion.
+6. Settings: AEO Core options: llms.txt, the Markdown alternate for AI crawlers, and other answer-engine controls.
+
 == Changelog ==
 
 = 0.2.0 =
