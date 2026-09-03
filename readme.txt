@@ -4,7 +4,7 @@ Tags: seo, schema, sitemap, aeo, woocommerce
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.2.0
+Stable tag: 0.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 WC requires at least: 8.0
@@ -15,6 +15,8 @@ Complete WordPress SEO — schema, sitemaps, meta, Open Graph — plus an Answer
 == Description ==
 
 Flexa SEO is a complete, privacy-first SEO plugin: title & meta templating, JSON-LD schema, XML sitemaps, Open Graph, `robots.txt`, IndexNow, and one-click migration from Yoast, Rank Math and SEOPress. It covers the SEO baseline you expect — and then goes one step further than any of them.
+
+A guided **Setup Assistant** takes you from activation to a configured, answer-engine-ready site in a few minutes: it detects your setup, recommends the SEO and AEO settings that fit, and applies them in one click. Every recommendation is compared against the defaults, so you see exactly which settings will change before anything is applied and any value you set yourself is kept.
 
 **What makes it different: the Answer-Engine Readiness Score**
 
@@ -114,6 +116,11 @@ Yes. WooCommerce product schema is an optional layer that activates only when Wo
 6. Settings: AEO Core options: llms.txt, the Markdown alternate for AI crawlers, and other answer-engine controls.
 
 == Changelog ==
+
+= 0.3.0 =
+* New: **Setup Assistant**, a guided onboarding wizard. It detects your site, recommends the SEO and AEO settings that fit, and applies them in one click. The flow covers search essentials, AI readiness, a quick content-readiness scan of your recent pages, optional migration from Yoast or Rank Math, and a final readiness report that seeds your Dashboard. Nothing is ever overwritten: recommendations are compared against the defaults, you see every setting that will change before applying, and any value you already customized is kept.
+* New: re-enter the Setup Assistant any time from the Dashboard card, from Settings › Tools, or from the command palette. A re-run only proposes settings that are still at their defaults, so it is safe to run repeatedly.
+* Security: running a full site scan now requires the "edit others' posts" capability (Editors and Administrators), so lower-privileged roles can no longer trigger the site-wide scan through the REST API. Viewing the cached Dashboard report is unchanged.
 
 = 0.2.0 =
 * New: **SEO/AEO health Dashboard** — overall SEO, AEO and Technical scores, an issues overview, SEO & AEO health breakdowns, prioritised recommended actions, and a "Pages needing attention" list. Each listed page expands to show exactly which readiness checks fail (with a plain-English fix), links straight to the editor, and can be re-scanned on its own after an edit — no full site scan needed.
