@@ -163,3 +163,22 @@ export function applicableSteps(detect: DetectPayload): WizardStep[] {
 
   return steps;
 }
+
+/**
+ * The completion percentage, computed client-side from the applicable steps and
+ * what has been completed. The server stores no percentage: it would go stale
+ * the moment detection changes. Mirrors docs/onboarding-design.md §7.3.
+ */
+export function completionPercent(
+  state: OnboardingStateData,
+  detect: DetectPayload,
+): number {
+  const applicable = applicableSteps(detect).map((step) => step.id);
+  if (applicable.length === 0) {
+    return 0;
+  }
+  const done = new Set(
+    state.completed_steps.filter((id) => applicable.includes(id)),
+  );
+  return Math.round((100 * done.size) / applicable.length);
+}

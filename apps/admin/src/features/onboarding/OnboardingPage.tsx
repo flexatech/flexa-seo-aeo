@@ -1,14 +1,14 @@
-import { AlertTriangle, ArrowRight } from "lucide-react";
-import { useEffect } from "react";
+import { AlertTriangle } from "lucide-react";
+import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { __ } from "@/lib/i18n";
 import { useUiStore } from "@/lib/store";
 import { AeoStep } from "./AeoStep";
 import { ContentStep } from "./ContentStep";
 import { MigrationStep } from "./MigrationStep";
+import { ReportStep } from "./ReportStep";
 import { SeoStep } from "./SeoStep";
 import { WelcomeStep } from "./WelcomeStep";
-import { WizardFooter } from "./WizardFooter";
 import { WizardShell } from "./WizardShell";
 import {
   applicableSteps,
@@ -18,24 +18,19 @@ import {
   useUpdateOnboarding,
 } from "./useOnboarding";
 
-/**
- * Interim copy for the report step, whose interactive screen lands in Phase 5.
- * Welcome, SEO, AEO, Content and Migration have real components now.
- */
-const PLACEHOLDER_META: Partial<
-  Record<StepId, { title: string; description: string }>
-> = {
-  report: {
-    title: __("Readiness report"),
-    description: __("Your SEO and AEO scores, and what to do next."),
-  },
-};
-
 export function OnboardingPage() {
   const query = useOnboarding();
   const update = useUpdateOnboarding();
   const setView = useUiStore((s) => s.setView);
   const setupIntent = useUiStore((s) => s.setupIntent);
+
+  // On each step change, move focus to the top of the fresh step so keyboard
+  // and screen-reader users land on the new heading rather than a stale button.
+  const stepRef = useRef<HTMLDivElement>(null);
+  const activeStep = query.data?.state.current_step;
+  useEffect(() => {
+    stepRef.current?.focus();
+  }, [activeStep]);
 
   const status = query.data?.state.status;
   const staleFinished =
@@ -151,56 +146,21 @@ export function OnboardingPage() {
 
   return (
     <WizardShell steps={steps} currentId={current} onExit={exit}>
-      {current === "welcome" ? (
-        <WelcomeStep {...stepProps} />
-      ) : current === "seo" ? (
-        <SeoStep {...stepProps} />
-      ) : current === "aeo" ? (
-        <AeoStep {...stepProps} />
-      ) : current === "content" ? (
-        <ContentStep {...stepProps} />
-      ) : current === "migration" ? (
-        <MigrationStep {...stepProps} />
-      ) : (
-        <PlaceholderStep step={current} isLast={isLast} {...stepProps} />
-      )}
-    </WizardShell>
-  );
-}
-
-/**
- * The interim body for a step whose interactive screen ships in a later phase.
- * It still exercises the shell, resume and navigation end to end.
- */
-function PlaceholderStep({
-  step,
-  isLast,
-  onContinue,
-  onBack,
-  busy,
-}: StepProps & { step: StepId; isLast: boolean }) {
-  const meta = PLACEHOLDER_META[step] ?? {
-    title: step,
-    description: "",
-  };
-
-  return (
-    <div className="fsa:space-y-6">
-      <div className="fsa:rounded-xl fsa:border fsa:border-slate-200 fsa:bg-white fsa:p-8 fsa:shadow-sm">
-        <h1 className="fsa:text-2xl fsa:font-bold fsa:text-slate-900">
-          {meta.title}
-        </h1>
-        <p className="fsa:mt-2 fsa:text-sm fsa:text-slate-600">
-          {meta.description}
-        </p>
+      <div ref={stepRef} tabIndex={-1} className="fsa:outline-none">
+        {current === "welcome" ? (
+          <WelcomeStep {...stepProps} />
+        ) : current === "seo" ? (
+          <SeoStep {...stepProps} />
+        ) : current === "aeo" ? (
+          <AeoStep {...stepProps} />
+        ) : current === "content" ? (
+          <ContentStep {...stepProps} />
+        ) : current === "migration" ? (
+          <MigrationStep {...stepProps} />
+        ) : (
+          <ReportStep {...stepProps} />
+        )}
       </div>
-
-      <WizardFooter onBack={onBack} disabled={busy}>
-        <Button type="button" onClick={onContinue} disabled={busy}>
-          {isLast ? __("Go to Dashboard") : __("Continue")}
-          {!isLast && <ArrowRight className="fsa:h-4 fsa:w-4" aria-hidden />}
-        </Button>
-      </WizardFooter>
-    </div>
+    </WizardShell>
   );
 }
