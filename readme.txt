@@ -1,4 +1,4 @@
-=== Flexa SEO - AEO ===
+=== Flexa SEO - AEO | AI SEO & Answer Engine Optimization ===
 Contributors: flexatech
 Tags: seo, schema, sitemap, aeo, woocommerce
 Requires at least: 6.5

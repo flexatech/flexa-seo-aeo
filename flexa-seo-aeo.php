@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name:       Flexa SEO - AEO
- * Description:       Complete WordPress SEO — schema, sitemaps, meta, Open Graph — plus a per-post Answer-Engine Readiness score and a site health dashboard for AI search.
+ * Plugin Name:       Flexa SEO - AEO | AI SEO & Answer Engine Optimization
+ * Description:       Complete WordPress SEO (schema, sitemaps, meta, Open Graph), plus a per-post Answer-Engine Readiness score and a site health dashboard for AI search.
  * Version:           0.3.0
  * Requires at least: 6.5
  * Tested up to:      7.1
