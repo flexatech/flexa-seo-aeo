@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { __ } from "@/lib/i18n";
 import { useUiStore } from "@/lib/store";
 import { AeoStep } from "./AeoStep";
+import { ContentStep } from "./ContentStep";
+import { MigrationStep } from "./MigrationStep";
 import { SeoStep } from "./SeoStep";
 import { WelcomeStep } from "./WelcomeStep";
 import { WizardFooter } from "./WizardFooter";
@@ -17,22 +19,12 @@ import {
 } from "./useOnboarding";
 
 /**
- * Interim copy for the steps whose interactive screens land in Phases 4-5
- * (Content, Migration, Report). Welcome, SEO and AEO have real components now.
+ * Interim copy for the report step, whose interactive screen lands in Phase 5.
+ * Welcome, SEO, AEO, Content and Migration have real components now.
  */
 const PLACEHOLDER_META: Partial<
   Record<StepId, { title: string; description: string }>
 > = {
-  content: {
-    title: __("Content readiness"),
-    description: __("A quick scan of your top pages and what to improve."),
-  },
-  migration: {
-    title: __("Migrate existing data"),
-    description: __(
-      "Bring your titles, descriptions and social settings over.",
-    ),
-  },
   report: {
     title: __("Readiness report"),
     description: __("Your SEO and AEO scores, and what to do next."),
@@ -165,6 +157,10 @@ export function OnboardingPage() {
         <SeoStep {...stepProps} />
       ) : current === "aeo" ? (
         <AeoStep {...stepProps} />
+      ) : current === "content" ? (
+        <ContentStep {...stepProps} />
+      ) : current === "migration" ? (
+        <MigrationStep {...stepProps} />
       ) : (
         <PlaceholderStep step={current} isLast={isLast} {...stepProps} />
       )}

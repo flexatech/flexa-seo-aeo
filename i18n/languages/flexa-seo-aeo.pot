@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-01T05:18:41+00:00\n"
+"POT-Creation-Date: 2026-09-03T02:31:21+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: flexa-seo-aeo\n"
@@ -33,6 +33,21 @@ msgstr ""
 
 #: flexa-seo-aeo.php:27
 msgid "Flexa SEO requires PHP 8.2 or higher. The plugin has been disabled."
+msgstr ""
+
+#. translators: %s: plugin brand name.
+#: src/Admin/ActivationRedirect.php:123
+msgid ""
+"%s is active. Run the 3-minute Setup Assistant to configure SEO and AEO in a "
+"few clicks."
+msgstr ""
+
+#: src/Admin/ActivationRedirect.php:128
+msgid "Run Setup Assistant"
+msgstr ""
+
+#: src/Admin/ActivationRedirect.php:130
+msgid "Dismiss"
 msgstr ""
 
 #: src/Admin/AdminMenu.php:33
@@ -280,6 +295,7 @@ msgid ""
 msgstr ""
 
 #: src/Services/Aeo/SiteAudit.php:277
+#: src/Services/Onboarding/Recommended.php:48
 msgid "XML sitemap"
 msgstr ""
 
@@ -405,6 +421,46 @@ msgstr[1] ""
 
 #: src/Services/Metas.php:105
 msgid "Page not found"
+msgstr ""
+
+#: src/Services/Onboarding/Recommended.php:47
+msgid "Titles & meta descriptions"
+msgstr ""
+
+#: src/Services/Onboarding/Recommended.php:49
+msgid "Open Graph (social sharing)"
+msgstr ""
+
+#: src/Services/Onboarding/Recommended.php:50
+msgid "Twitter / X cards"
+msgstr ""
+
+#: src/Services/Onboarding/Recommended.php:53
+msgid "Knowledge graph name"
+msgstr ""
+
+#: src/Services/Onboarding/Recommended.php:70
+msgid "llms.txt for AI engines"
+msgstr ""
+
+#: src/Services/Onboarding/Recommended.php:71
+msgid "Structured data (Article, FAQ, HowTo)"
+msgstr ""
+
+#: src/Services/Onboarding/Recommended.php:72
+msgid "Agent readiness"
+msgstr ""
+
+#: src/Services/Onboarding/Recommended.php:73
+msgid "Markdown / plain-text alternate"
+msgstr ""
+
+#: src/Services/Onboarding/Recommended.php:78
+msgid "Product data for AI shopping answers"
+msgstr ""
+
+#: src/Services/Onboarding/Recommended.php:83
+msgid "AI summary"
 msgstr ""
 
 #: templates/sitemap/stylesheet.php:15
@@ -567,20 +623,51 @@ msgctxt "block keyword"
 msgid "links"
 msgstr ""
 
+#: apps/admin/src/features/onboarding/ContentStep.tsx:208
+msgid "%1$d %2$s"
+msgstr ""
+
+#: apps/admin/src/features/onboarding/ContentStep.tsx:160
+msgid "%1$d / %2$d"
+msgstr ""
+
+#: apps/admin/src/features/onboarding/MigrationStep.tsx:170
 #: apps/admin/src/features/settings/MigrationPane.tsx:173
 msgid "%1$d / %2$d processed"
 msgstr ""
 
+#: apps/admin/src/features/onboarding/MigrationStep.tsx:57
 #: apps/admin/src/features/settings/MigrationPane.tsx:41
 msgid "%1$s: migrated %2$d, skipped %3$d."
 msgstr ""
 
+#: apps/admin/src/features/onboarding/ContentStep.tsx:71
+msgid "%d / 100"
+msgstr ""
+
+#: apps/admin/src/features/onboarding/MigrationStep.tsx:125
 #: apps/admin/src/features/settings/MigrationPane.tsx:114
 msgid "%d post(s) with data to import."
 msgstr ""
 
+#: apps/admin/src/features/onboarding/ApplyConfirmDialog.tsx:50
+msgid "%d setting(s) will change. Nothing else is touched."
+msgstr ""
+
+#: apps/admin/src/features/onboarding/WelcomeStep.tsx:89
+msgid ""
+"%s is still active. Deactivate it after setup to avoid duplicate meta tags."
+msgstr ""
+
 #: apps/admin/src/features/dashboard/DashboardPage.tsx:816
+#: apps/admin/src/features/onboarding/ContentStep.tsx:99
 msgid "(no title)"
+msgstr ""
+
+#: apps/admin/src/features/onboarding/ContentStep.tsx:51
+msgid ""
+"A quick read of your most recent pages. This only measures, it changes "
+"nothing."
 msgstr ""
 
 #: apps/admin/src/features/settings/SettingsPage.tsx:634
@@ -606,12 +693,20 @@ msgstr ""
 msgid "AEO Score"
 msgstr ""
 
+#: apps/admin/src/features/onboarding/AeoStep.tsx:37
+msgid "AEO features enabled."
+msgstr ""
+
 #: apps/admin/src/features/settings/SettingsPage.tsx:297
 msgid "AEO schema"
 msgstr ""
 
-#: apps/admin/src/app/App.tsx:35
+#: apps/admin/src/app/App.tsx:74
 msgid "AEO-first SEO for WordPress"
+msgstr ""
+
+#: apps/admin/src/features/onboarding/useOnboarding.ts:152
+msgid "AI readiness"
 msgstr ""
 
 #: apps/admin/src/features/dashboard/DashboardPage.tsx:684
@@ -638,6 +733,10 @@ msgstr ""
 msgid "All settings were reset to defaults."
 msgstr ""
 
+#: apps/admin/src/features/onboarding/RecommendationList.tsx:22
+msgid "Already on"
+msgstr ""
+
 #: apps/admin/src/features/settings/sections.ts:81
 msgid "Answer-engine optimization"
 msgstr ""
@@ -647,8 +746,28 @@ msgid ""
 "Appended to the virtual robots.txt. The sitemap line is added automatically."
 msgstr ""
 
+#: apps/admin/src/features/onboarding/ApplyConfirmDialog.tsx:97
+msgid "Apply"
+msgstr ""
+
+#: apps/admin/src/features/onboarding/SeoStep.tsx:16
+msgid "Apply recommended settings"
+msgstr ""
+
+#: apps/admin/src/features/onboarding/ApplyConfirmDialog.tsx:46
+msgid "Apply these settings?"
+msgstr ""
+
+#: apps/admin/src/features/onboarding/ApplyConfirmDialog.tsx:97
+msgid "Applying…"
+msgstr ""
+
 #: apps/admin/src/features/settings/SettingsPage.tsx:212
 msgid "Auto-fill missing image alt attributes."
+msgstr ""
+
+#: apps/admin/src/features/onboarding/WizardFooter.tsx:31
+msgid "Back"
 msgstr ""
 
 #: apps/admin/src/features/settings/sections.ts:108
@@ -662,6 +781,10 @@ msgid ""
 "only empty Flexa fields are filled — your existing edits are kept."
 msgstr ""
 
+#: apps/admin/src/features/onboarding/WelcomeStep.tsx:28
+msgid "Blog"
+msgstr ""
+
 #: apps/admin/src/features/settings/SettingsPage.tsx:674
 msgid "Brand name"
 msgstr ""
@@ -671,12 +794,23 @@ msgstr ""
 msgid "Branding"
 msgstr ""
 
+#: apps/admin/src/features/onboarding/MigrationStep.tsx:74
+msgid "Bring your existing SEO data over"
+msgstr ""
+
 #: apps/admin/src/features/settings/sections.ts:100
 msgid "Bring your existing SEO meta over from Yoast SEO or Rank Math."
 msgstr ""
 
+#: apps/admin/src/features/onboarding/ApplyConfirmDialog.tsx:93
 #: apps/admin/src/features/settings/DangerZone.tsx:113
 msgid "Cancel"
+msgstr ""
+
+#: apps/admin/src/features/onboarding/AeoStep.tsx:33
+msgid ""
+"ChatGPT, Perplexity and Google AI Overviews read sites differently. Flexa "
+"prepares yours, then measures how quotable each post is."
 msgstr ""
 
 #: apps/admin/src/features/dashboard/DashboardPage.tsx:668
@@ -692,10 +826,22 @@ msgid ""
 "Configure how Flexa SEO optimizes your site for search and answer engines."
 msgstr ""
 
+#: apps/admin/src/features/onboarding/useOnboarding.ts:156
+msgid "Content"
+msgstr ""
+
+#: apps/admin/src/features/onboarding/ContentStep.tsx:142
+#: apps/admin/src/features/onboarding/MigrationStep.tsx:211
+#: apps/admin/src/features/onboarding/OnboardingPage.tsx:200
+#: apps/admin/src/features/onboarding/RecommendedScopeStep.tsx:133
+msgid "Continue"
+msgstr ""
+
 #: apps/admin/src/features/settings/sections.ts:44
 msgid "Control the <title>, meta description, and homepage defaults."
 msgstr ""
 
+#: apps/admin/src/features/onboarding/MigrationStep.tsx:91
 #: apps/admin/src/features/settings/MigrationPane.tsx:79
 msgid "Could not read migration sources."
 msgstr ""
@@ -725,7 +871,8 @@ msgstr ""
 msgid "Danger zone"
 msgstr ""
 
-#: apps/admin/src/app/App.tsx:9 apps/admin/src/components/CommandPalette.tsx:54
+#: apps/admin/src/app/App.tsx:15
+#: apps/admin/src/components/CommandPalette.tsx:54
 #: apps/admin/src/features/dashboard/DashboardPage.tsx:115
 msgid "Dashboard"
 msgstr ""
@@ -751,6 +898,10 @@ msgstr ""
 msgid "Done — migrated %1$d, skipped %2$d."
 msgstr ""
 
+#: apps/admin/src/features/onboarding/MigrationStep.tsx:183
+msgid "Done. Migrated %1$d, skipped %2$d."
+msgstr ""
+
 #: apps/admin/src/features/settings/ToolsPane.tsx:116
 msgid "Download the current configuration as a JSON file."
 msgstr ""
@@ -769,6 +920,10 @@ msgid ""
 "for AI shopping."
 msgstr ""
 
+#: apps/admin/src/features/onboarding/AeoStep.tsx:36
+msgid "Enable AEO features"
+msgstr ""
+
 #: apps/admin/src/features/settings/SettingsPage.tsx:205
 msgid "Enable breadcrumb trail + BreadcrumbList schema."
 msgstr ""
@@ -783,6 +938,18 @@ msgstr ""
 
 #: apps/admin/src/features/dashboard/DashboardPage.tsx:663
 msgid "Every scanned page is in good shape. 🎉"
+msgstr ""
+
+#: apps/admin/src/features/onboarding/RecommendedScopeStep.tsx:105
+msgid "Everything recommended is already enabled."
+msgstr ""
+
+#: apps/admin/src/features/onboarding/WelcomeStep.tsx:75
+msgid "Existing data: %1$s (%2$d posts)"
+msgstr ""
+
+#: apps/admin/src/features/onboarding/WizardShell.tsx:48
+msgid "Exit setup"
 msgstr ""
 
 #: apps/admin/src/features/settings/ToolsPane.tsx:127
@@ -807,6 +974,15 @@ msgstr ""
 
 #: apps/admin/src/features/dashboard/DashboardPage.tsx:944
 msgid "Fix in editor"
+msgstr ""
+
+#: apps/admin/src/features/onboarding/WelcomeStep.tsx:43
+msgid ""
+"Flexa SEO is already partly configured. We'll only suggest what's missing."
+msgstr ""
+
+#: apps/admin/src/features/onboarding/OnboardingPage.tsx:200
+msgid "Go to Dashboard"
 msgstr ""
 
 #: apps/admin/src/components/CommandPalette.tsx:67
@@ -835,6 +1011,10 @@ msgstr ""
 
 #: apps/admin/src/features/settings/sections.ts:52
 msgid "How pages look when shared to social and chat apps."
+msgstr ""
+
+#: apps/admin/src/features/onboarding/ContentStep.tsx:48
+msgid "How ready is your content?"
 msgstr ""
 
 #: apps/admin/src/features/settings/ToolsPane.tsx:159
@@ -894,8 +1074,16 @@ msgstr ""
 msgid "Jump to a section or action…"
 msgstr ""
 
+#: apps/admin/src/features/onboarding/RecommendationList.tsx:23
+msgid "Kept as you set it"
+msgstr ""
+
 #: apps/admin/src/features/settings/sections.ts:57
 msgid "Knowledge graph identity"
+msgstr ""
+
+#: apps/admin/src/features/onboarding/WelcomeStep.tsx:60
+msgid "Language: %s"
 msgstr ""
 
 #: apps/admin/src/features/dashboard/DashboardPage.tsx:127
@@ -906,6 +1094,10 @@ msgstr ""
 msgid "Leave blank to use %%sitename%% %%sep%% %%tagline%%."
 msgstr ""
 
+#: apps/admin/src/features/onboarding/WelcomeStep.tsx:37
+msgid "Let's make %s answer-engine ready"
+msgstr ""
+
 #: apps/admin/src/features/dashboard/DashboardPage.tsx:84
 msgid "Loading dashboard…"
 msgstr ""
@@ -914,10 +1106,20 @@ msgstr ""
 msgid "Loading settings…"
 msgstr ""
 
+#: apps/admin/src/features/onboarding/OnboardingPage.tsx:58
+msgid "Loading setup…"
+msgstr ""
+
 #: apps/admin/src/features/settings/sections.ts:84
 msgid "Make your content first-class for AI answer engines."
 msgstr ""
 
+#: apps/admin/src/features/onboarding/AeoStep.tsx:31
+msgid "Make your content ready for AI answers"
+msgstr ""
+
+#: apps/admin/src/features/onboarding/MigrationStep.tsx:144
+#: apps/admin/src/features/onboarding/useOnboarding.ts:159
 #: apps/admin/src/features/settings/MigrationPane.tsx:142
 #: apps/admin/src/features/settings/sections.ts:96
 msgid "Migrate"
@@ -927,6 +1129,7 @@ msgstr ""
 msgid "Migrate from another plugin"
 msgstr ""
 
+#: apps/admin/src/features/onboarding/MigrationStep.tsx:144
 #: apps/admin/src/features/settings/MigrationPane.tsx:141
 msgid "Migrating…"
 msgstr ""
@@ -937,6 +1140,10 @@ msgstr ""
 
 #: apps/admin/src/features/settings/MigrationPane.tsx:119
 msgid "No data found from this plugin."
+msgstr ""
+
+#: apps/admin/src/features/onboarding/MigrationStep.tsx:97
+msgid "No importable data found. You can skip this step."
 msgstr ""
 
 #: apps/admin/src/components/CommandPalette.tsx:187
@@ -957,6 +1164,10 @@ msgstr ""
 
 #: apps/admin/src/features/settings/sections.ts:49
 msgid "Open Graph & X cards"
+msgstr ""
+
+#: apps/admin/src/features/onboarding/WelcomeStep.tsx:105
+msgid "Open Permalink Settings"
 msgstr ""
 
 #: apps/admin/src/features/settings/SettingsPage.tsx:354
@@ -991,10 +1202,15 @@ msgstr ""
 msgid "Output the <title> and meta description tags."
 msgstr ""
 
+#: apps/admin/src/features/onboarding/ContentStep.tsx:66
+msgid "Overall readiness"
+msgstr ""
+
 #: apps/admin/src/features/settings/SettingsPage.tsx:615
 msgid "Overrides the site title in llms.txt. Defaults to the site title."
 msgstr ""
 
+#: apps/admin/src/features/onboarding/MigrationStep.tsx:156
 #: apps/admin/src/features/settings/MigrationPane.tsx:158
 msgid "Overwrite existing Flexa values"
 msgstr ""
@@ -1024,8 +1240,20 @@ msgstr ""
 msgid "Plain-text export"
 msgstr ""
 
+#: apps/admin/src/features/onboarding/AeoStep.tsx:32
+msgid "Prepared in one click, then measured per post."
+msgstr ""
+
+#: apps/admin/src/features/onboarding/WelcomeStep.tsx:98
+msgid "Pretty permalinks are off. The sitemap and /llms.txt need them."
+msgstr ""
+
 #: apps/admin/src/features/settings/sections.ts:76
 msgid "Push instant index signals and tune the virtual robots.txt."
+msgstr ""
+
+#: apps/admin/src/features/onboarding/OnboardingPage.tsx:29
+msgid "Readiness report"
 msgstr ""
 
 #: apps/admin/src/features/dashboard/DashboardPage.tsx:606
@@ -1042,6 +1270,10 @@ msgstr ""
 
 #: apps/admin/src/features/settings/SettingsPage.tsx:662
 msgid "Replace the “Flexa SEO” name in the admin menu and this screen."
+msgstr ""
+
+#: apps/admin/src/features/onboarding/useOnboarding.ts:162
+msgid "Report"
 msgstr ""
 
 #: apps/admin/src/features/dashboard/DashboardPage.tsx:768
@@ -1084,6 +1316,10 @@ msgstr ""
 msgid ""
 "Restore every Flexa SEO setting to its default and remove per-post SEO "
 "overrides. This cannot be undone."
+msgstr ""
+
+#: apps/admin/src/features/onboarding/OnboardingPage.tsx:84
+msgid "Retry"
 msgstr ""
 
 #: apps/admin/src/features/settings/SettingsPage.tsx:229
@@ -1134,20 +1370,42 @@ msgstr ""
 msgid "Saving…"
 msgstr ""
 
+#: apps/admin/src/features/onboarding/ContentStep.tsx:126
+msgid "Scan incomplete. Retry from the Dashboard."
+msgstr ""
+
 #: apps/admin/src/features/dashboard/DashboardPage.tsx:144
 msgid "Scan now"
 msgstr ""
 
+#: apps/admin/src/features/onboarding/MigrationStep.tsx:85
 #: apps/admin/src/features/settings/MigrationPane.tsx:73
 msgid "Scanning for existing SEO data…"
+msgstr ""
+
+#: apps/admin/src/features/onboarding/ContentStep.tsx:156
+msgid "Scanning your content…"
 msgstr ""
 
 #: apps/admin/src/features/dashboard/DashboardPage.tsx:144
 msgid "Scanning…"
 msgstr ""
 
+#: apps/admin/src/features/onboarding/AeoStep.tsx:67
+msgid "Scoring your latest post…"
+msgstr ""
+
 #: apps/admin/src/features/settings/SettingsPage.tsx:358
 msgid "Search"
+msgstr ""
+
+#: apps/admin/src/features/onboarding/SeoStep.tsx:14
+#: apps/admin/src/features/onboarding/useOnboarding.ts:151
+msgid "Search essentials"
+msgstr ""
+
+#: apps/admin/src/features/onboarding/SeoStep.tsx:17
+msgid "Search essentials enabled."
 msgstr ""
 
 #: apps/admin/src/features/settings/SettingsPage.tsx:275
@@ -1175,6 +1433,10 @@ msgstr ""
 msgid "Settings saved."
 msgstr ""
 
+#: apps/admin/src/features/onboarding/WizardShell.tsx:36
+msgid "Setup Assistant"
+msgstr ""
+
 #: apps/admin/src/features/settings/SettingsPage.tsx:675
 msgid "Shown when white-label is on. Takes effect after the next page load."
 msgstr ""
@@ -1192,12 +1454,33 @@ msgstr ""
 msgid "Sitemaps"
 msgstr ""
 
+#: apps/admin/src/features/onboarding/MigrationStep.tsx:211
+#: apps/admin/src/features/onboarding/RecommendedScopeStep.tsx:120
+msgid "Skip for now"
+msgstr ""
+
+#: apps/admin/src/features/onboarding/ContentStep.tsx:138
+msgid "Skip scan"
+msgstr ""
+
 #: apps/admin/src/features/settings/sections.ts:48
 msgid "Social"
 msgstr ""
 
 #: apps/admin/src/features/settings/sections.ts:51
 msgid "Social Sharing"
+msgstr ""
+
+#: apps/admin/src/features/onboarding/RecommendedScopeStep.tsx:77
+msgid "Something went wrong."
+msgstr ""
+
+#: apps/admin/src/features/onboarding/WelcomeStep.tsx:118
+msgid "Start setup"
+msgstr ""
+
+#: apps/admin/src/features/onboarding/Stepper.tsx:66
+msgid "Step %1$d of %2$d"
 msgstr ""
 
 #: apps/admin/src/features/settings/SettingsPage.tsx:72
@@ -1212,12 +1495,20 @@ msgstr ""
 msgid "Tell search engines and answer engines what to crawl."
 msgstr ""
 
+#: apps/admin/src/features/onboarding/SeoStep.tsx:15
+msgid "The baseline every site needs. One click."
+msgstr ""
+
 #: apps/admin/src/features/settings/ToolsPane.tsx:32
 msgid "The file is not a valid settings object."
 msgstr ""
 
 #: apps/admin/src/features/settings/SettingsPage.tsx:433
 msgid "The meta description for your front page."
+msgstr ""
+
+#: apps/admin/src/features/onboarding/RecommendationList.tsx:135
+msgid "This differs from the default, so we kept your value."
 msgstr ""
 
 #: apps/admin/src/features/settings/SettingsPage.tsx:510
@@ -1239,8 +1530,10 @@ msgstr ""
 msgid "Titles & Meta"
 msgstr ""
 
-#: apps/admin/src/features/settings/SettingsPage.tsx:197
-msgid "Titles & meta descriptions"
+#: apps/admin/src/features/onboarding/MigrationStep.tsx:77
+msgid ""
+"Titles, descriptions, canonical URLs and social tags from your old plugin. "
+"Fill-gaps keeps anything Flexa already has."
 msgstr ""
 
 #: apps/admin/src/features/dashboard/DashboardPage.tsx:804
@@ -1251,11 +1544,16 @@ msgstr ""
 msgid "Tools"
 msgstr ""
 
+#: apps/admin/src/features/onboarding/ContentStep.tsx:86
+msgid "Top pages needing attention"
+msgstr ""
+
 #: apps/admin/src/features/settings/DangerZone.tsx:87
 msgid "Type"
 msgstr ""
 
 #: apps/admin/src/features/dashboard/DashboardPage.tsx:92
+#: apps/admin/src/features/onboarding/OnboardingPage.tsx:76
 msgid "Unknown error."
 msgstr ""
 
@@ -1273,6 +1571,26 @@ msgstr ""
 
 #: apps/admin/src/features/dashboard/DashboardPage.tsx:447
 msgid "Warnings"
+msgstr ""
+
+#: apps/admin/src/features/onboarding/OnboardingPage.tsx:75
+msgid "We couldn't load the Setup Assistant."
+msgstr ""
+
+#: apps/admin/src/features/onboarding/WelcomeStep.tsx:46
+msgid "We detected your setup. Nothing to fill in."
+msgstr ""
+
+#: apps/admin/src/features/onboarding/AeoStep.tsx:90
+msgid "We'll scan more of your content next."
+msgstr ""
+
+#: apps/admin/src/features/onboarding/WelcomeStep.tsx:29
+msgid "Website"
+msgstr ""
+
+#: apps/admin/src/features/onboarding/useOnboarding.ts:150
+msgid "Welcome"
 msgstr ""
 
 #: apps/admin/src/features/settings/SettingsPage.tsx:547
@@ -1295,6 +1613,14 @@ msgstr ""
 msgid "Who publishes this site, for the schema knowledge graph."
 msgstr ""
 
+#: apps/admin/src/features/onboarding/RecommendationList.tsx:21
+msgid "Will be enabled"
+msgstr ""
+
+#: apps/admin/src/features/onboarding/WelcomeStep.tsx:26
+msgid "WooCommerce store"
+msgstr ""
+
 #: apps/admin/src/features/settings/SettingsPage.tsx:463
 msgid "X Card type"
 msgstr ""
@@ -1303,12 +1629,43 @@ msgstr ""
 msgid "XML & HTML sitemaps"
 msgstr ""
 
+#: apps/admin/src/features/onboarding/MigrationStep.tsx:204
+msgid ""
+"You can always run this later from Settings → Tools. Back up your database "
+"before a large import."
+msgstr ""
+
+#: apps/admin/src/features/onboarding/ContentStep.tsx:113
+msgid ""
+"You'll fix these from the Dashboard after setup. Each has one-click patches."
+msgstr ""
+
+#: apps/admin/src/features/onboarding/OnboardingPage.tsx:30
+msgid "Your SEO and AEO scores, and what to do next."
+msgstr ""
+
+#: apps/admin/src/features/onboarding/AeoStep.tsx:86
+msgid "Your latest post scores %d/100 for AI answers."
+msgstr ""
+
 #: apps/admin/src/features/settings/SettingsPage.tsx:688
 msgid "e.g. Acme SEO"
 msgstr ""
 
+#: apps/admin/src/features/onboarding/ContentStep.tsx:181
+msgid "good"
+msgstr ""
+
 #: apps/admin/src/features/dashboard/DashboardPage.tsx:580
 msgid "n/a"
+msgstr ""
+
+#: apps/admin/src/features/onboarding/ContentStep.tsx:186
+msgid "needs improvement"
+msgstr ""
+
+#: apps/admin/src/features/onboarding/ContentStep.tsx:191
+msgid "poor"
 msgstr ""
 
 #: apps/admin/src/features/settings/DangerZone.tsx:91
@@ -1317,4 +1674,8 @@ msgstr ""
 
 #: apps/admin/src/features/dashboard/DashboardPage.tsx:928
 msgid "· site-wide"
+msgstr ""
+
+#: apps/admin/src/features/onboarding/WelcomeStep.tsx:115
+msgid "≈ 3 minutes · you can exit anytime"
 msgstr ""
