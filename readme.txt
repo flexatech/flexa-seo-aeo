@@ -10,25 +10,25 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 WC requires at least: 8.0
 WC tested up to: 11.0
 
-Complete WordPress SEO — schema, sitemaps, meta, Open Graph — plus an Answer-Engine Readiness score that grades every post for AI search.
+Complete WordPress SEO (schema, sitemaps, meta, Open Graph), plus an Answer-Engine Readiness score that grades every post for AI search.
 
 == Description ==
 
-Flexa SEO is a complete, privacy-first SEO plugin: title & meta templating, JSON-LD schema, XML sitemaps, Open Graph, `robots.txt`, IndexNow, and one-click migration from Yoast, Rank Math and SEOPress. It covers the SEO baseline you expect — and then goes one step further than any of them.
+Flexa SEO is a complete, privacy-first SEO plugin: title & meta templating, JSON-LD schema, XML sitemaps, Open Graph, `robots.txt`, IndexNow, and one-click migration from Yoast, Rank Math and SEOPress. It covers the SEO baseline you expect, and then goes one step further than any of them.
 
 A guided **Setup Assistant** takes you from activation to a configured, answer-engine-ready site in a few minutes: it detects your setup, recommends the SEO and AEO settings that fit, and applies them in one click. Every recommendation is compared against the defaults, so you see exactly which settings will change before anything is applied and any value you set yourself is kept.
 
 **What makes it different: the Answer-Engine Readiness Score**
 
-AI answer engines (ChatGPT, Perplexity, Claude, Google AI Overviews) now decide whether your content gets *quoted* — not just ranked. Dozens of plugins will generate an `llms.txt` file and stop there. Flexa SEO is the only one that **measures and scores how quotable each post actually is**, right in the block editor:
+AI answer engines (ChatGPT, Perplexity, Claude, Google AI Overviews) now decide whether your content gets *quoted*, not just ranked. Dozens of plugins will generate an `llms.txt` file and stop there. Flexa SEO is the only one that **measures and scores how quotable each post actually is**, right in the block editor:
 
 * A live **0–100 readiness score** with a letter grade for the post you're editing, refreshed on every save.
 * An **actionable checklist** across eight signals answer engines rely on: structured data, a concise meta description, an answer-first opening paragraph, question-style headings, FAQ/Q&A blocks, `llms.txt` inclusion, a Markdown alternate for crawlers, and content depth.
-* Each item comes with a plain-English fix — so writers know *exactly* what to change to become citable, no guesswork and no external tool.
-* A site-wide **health Dashboard** rolls those scores up across your content: overall SEO / AEO / Technical scores, an issues overview, health breakdowns, prioritised actions, and a "Pages needing attention" list where each page reveals what to fix — with a one-click **Enable site-wide** button on the checks that are just a settings toggle away (structured data, llms.txt, Markdown alternate).
+* Each item comes with a plain-English fix, so writers know *exactly* what to change to become citable, with no guesswork and no external tool.
+* A site-wide **health Dashboard** rolls those scores up across your content: overall SEO / AEO / Technical scores, an issues overview, health breakdowns, prioritised actions, and a "Pages needing attention" list where each page reveals what to fix, with a one-click **Enable site-wide** button on the checks that are just a settings toggle away (structured data, llms.txt, Markdown alternate).
 * Extensible via the `flexa_seo_aeo/aeo/readiness_checks` filter for themes and add-ons.
 
-This turns "AEO" from a file you generate once into a workflow your team improves post by post — the gap the crowded llms.txt category leaves wide open.
+This turns "AEO" from a file you generate once into a workflow your team improves post by post: the gap the crowded llms.txt category leaves wide open.
 
 **Core SEO**
 
@@ -42,7 +42,7 @@ This turns "AEO" from a file you generate once into a workflow your team improve
 **AI answer-engine tooling**
 
 * Native **`/llms.txt`** endpoint describing your site for large language models.
-* **Agent Readiness** — advertises a Markdown alternate of each post (`?flexa-aeo=md`) via a `Link` header and `<link rel="alternate">`, and serves a clean, token-cheap Markdown rendering for AI crawlers and coding agents.
+* **Agent Readiness**: advertises a Markdown alternate of each post (`?flexa-aeo=md`) via a `Link` header and `<link rel="alternate">`, and serves a clean, token-cheap Markdown rendering for AI crawlers and coding agents.
 * No cloud account and no per-request AI fees: the readiness score and every AEO feature run entirely on your own server.
 
 **WooCommerce (optional)**
@@ -57,15 +57,15 @@ This turns "AEO" from a file you generate once into a workflow your team improve
 
 This plugin connects to one third-party service, and only when you explicitly enable it.
 
-**IndexNow (optional — "IndexNow ping" setting)**
+**IndexNow (optional, "IndexNow ping" setting)**
 
 When the IndexNow feature is turned on, the plugin notifies the IndexNow API each time you publish or update a post so participating search engines (e.g. Microsoft Bing, Yandex) can recrawl the changed URL quickly.
 
-* **What is sent:** your site host, the changed URL(s), and an IndexNow verification key (a random key the plugin generates and serves at `/{key}.txt` on your own site). No personal data and no post content are transmitted — only the public URL that changed.
+* **What is sent:** your site host, the changed URL(s), and an IndexNow verification key (a random key the plugin generates and serves at `/{key}.txt` on your own site). No personal data and no post content are transmitted; only the public URL that changed.
 * **When:** on the `publish`/update transition of a post, as a non-blocking background request. Nothing is sent while the feature is disabled (it is off by default).
 * **Endpoint:** `https://api.indexnow.org/indexnow` (operated by Microsoft).
 
-IndexNow is an open protocol. Documentation and terms: https://www.indexnow.org/documentation — Privacy statement (Microsoft, operator of the endpoint): https://privacy.microsoft.com/privacystatement
+IndexNow is an open protocol. Documentation and terms: https://www.indexnow.org/documentation (privacy statement for Microsoft, the endpoint operator: https://privacy.microsoft.com/privacystatement).
 
 == Source code ==
 
@@ -88,7 +88,7 @@ The `.pot` translation template is regenerated with `pnpm i18n:pot` (PHP + vanil
 
 = What is the Answer-Engine Readiness Score? =
 
-It is a per-post grade (0–100) shown in the block-editor sidebar that measures how ready the post is to be quoted by AI answer engines. It checks eight signals — structured data, meta description, an answer-first opening, question-style headings, FAQ blocks, llms.txt inclusion, a Markdown alternate, and content depth — and gives a plain-English fix for each. It runs entirely on your server, with no AI account or API key.
+It is a per-post grade (0–100) shown in the block-editor sidebar that measures how ready the post is to be quoted by AI answer engines. It checks eight signals (structured data, meta description, an answer-first opening, question-style headings, FAQ blocks, llms.txt inclusion, a Markdown alternate, and content depth) and gives a plain-English fix for each. It runs entirely on your server, with no AI account or API key.
 
 = How is this different from the many llms.txt plugins? =
 
@@ -123,10 +123,10 @@ Yes. WooCommerce product schema is an optional layer that activates only when Wo
 * Security: running a full site scan now requires the "edit others' posts" capability (Editors and Administrators), so lower-privileged roles can no longer trigger the site-wide scan through the REST API. Viewing the cached Dashboard report is unchanged.
 
 = 0.2.0 =
-* New: **SEO/AEO health Dashboard** — overall SEO, AEO and Technical scores, an issues overview, SEO & AEO health breakdowns, prioritised recommended actions, and a "Pages needing attention" list. Each listed page expands to show exactly which readiness checks fail (with a plain-English fix), links straight to the editor, and can be re-scanned on its own after an edit — no full site scan needed.
-* New: **one-click "Enable site-wide" fix** — readiness checks that fail only because a global toggle is off (structured data, llms.txt, Markdown alternate) get a Fix button on the dashboard and in the block-editor sidebar; it flips the setting and re-scores your pages. Shown only to users who can manage settings. No AI, no external calls.
-* New: score trend — a lightweight history of your SEO/AEO scores, captured each time you run a scan (no cron, no external analytics).
-* Fix: migration source detection could run an extremely slow database query on large sites (a multi-key meta lookup), which under a small PHP-FPM pool could tie up all workers. Rewritten as a single indexed query so opening the plugin — and running a migration — stays fast.
+* New: **SEO/AEO health Dashboard**: overall SEO, AEO and Technical scores, an issues overview, SEO & AEO health breakdowns, prioritised recommended actions, and a "Pages needing attention" list. Each listed page expands to show exactly which readiness checks fail (with a plain-English fix), links straight to the editor, and can be re-scanned on its own after an edit, with no full site scan needed.
+* New: **one-click "Enable site-wide" fix**: readiness checks that fail only because a global toggle is off (structured data, llms.txt, Markdown alternate) get a Fix button on the dashboard and in the block-editor sidebar; it flips the setting and re-scores your pages. Shown only to users who can manage settings. No AI, no external calls.
+* New: score trend, a lightweight history of your SEO/AEO scores, captured each time you run a scan (no cron, no external analytics).
+* Fix: migration source detection could run an extremely slow database query on large sites (a multi-key meta lookup), which under a small PHP-FPM pool could tie up all workers. Rewritten as a single indexed query so opening the plugin (and running a migration) stays fast.
 * Improved: the plugin now opens on the Dashboard, with a Dashboard / Settings switch in the header.
 
 = 0.1.0 =
