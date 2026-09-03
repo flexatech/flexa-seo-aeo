@@ -122,6 +122,25 @@ export interface WizardStep {
 }
 
 /**
+ * The shared contract every step component receives from `OnboardingPage`. The
+ * page owns navigation and step-transition persistence; a step owns its body
+ * and its own footer actions (which call these callbacks).
+ */
+export interface StepProps {
+  detect: DetectPayload;
+  state: OnboardingStateData;
+  recommended: RecommendedPayload;
+  /** Advance to the next applicable step, marking the current one complete. */
+  onContinue: () => void;
+  /** Go back one step; undefined on the first step. */
+  onBack?: () => void;
+  /** Finish setup; relevant only on the last step. */
+  onFinish: () => void;
+  /** True while a step-transition write is in flight. */
+  busy: boolean;
+}
+
+/**
  * The steps that actually apply to this site, in order. The content step is
  * skipped on a near-empty site; the migration step appears only when a legacy
  * plugin has data to import. Mirrors docs/onboarding-design.md §7.3.

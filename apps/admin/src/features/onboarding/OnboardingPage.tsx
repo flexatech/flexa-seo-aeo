@@ -1,39 +1,28 @@
-import { AlertTriangle, ArrowLeft, ArrowRight } from "lucide-react";
+import { AlertTriangle, ArrowRight } from "lucide-react";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { __ } from "@/lib/i18n";
 import { useUiStore } from "@/lib/store";
+import { AeoStep } from "./AeoStep";
+import { SeoStep } from "./SeoStep";
+import { WelcomeStep } from "./WelcomeStep";
+import { WizardFooter } from "./WizardFooter";
 import { WizardShell } from "./WizardShell";
 import {
   applicableSteps,
-  type DetectPayload,
   type StepId,
+  type StepProps,
   useOnboarding,
   useUpdateOnboarding,
 } from "./useOnboarding";
 
 /**
- * Interim copy per step. The interactive screens (Welcome, SEO, AEO, Content,
- * Migration, Report) land in later phases; until then each step renders its
- * heading and intent so the shell, resume, and navigation are fully exercisable.
+ * Interim copy for the steps whose interactive screens land in Phases 4-5
+ * (Content, Migration, Report). Welcome, SEO and AEO have real components now.
  */
-const STEP_META: Record<StepId, { title: string; description: string }> = {
-  welcome: {
-    title: __("Welcome"),
-    description: __(
-      "We detected your site setup so you don't have to fill anything in.",
-    ),
-  },
-  seo: {
-    title: __("Search essentials"),
-    description: __("The SEO baseline every site needs, applied in one click."),
-  },
-  aeo: {
-    title: __("AI readiness"),
-    description: __(
-      "Make your content ready to be quoted by AI answer engines.",
-    ),
-  },
+const PLACEHOLDER_META: Partial<
+  Record<StepId, { title: string; description: string }>
+> = {
   content: {
     title: __("Content readiness"),
     description: __("A quick scan of your top pages and what to improve."),
@@ -114,7 +103,7 @@ export function OnboardingPage() {
     return null;
   }
 
-  const { state, detect } = query.data;
+  const { state, detect, recommended } = query.data;
   const steps = applicableSteps(detect);
   const stepIds = steps.map((step) => step.id);
 
@@ -140,11 +129,6 @@ export function OnboardingPage() {
     }
   };
 
-  const onNext = () => {
-    const completed = [...state.completed_steps, current];
-    goTo(stepIds[index + 1], completed);
-  };
-
   const onFinish = () => {
     update.mutate(
       {
@@ -155,89 +139,72 @@ export function OnboardingPage() {
     );
   };
 
-  const meta = STEP_META[current];
+  const onContinue = () => {
+    if (isLast) {
+      onFinish();
+      return;
+    }
+    goTo(stepIds[index + 1], [...state.completed_steps, current]);
+  };
+
+  const stepProps: StepProps = {
+    detect,
+    state,
+    recommended,
+    onContinue,
+    onBack: isFirst ? undefined : onBack,
+    onFinish,
+    busy: update.isPending,
+  };
 
   return (
     <WizardShell steps={steps} currentId={current} onExit={exit}>
-      <div className="fsa:space-y-6">
-        <div className="fsa:rounded-xl fsa:border fsa:border-slate-200 fsa:bg-white fsa:p-8 fsa:shadow-sm">
-          <h1 className="fsa:text-2xl fsa:font-bold fsa:text-slate-900">
-            {meta.title}
-          </h1>
-          <p className="fsa:mt-2 fsa:text-sm fsa:text-slate-600">
-            {meta.description}
-          </p>
-          <StepDetails step={current} detect={detect} />
-        </div>
-
-        <div className="fsa:flex fsa:items-center fsa:justify-between">
-          <div>
-            {!isFirst && (
-              <Button
-                type="button"
-                variant="ghost"
-                onClick={onBack}
-                disabled={update.isPending}
-              >
-                <ArrowLeft className="fsa:h-4 fsa:w-4" aria-hidden />
-                {__("Back")}
-              </Button>
-            )}
-          </div>
-
-          <Button
-            type="button"
-            onClick={isLast ? onFinish : onNext}
-            disabled={update.isPending}
-          >
-            {isLast
-              ? __("Go to Dashboard")
-              : isFirst
-                ? __("Start setup")
-                : __("Continue")}
-            {!isLast && <ArrowRight className="fsa:h-4 fsa:w-4" aria-hidden />}
-          </Button>
-        </div>
-      </div>
+      {current === "welcome" ? (
+        <WelcomeStep {...stepProps} />
+      ) : current === "seo" ? (
+        <SeoStep {...stepProps} />
+      ) : current === "aeo" ? (
+        <AeoStep {...stepProps} />
+      ) : (
+        <PlaceholderStep step={current} isLast={isLast} {...stepProps} />
+      )}
     </WizardShell>
   );
 }
 
 /**
- * A small, read-only snapshot of the detection relevant to the current step, so
- * the interim screen already reflects the real site. Interactive controls arrive
- * with each step's dedicated component in later phases.
+ * The interim body for a step whose interactive screen ships in a later phase.
+ * It still exercises the shell, resume and navigation end to end.
  */
-function StepDetails({
+function PlaceholderStep({
   step,
-  detect,
-}: {
-  step: StepId;
-  detect: DetectPayload;
-}) {
-  if (step !== "welcome") {
-    return null;
-  }
-
-  const rows: { label: string; value: string }[] = [
-    { label: __("Site"), value: detect.site_name || detect.site_url },
-    { label: __("Language"), value: detect.language },
-    {
-      label: __("Type"),
-      value: detect.has_woocommerce
-        ? __("WooCommerce store")
-        : detect.site_type,
-    },
-  ];
+  isLast,
+  onContinue,
+  onBack,
+  busy,
+}: StepProps & { step: StepId; isLast: boolean }) {
+  const meta = PLACEHOLDER_META[step] ?? {
+    title: step,
+    description: "",
+  };
 
   return (
-    <dl className="fsa:mt-6 fsa:grid fsa:gap-2 fsa:rounded-lg fsa:bg-slate-50 fsa:p-4 fsa:text-sm">
-      {rows.map((row) => (
-        <div key={row.label} className="fsa:flex fsa:justify-between fsa:gap-4">
-          <dt className="fsa:text-slate-500">{row.label}</dt>
-          <dd className="fsa:font-medium fsa:text-slate-800">{row.value}</dd>
-        </div>
-      ))}
-    </dl>
+    <div className="fsa:space-y-6">
+      <div className="fsa:rounded-xl fsa:border fsa:border-slate-200 fsa:bg-white fsa:p-8 fsa:shadow-sm">
+        <h1 className="fsa:text-2xl fsa:font-bold fsa:text-slate-900">
+          {meta.title}
+        </h1>
+        <p className="fsa:mt-2 fsa:text-sm fsa:text-slate-600">
+          {meta.description}
+        </p>
+      </div>
+
+      <WizardFooter onBack={onBack} disabled={busy}>
+        <Button type="button" onClick={onContinue} disabled={busy}>
+          {isLast ? __("Go to Dashboard") : __("Continue")}
+          {!isLast && <ArrowRight className="fsa:h-4 fsa:w-4" aria-hidden />}
+        </Button>
+      </WizardFooter>
+    </div>
   );
 }
