@@ -21,6 +21,10 @@ final class Resetter {
 	public static function reset_all(): array {
 		$removed = delete_option( Settings::OPTION_KEY );
 
+		// Setup Assistant progress is Flexa data too — a full reset returns the
+		// site to a first-run state, so the wizard offers itself again.
+		delete_option( OnboardingState::OPTION_KEY );
+
 		if ( class_exists( \Flexa\SeoAeo\Install\Migrator::class ) ) {
 			\Flexa\SeoAeo\Install\Migrator::drop();
 		}

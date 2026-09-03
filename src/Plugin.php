@@ -103,6 +103,13 @@ final class Plugin {
 		}
 
 		// Phase 4 — admin React app.
+		// Setup Assistant: first-run redirect into the wizard, with a
+		// Plugins-screen notice fallback. Admin-only; self-suppresses once
+		// setup is completed or dismissed.
+		if ( is_admin() && class_exists( Admin\ActivationRedirect::class ) ) {
+			Admin\ActivationRedirect::instance()->register();
+		}
+
 		if ( class_exists( Admin\AdminMenu::class ) ) {
 			Admin\AdminMenu::instance()->register();
 		}
