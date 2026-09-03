@@ -65,6 +65,9 @@ final class Enqueue {
 				// Gates the one-click "Enable site-wide" fix, which POSTs to the
 				// settings endpoint (manage_options) — editors see the hint only.
 				'canManageSettings' => Capabilities::can_manage_settings(),
+				// Gates the "Scan now" button, which POSTs to /dashboard/scan
+				// (edit_others_posts) — Authors see the cached report read-only.
+				'canScan'           => Capabilities::can_scan(),
 				'postTypes'         => $this->public_objects( 'post_types' ),
 				'taxonomies'        => $this->public_objects( 'taxonomies' ),
 			]

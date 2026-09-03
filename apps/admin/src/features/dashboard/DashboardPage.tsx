@@ -108,6 +108,7 @@ export function DashboardPage() {
   };
 
   const canManageSettings = getPluginGlobal().canManageSettings;
+  const canScan = getPluginGlobal().canScan;
 
   return (
     <div className="fsa:mx-auto fsa:max-w-6xl fsa:px-6 fsa:pt-8 fsa:pb-12">
@@ -132,20 +133,22 @@ export function DashboardPage() {
               ? sprintfLike(__("Last scan analysed %d posts."), data.scanned)
               : __("No scan yet.")}
           </span>
-          <Button
-            onClick={onScan}
-            disabled={scan.isPending}
-            className="fsa:gap-2"
-          >
-            <RefreshCw
-              className={cn(
-                "fsa:h-4 fsa:w-4",
-                scan.isPending && "fsa:animate-spin",
-              )}
-              aria-hidden
-            />
-            {scan.isPending ? __("Scanning…") : __("Scan now")}
-          </Button>
+          {canScan && (
+            <Button
+              onClick={onScan}
+              disabled={scan.isPending}
+              className="fsa:gap-2"
+            >
+              <RefreshCw
+                className={cn(
+                  "fsa:h-4 fsa:w-4",
+                  scan.isPending && "fsa:animate-spin",
+                )}
+                aria-hidden
+              />
+              {scan.isPending ? __("Scanning…") : __("Scan now")}
+            </Button>
+          )}
         </div>
       </div>
 

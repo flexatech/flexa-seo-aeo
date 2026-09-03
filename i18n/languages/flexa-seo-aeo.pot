@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-03T02:37:22+00:00\n"
+"POT-Creation-Date: 2026-09-03T02:48:51+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: flexa-seo-aeo\n"
@@ -120,6 +120,10 @@ msgid "You do not have permission to perform this action."
 msgstr ""
 
 #: src/Rest/BaseRestController.php:39
+msgid "You do not have permission to run a site scan."
+msgstr ""
+
+#: src/Rest/BaseRestController.php:51
 msgid "You do not have permission to update settings."
 msgstr ""
 
@@ -667,7 +671,7 @@ msgid ""
 "%s is still active. Deactivate it after setup to avoid duplicate meta tags."
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:788
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:791
 #: apps/admin/src/features/onboarding/ContentStep.tsx:99
 msgid "(no title)"
 msgstr ""
@@ -683,8 +687,8 @@ msgid ""
 "A short description answer engines can quote. Shown at the top of llms.txt."
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:344
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:647
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:347
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:650
 #: apps/admin/src/features/onboarding/ReportStep.tsx:97
 msgid "AEO"
 msgstr ""
@@ -694,11 +698,11 @@ msgstr ""
 msgid "AEO Core"
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:185
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:188
 msgid "AEO Health"
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:162
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:165
 msgid "AEO Score"
 msgstr ""
 
@@ -718,7 +722,7 @@ msgstr ""
 msgid "AI readiness"
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:653
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:656
 msgid "Action"
 msgstr ""
 
@@ -734,7 +738,7 @@ msgstr ""
 msgid "Agent Readiness"
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:842
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:845
 msgid "All readiness checks pass now. 🎉"
 msgstr ""
 
@@ -822,7 +826,7 @@ msgid ""
 "prepares yours, then measures how quotable each post is."
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:639
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:642
 msgid "Click a row to see what to fix."
 msgstr ""
 
@@ -862,11 +866,11 @@ msgstr ""
 msgid "Could not read the file."
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:759
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:762
 msgid "Couldn’t apply that fix."
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:421
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:424
 msgid "Critical"
 msgstr ""
 
@@ -885,7 +889,7 @@ msgstr ""
 
 #: apps/admin/src/app/App.tsx:15
 #: apps/admin/src/components/CommandPalette.tsx:56
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:121
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:122
 msgid "Dashboard"
 msgstr ""
 
@@ -901,7 +905,7 @@ msgstr ""
 msgid "Destructive actions"
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:843
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:846
 msgid ""
 "Details aren’t loaded yet — run “Scan now” at the top to refresh this list."
 msgstr ""
@@ -930,7 +934,7 @@ msgstr ""
 msgid "Download the current configuration as a JSON file."
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:827
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:830
 msgid "Edit"
 msgstr ""
 
@@ -960,11 +964,11 @@ msgstr ""
 msgid "Enabled during setup"
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:754
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:757
 msgid "Enabled site-wide — your pages are being re-scored."
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:634
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:637
 msgid "Every scanned page is in good shape. 🎉"
 msgstr ""
 
@@ -1000,7 +1004,7 @@ msgstr ""
 msgid "Failed to load the dashboard:"
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:907
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:910
 msgid "Fix in editor"
 msgstr ""
 
@@ -1033,7 +1037,7 @@ msgstr ""
 msgid "Homepage title"
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:124
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:125
 msgid "How healthy is your site, what is wrong, and what to fix next."
 msgstr ""
 
@@ -1090,11 +1094,11 @@ msgstr ""
 msgid "Indexing"
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:650
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:653
 msgid "Issues"
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:459
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:462
 msgid "Issues overview"
 msgstr ""
 
@@ -1114,7 +1118,7 @@ msgstr ""
 msgid "Language: %s"
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:132
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:133
 msgid "Last scan analysed %d posts."
 msgstr ""
 
@@ -1178,7 +1182,7 @@ msgstr ""
 msgid "No matching commands."
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:133
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:134
 msgid "No scan yet."
 msgstr ""
 
@@ -1186,7 +1190,7 @@ msgstr ""
 msgid "Nothing available."
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:583
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:586
 msgid "Nothing urgent — your configuration looks healthy."
 msgstr ""
 
@@ -1215,7 +1219,7 @@ msgstr ""
 msgid "Opens /sitemap.xml"
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:435
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:438
 msgid "Opportunities"
 msgstr ""
 
@@ -1248,15 +1252,15 @@ msgstr ""
 msgid "Overwrite existing Flexa values"
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:645
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:648
 msgid "Page"
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:629
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:632
 msgid "Pages needing attention"
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:442
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:445
 msgid "Passed"
 msgstr ""
 
@@ -1300,7 +1304,7 @@ msgid ""
 "values."
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:578
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:581
 msgid "Recommended actions"
 msgstr ""
 
@@ -1324,15 +1328,15 @@ msgstr ""
 msgid "Report"
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:740
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:743
 msgid "Rescan failed."
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:922
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:925
 msgid "Rescan this page"
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:922
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:925
 msgid "Rescanning…"
 msgstr ""
 
@@ -1382,32 +1386,32 @@ msgstr ""
 msgid "Rich preview cards on X."
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:633
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:636
 msgid "Run a scan to surface the pages that need work."
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:337
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:340
 msgid "Run “Scan now” a few times to build a score history here."
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:343
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:346
 #: apps/admin/src/features/onboarding/ReportStep.tsx:92
 msgid "SEO"
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:333
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:336
 msgid "SEO & AEO trend"
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:184
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:187
 msgid "SEO Health"
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:156
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:159
 msgid "SEO Score"
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:378
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:381
 msgid "SEO and AEO score history"
 msgstr ""
 
@@ -1431,7 +1435,7 @@ msgstr ""
 msgid "Scan incomplete. Retry from the Dashboard."
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:147
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:149
 msgid "Scan now"
 msgstr ""
 
@@ -1444,7 +1448,7 @@ msgstr ""
 msgid "Scanning your content…"
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:147
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:149
 msgid "Scanning…"
 msgstr ""
 
@@ -1615,7 +1619,7 @@ msgid ""
 "Fill-gaps keeps anything Flexa already has."
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:776
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:779
 msgid "Toggle issue details"
 msgstr ""
 
@@ -1648,7 +1652,7 @@ msgstr ""
 msgid "View llms.txt"
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:428
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:431
 msgid "Warnings"
 msgstr ""
 
@@ -1744,7 +1748,7 @@ msgstr ""
 msgid "good"
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:552
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:555
 msgid "n/a"
 msgstr ""
 
@@ -1760,7 +1764,7 @@ msgstr ""
 msgid "to confirm"
 msgstr ""
 
-#: apps/admin/src/features/dashboard/DashboardPage.tsx:891
+#: apps/admin/src/features/dashboard/DashboardPage.tsx:894
 msgid "· site-wide"
 msgstr ""
 

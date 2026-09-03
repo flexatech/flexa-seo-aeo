@@ -23,6 +23,11 @@ export interface PluginGlobal {
      * gates the one-click "Enable site-wide" fix on the dashboard.
      */
     canManageSettings: boolean;
+    /**
+     * Whether the current user can run a full site scan (edit_others_posts) —
+     * gates the "Scan now" button. Authors see the cached report read-only.
+     */
+    canScan: boolean;
     /** Public post types as `slug => label`, for the sitemap multi-select. */
     postTypes: Record<string, string>;
     /** Public taxonomies as `slug => label`, for the sitemap multi-select. */

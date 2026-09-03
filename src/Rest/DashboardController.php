@@ -15,9 +15,12 @@ defined( 'ABSPATH' ) || exit;
  * GET  /wp-json/flexa-seo-aeo/v1/dashboard      — the cached site health report.
  * POST /wp-json/flexa-seo-aeo/v1/dashboard/scan — force a fresh scan + snapshot.
  *
- * Both are gated on the plugin's manage capability (`edit_posts`) since the
- * report only summarises content the user can already see. The heavy work lives
- * in {@see SiteAudit}; this controller is just the HTTP seam.
+ * Reading the cached report is gated on the plugin's manage capability
+ * (`edit_posts`) since it only summarises content the user can already see.
+ * Forcing a fresh scan is a heavier, site-wide write, so it requires the
+ * stronger scan capability (`edit_others_posts`) — Editors and Administrators,
+ * not Authors. The heavy work lives in {@see SiteAudit}; this controller is just
+ * the HTTP seam.
  */
 final class DashboardController extends BaseRestController {
 	public function register_routes(): void {
@@ -37,7 +40,7 @@ final class DashboardController extends BaseRestController {
 			[
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => [ $this, 'scan' ],
-				'permission_callback' => [ $this, 'manage_permission' ],
+				'permission_callback' => [ $this, 'scan_permission' ],
 			]
 		);
 	}
