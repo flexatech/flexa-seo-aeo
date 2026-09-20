@@ -4,7 +4,7 @@ Tags: seo, schema, sitemap, aeo, woocommerce
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.3.0
+Stable tag: 0.4.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 WC requires at least: 8.0
@@ -55,7 +55,7 @@ This turns "AEO" from a file you generate once into a workflow your team improve
 
 == External services ==
 
-This plugin connects to one third-party service, and only when you explicitly enable it.
+This plugin connects to two external services: IndexNow, only when you explicitly enable it, and an optional deactivation feedback survey that runs only in the admin.
 
 **IndexNow (optional, "IndexNow ping" setting)**
 
@@ -66,6 +66,16 @@ When the IndexNow feature is turned on, the plugin notifies the IndexNow API eac
 * **Endpoint:** `https://api.indexnow.org/indexnow` (operated by Microsoft).
 
 IndexNow is an open protocol. Documentation and terms: https://www.indexnow.org/documentation (privacy statement for Microsoft, the endpoint operator: https://privacy.microsoft.com/privacystatement).
+
+**Deactivation feedback (Flexa Product Intelligence)**
+
+When you go to deactivate Flexa SEO on the Plugins screen, a short optional survey asks why. It is served by Flexa's product intelligence service at `https://product-intelligence.flexacommerce.com`. It runs only on `wp-admin/plugins.php`, never on the front end, and never blocks or delays deactivation.
+
+* **What is sent, and when:** on opening the Plugins screen, a request to `/api/v1/config` (the product slug and tier) loads the survey configuration, cached for 6 hours. When you deactivate or interact with the survey, the reason you pick and any optional message you type are sent to `/api/v1/deactivations`, `/api/v1/events`, `/api/v1/feedback`, `/api/v1/feature-requests`, and `/api/v1/recovery-events`. If you later reactivate the plugin, a single `/api/v1/recovery-events` request records the reactivation and how long the plugin was inactive.
+* **What is included:** an anonymous per-site identifier (a random UUID), the plugin version and tier, and by default your WordPress/PHP version and locale. No email, site domain, user identity, or raw IP is collected.
+* **Opt out:** turn the environment data off with `add_filter( 'flexa_seo_aeo/deactivation_survey/config', fn( $c ) => array( 'collect_environment' => false ) + $c );`, or disable the whole survey with `add_filter( 'flexa_seo_aeo/deactivation_survey/enabled', '__return_false' );`.
+
+Service terms and privacy policy: https://flexacommerce.com/pages/terms and https://flexacommerce.com/pages/privacy
 
 == Source code ==
 
@@ -96,7 +106,7 @@ Most of those generate a single `llms.txt` file and stop. Flexa SEO does that to
 
 = Does this plugin require an account or send my data anywhere? =
 
-No. There is no account and no telemetry. The only outbound request is the optional IndexNow ping, which you enable yourself and which sends only changed public URLs (see *External services*).
+No account is required, and no content is sent anywhere. There are only two optional outbound requests, both covered under *External services*: the IndexNow ping, which you enable yourself and which sends only changed public URLs, and a short deactivation feedback survey on the Plugins screen, which is anonymous and which you can disable with a filter.
 
 = Will it conflict with Yoast, Rank Math, or SEOPress? =
 
@@ -108,14 +118,28 @@ Yes. WooCommerce product schema is an optional layer that activates only when Wo
 
 == Screenshots ==
 
-1. Health Dashboard: overall SEO, AEO and Technical SEO scores, an SEO & AEO score trend, and an issues overview (critical, warnings, opportunities, passed).
-2. SEO Health and AEO Health breakdowns, with prioritised recommended actions.
-3. "Pages needing attention" list: per-page AEO score and issue count, expandable to show exactly what to fix, with a link straight to the editor.
-4. Settings: title and meta description templating with the token engine.
+1. Health Dashboard: overall SEO, AEO and Technical SEO scores, an SEO & AEO score trend, an issues overview (critical, warnings, opportunities, passed), and SEO Health and AEO Health breakdowns.
+2. "Pages needing attention" list: per-page AEO score and issue count, expandable to show exactly what to fix, with a link straight to the editor.
+3. Settings: title and meta description templating with the token engine, plus site-wide title and meta defaults.
+4. Settings: Organization identity used for the knowledge-graph (Organization/Person) schema.
 5. Settings: XML and HTML sitemaps, with per-post-type and per-taxonomy inclusion.
-6. Settings: AEO Core options: llms.txt, the Markdown alternate for AI crawlers, and other answer-engine controls.
+6. Settings: indexing controls, IndexNow, and custom robots.txt rules.
+7. Settings: AEO Core options: llms.txt, the plain-text and Markdown alternates for AI crawlers, Agent Readiness, and JSON-LD schema.
+8. Settings: branding and white-label, to replace the plugin name across the admin.
+9. Settings: one-click migration of titles, meta and settings from Yoast SEO or Rank Math.
+10. Settings: import and export the full plugin configuration to move it between sites.
+11. Settings: Danger Zone, to restore defaults and clear per-post SEO overrides.
+12. Block editor: the Search & AI panel, editing title, meta description and canonical URL per page.
+13. Block editor: the Social panel, editing Open Graph title, description and share image per page.
+14. Settings: social sharing with Open Graph and X (Twitter) Cards, card type, and a default share image.
 
 == Changelog ==
+
+= 0.4.1 =
+* Fix: the deactivation feedback survey no longer opens more than one "Before you go" dialog. With several Flexa plugins active at once, each bundled its own copy of the survey script and every copy added a handler to the Deactivate link, so the dialog stacked and needed one click to dismiss each copy. Each Deactivate link now opens a single dialog.
+
+= 0.4.0 =
+* New: an optional deactivation feedback survey. If you deactivate the plugin from the Plugins screen, a short survey asks why, so we can fix what is not working. It is anonymous (a random per-site id, no email or domain), runs only in the admin, and never blocks or delays deactivation. If you reactivate later, that win-back is recorded too (anonymously). Disable it all with `add_filter( 'flexa_seo_aeo/deactivation_survey/enabled', '__return_false' );`. See *External services* for exactly what is sent.
 
 = 0.3.0 =
 * New: **Setup Assistant**, a guided onboarding wizard. It detects your site, recommends the SEO and AEO settings that fit, and applies them in one click. The flow covers search essentials, AI readiness, a quick content-readiness scan of your recent pages, optional migration from Yoast or Rank Math, and a final readiness report that seeds your Dashboard. Nothing is ever overwritten: recommendations are compared against the defaults, you see every setting that will change before applying, and any value you already customized is kept.
@@ -131,3 +155,11 @@ Yes. WooCommerce product schema is an optional layer that activates only when Wo
 
 = 0.1.0 =
 * Initial release: **Answer-Engine Readiness Score** (per-post 0–100 grade + actionable checklist in the block editor), title/meta templating, Open Graph & Twitter, canonical & robots, XML/HTML sitemaps, robots.txt, IndexNow, llms.txt, Agent Readiness Markdown export, JSON-LD schema (Article/WebPage/WebSite/Organization/FAQ), one-click migration from Yoast/Rank Math/SEOPress, optional WooCommerce Product schema, and a React admin app.
+
+== Upgrade Notice ==
+
+= 0.4.1 =
+Fixes the deactivation survey stacking multiple "Before you go" dialogs when several Flexa plugins are active.
+
+= 0.4.0 =
+Adds an optional, anonymous deactivation feedback survey on the Plugins screen. It never blocks deactivation and can be disabled with a filter.

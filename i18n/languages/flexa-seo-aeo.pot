@@ -3,14 +3,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Flexa SEO - AEO | AI SEO & Answer Engine Optimization "
-"0.3.0\n"
+"0.4.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/flexa-seo-aeo\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-03T03:17:01+00:00\n"
+"POT-Creation-Date: 2026-09-20T11:40:50+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: flexa-seo-aeo\n"
@@ -23,8 +23,8 @@ msgstr ""
 #. Description of the plugin
 #: flexa-seo-aeo.php
 msgid ""
-"Complete WordPress SEO — schema, sitemaps, meta, Open Graph — plus a per-"
-"post Answer-Engine Readiness score and a site health dashboard for AI search."
+"Complete WordPress SEO (schema, sitemaps, meta, Open Graph), plus a per-post "
+"Answer-Engine Readiness score and a site health dashboard for AI search."
 msgstr ""
 
 #. Author of the plugin
@@ -34,6 +34,102 @@ msgstr ""
 
 #: flexa-seo-aeo.php:27
 msgid "Flexa SEO requires PHP 8.2 or higher. The plugin has been disabled."
+msgstr ""
+
+#: libraries/deactivation-intelligence/src/class-deactivation-intelligence.php:287
+msgid "I no longer need it"
+msgstr ""
+
+#: libraries/deactivation-intelligence/src/class-deactivation-intelligence.php:288
+msgid "It's missing a feature I need"
+msgstr ""
+
+#: libraries/deactivation-intelligence/src/class-deactivation-intelligence.php:289
+msgid "Something isn't working"
+msgstr ""
+
+#: libraries/deactivation-intelligence/src/class-deactivation-intelligence.php:290
+msgid "It conflicts with another plugin/theme"
+msgstr ""
+
+#: libraries/deactivation-intelligence/src/class-deactivation-intelligence.php:291
+msgid "It's too difficult to use"
+msgstr ""
+
+#: libraries/deactivation-intelligence/src/class-deactivation-intelligence.php:292
+msgid "It's affecting performance"
+msgstr ""
+
+#: libraries/deactivation-intelligence/src/class-deactivation-intelligence.php:293
+msgid "I found a better alternative"
+msgstr ""
+
+#: libraries/deactivation-intelligence/src/class-deactivation-intelligence.php:294
+msgid "I'm troubleshooting"
+msgstr ""
+
+#: libraries/deactivation-intelligence/src/class-deactivation-intelligence.php:295
+msgid "Other"
+msgstr ""
+
+#: libraries/deactivation-intelligence/src/class-deactivation-intelligence.php:302
+msgid "Before you go…"
+msgstr ""
+
+#: libraries/deactivation-intelligence/src/class-deactivation-intelligence.php:303
+msgid "What made you deactivate this plugin?"
+msgstr ""
+
+#: libraries/deactivation-intelligence/src/class-deactivation-intelligence.php:304
+msgid "Skip & deactivate"
+msgstr ""
+
+#: libraries/deactivation-intelligence/src/class-deactivation-intelligence.php:305
+msgid "Cancel"
+msgstr ""
+
+#: libraries/deactivation-intelligence/src/class-deactivation-intelligence.php:306
+msgid "Deactivate"
+msgstr ""
+
+#: libraries/deactivation-intelligence/src/class-deactivation-intelligence.php:307
+msgid "Deactivate anyway"
+msgstr ""
+
+#: libraries/deactivation-intelligence/src/class-deactivation-intelligence.php:308
+msgid "Get help"
+msgstr ""
+
+#: libraries/deactivation-intelligence/src/class-deactivation-intelligence.php:309
+msgid "Notify me if you add it"
+msgstr ""
+
+#: libraries/deactivation-intelligence/src/class-deactivation-intelligence.php:310
+msgid "What feature are you looking for?"
+msgstr ""
+
+#: libraries/deactivation-intelligence/src/class-deactivation-intelligence.php:311
+msgid "What went wrong?"
+msgstr ""
+
+#: libraries/deactivation-intelligence/src/class-deactivation-intelligence.php:312
+msgid "Which plugin or theme is it conflicting with?"
+msgstr ""
+
+#: libraries/deactivation-intelligence/src/class-deactivation-intelligence.php:313
+msgid "What was difficult to use?"
+msgstr ""
+
+#: libraries/deactivation-intelligence/src/class-deactivation-intelligence.php:314
+msgid "What alternative are you using?"
+msgstr ""
+
+#: libraries/deactivation-intelligence/src/class-deactivation-intelligence.php:315
+msgid "Anything you would like to share?"
+msgstr ""
+
+#: libraries/deactivation-intelligence/src/class-deactivation-intelligence.php:316
+msgid "Optional"
 msgstr ""
 
 #. translators: %s: plugin brand name.
@@ -814,11 +910,6 @@ msgstr ""
 
 #: apps/admin/src/features/settings/sections.ts:100
 msgid "Bring your existing SEO meta over from Yoast SEO or Rank Math."
-msgstr ""
-
-#: apps/admin/src/features/onboarding/ApplyConfirmDialog.tsx:93
-#: apps/admin/src/features/settings/DangerZone.tsx:113
-msgid "Cancel"
 msgstr ""
 
 #: apps/admin/src/features/onboarding/AeoStep.tsx:33

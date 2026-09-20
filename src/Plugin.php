@@ -110,6 +110,12 @@ final class Plugin {
 			Admin\ActivationRedirect::instance()->register();
 		}
 
+		// Deactivation Intelligence: an optional feedback survey on the Plugins
+		// screen. Self-gates to plugins.php and never blocks deactivation.
+		if ( is_admin() && class_exists( Engine\DeactivationSurvey::class ) ) {
+			Engine\DeactivationSurvey::instance();
+		}
+
 		if ( class_exists( Admin\AdminMenu::class ) ) {
 			Admin\AdminMenu::instance()->register();
 		}
