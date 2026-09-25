@@ -43,6 +43,12 @@ export interface SettingsData {
     robots_txt: string;
     whitelabel: boolean;
     whitelabel_name: string;
+    strip_category_base: boolean;
+    redirect_attachments: boolean;
+    redirect_orphan_attachments: string;
+    nofollow_external_links: boolean;
+    nofollow_image_links: boolean;
+    new_window_external_links: boolean;
     sitemap_post_types: string[];
     sitemap_taxonomies: string[];
     aeo: AeoSettings;

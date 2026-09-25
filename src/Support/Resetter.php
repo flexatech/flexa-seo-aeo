@@ -25,6 +25,9 @@ final class Resetter {
 		// site to a first-run state, so the wizard offers itself again.
 		delete_option( OnboardingState::OPTION_KEY );
 
+		// Transient flag for a deferred rewrite flush (strip-category-base).
+		delete_option( 'flexa_seo_aeo_flush_rewrite' );
+
 		if ( class_exists( \Flexa\SeoAeo\Install\Migrator::class ) ) {
 			\Flexa\SeoAeo\Install\Migrator::drop();
 		}

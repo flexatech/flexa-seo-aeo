@@ -2,6 +2,7 @@ import {
     ArrowLeftRight,
     Bot,
     Building2,
+    Link2,
     Network,
     Palette,
     Rss,
@@ -19,6 +20,7 @@ export type SectionId =
     | "organization"
     | "sitemaps"
     | "indexing"
+    | "links"
     | "aeo"
     | "branding"
     | "migrate"
@@ -74,6 +76,14 @@ export const SECTIONS: SectionMeta[] = [
         icon: Rss,
         paneTitle: __("Indexing"),
         paneSubtitle: __("Push instant index signals and tune the virtual robots.txt."),
+    },
+    {
+        id: "links",
+        title: __("Links"),
+        subtitle: __("URLs & link attributes"),
+        icon: Link2,
+        paneTitle: __("Links"),
+        paneSubtitle: __("Clean up URLs and control how links behave on the front end."),
     },
     {
         id: "aeo",

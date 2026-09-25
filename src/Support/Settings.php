@@ -32,6 +32,11 @@ final class Settings {
 		'image_seo_alt',       // Auto-fill missing image alt text.
 		'indexnow',            // Ping IndexNow on publish/update for instant indexing.
 		'whitelabel',          // Replace the "Flexa SEO" branding in wp-admin.
+		'strip_category_base',       // Remove /category/ from category archive URLs.
+		'redirect_attachments',      // Redirect attachment pages to their parent post.
+		'nofollow_external_links',   // Add rel="nofollow" to external links in content.
+		'nofollow_image_links',      // Add rel="nofollow" to external image-file links.
+		'new_window_external_links', // Add target="_blank" to external links in content.
 	];
 
 	/**
@@ -89,6 +94,7 @@ final class Settings {
 		$defaults['knowledge_name']     = '';
 		$defaults['sitemap_post_types'] = [ 'post', 'page' ];
 		$defaults['sitemap_taxonomies'] = [ 'category', 'post_tag' ];
+		$defaults['redirect_orphan_attachments'] = ''; // Fallback URL for attachments without a parent post.
 		$defaults['robots_txt']         = '';   // Extra lines appended to the virtual robots.txt.
 		$defaults['indexnow_key']       = '';   // Auto-generated on first IndexNow submission.
 		$defaults['whitelabel_name']    = '';   // Overrides the admin menu / brand label when white-label is on.
@@ -202,6 +208,10 @@ final class Settings {
 			$clean['sitemap_taxonomies'] = self::sanitize_keys( $incoming['sitemap_taxonomies'] );
 		}
 
+		if ( array_key_exists( 'redirect_orphan_attachments', $incoming ) ) {
+			$clean['redirect_orphan_attachments'] = esc_url_raw( (string) $incoming['redirect_orphan_attachments'] );
+		}
+
 		if ( array_key_exists( 'robots_txt', $incoming ) ) {
 			// Plain-text robots.txt directives only (standard SEO-plugin feature).
 			// sanitize_textarea_field() strips any HTML/tags while keeping the
@@ -294,6 +304,9 @@ final class Settings {
 		}
 		if ( isset( $stored['sitemap_taxonomies'] ) ) {
 			$out['sitemap_taxonomies'] = self::sanitize_keys( $stored['sitemap_taxonomies'] );
+		}
+		if ( isset( $stored['redirect_orphan_attachments'] ) && is_string( $stored['redirect_orphan_attachments'] ) ) {
+			$out['redirect_orphan_attachments'] = $stored['redirect_orphan_attachments'];
 		}
 		if ( isset( $stored['robots_txt'] ) && is_string( $stored['robots_txt'] ) ) {
 			$out['robots_txt'] = $stored['robots_txt'];

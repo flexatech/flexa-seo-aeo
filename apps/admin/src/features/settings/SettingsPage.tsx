@@ -3,14 +3,19 @@ import {
     Bot,
     Braces,
     ChevronDown,
+    ExternalLink,
     FileCode,
     FileText,
+    FolderTree,
     Home,
     Image,
+    ImageOff,
+    Link2,
     List,
     Navigation,
     Network,
     Palette,
+    Paperclip,
     Rss,
     Save,
     Search,
@@ -47,6 +52,11 @@ const BOOL_KEYS = [
     "image_seo_alt",
     "indexnow",
     "whitelabel",
+    "strip_category_base",
+    "redirect_attachments",
+    "nofollow_external_links",
+    "nofollow_image_links",
+    "new_window_external_links",
 ] as const;
 
 const STRING_KEYS = [
@@ -57,6 +67,7 @@ const STRING_KEYS = [
     "og_default_image",
     "knowledge_type",
     "knowledge_name",
+    "redirect_orphan_attachments",
     "robots_txt",
     "whitelabel_name",
 ] as const;
@@ -265,6 +276,57 @@ export function SettingsPage() {
             ),
             checked: form.indexnow,
             onChange: (v) => setBool("indexnow", v),
+        },
+    ];
+
+    const linksUrlToggles: ToggleMeta[] = [
+        {
+            icon: FolderTree,
+            title: __("Strip Category Base"),
+            description: __(
+                "Remove /category/ from category archive URLs. e.g. example.com/category/news/ becomes example.com/news/.",
+            ),
+            checked: form.strip_category_base,
+            onChange: (v) => setBool("strip_category_base", v),
+        },
+        {
+            icon: Paperclip,
+            title: __("Redirect Attachments"),
+            description: __(
+                "Redirect attachment page URLs to the post they appear in.",
+            ),
+            checked: form.redirect_attachments,
+            onChange: (v) => setBool("redirect_attachments", v),
+        },
+    ];
+
+    const linksAttrToggles: ToggleMeta[] = [
+        {
+            icon: Link2,
+            title: __("Nofollow External Links"),
+            description: __(
+                'Add rel="nofollow" to external links in your content. Applied when the content is displayed; the stored content is not changed.',
+            ),
+            checked: form.nofollow_external_links,
+            onChange: (v) => setBool("nofollow_external_links", v),
+        },
+        {
+            icon: ImageOff,
+            title: __("Nofollow Image File Links"),
+            description: __(
+                'Add rel="nofollow" to links pointing to external image files. Applied when the content is displayed; the stored content is not changed.',
+            ),
+            checked: form.nofollow_image_links,
+            onChange: (v) => setBool("nofollow_image_links", v),
+        },
+        {
+            icon: ExternalLink,
+            title: __("Open External Links in New Tab/Window"),
+            description: __(
+                'Add target="_blank" to external links so they open in a new tab. Applied when the content is displayed; the stored content is not changed.',
+            ),
+            checked: form.new_window_external_links,
+            onChange: (v) => setBool("new_window_external_links", v),
         },
     ];
 
@@ -600,6 +662,42 @@ export function SettingsPage() {
                                             className={cn(TEXTAREA_CLS, "fsa:font-mono")}
                                         />
                                     </StackedField>
+                                </div>
+                            </div>
+                        )}
+
+                        {active === "links" && (
+                            <div>
+                                <ToggleList items={linksUrlToggles} />
+                                <div className={cn(ROW_DIVIDER, "fsa:space-y-5 fsa:p-5")}>
+                                    <StackedField
+                                        id="flexa-seo-aeo-orphan-attachment"
+                                        icon={ExternalLink}
+                                        title={__("Redirect Orphan Attachments")}
+                                        description={__(
+                                            "Redirect attachments without a parent post to this URL. Leave empty for no redirection.",
+                                        )}
+                                    >
+                                        <Input
+                                            id="flexa-seo-aeo-orphan-attachment"
+                                            type="url"
+                                            inputMode="url"
+                                            value={form.redirect_orphan_attachments}
+                                            onChange={(e) =>
+                                                setString(
+                                                    "redirect_orphan_attachments",
+                                                    e.target.value,
+                                                )
+                                            }
+                                            placeholder={
+                                                window.flexaSeoAeo?.homeUrl ??
+                                                "https://example.com"
+                                            }
+                                        />
+                                    </StackedField>
+                                </div>
+                                <div className={ROW_DIVIDER}>
+                                    <ToggleList items={linksAttrToggles} />
                                 </div>
                             </div>
                         )}

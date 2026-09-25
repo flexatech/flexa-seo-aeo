@@ -74,6 +74,23 @@ final class Plugin {
 		if ( class_exists( Actions\IndexNow::class ) ) {
 			Actions\IndexNow::instance()->register();
 		}
+
+		// Links: URL cleanup + link-attribute controls (strip category base,
+		// attachment redirects, nofollow/new-tab for external links).
+		if ( class_exists( Actions\Links\CategoryBase::class ) ) {
+			Actions\Links\CategoryBase::instance()->register();
+		}
+		if ( class_exists( Actions\Links\AttachmentRedirect::class ) ) {
+			Actions\Links\AttachmentRedirect::instance()->register();
+		}
+		if ( class_exists( Actions\Links\LinkAttributes::class ) ) {
+			Actions\Links\LinkAttributes::instance()->register();
+		}
+
+		// Strip-category-base rewrites depend on the current category set, so a
+		// flush is deferred to a flag that we honour once per request on init.
+		add_action( 'init', [ $this, 'maybe_flush_rewrites' ], 99 );
+		add_action( 'flexa_seo_aeo/settings/updated', [ $this, 'flush_on_link_toggle' ], 10, 2 );
 		if ( class_exists( Actions\Blocks\SitemapBlock::class ) ) {
 			Actions\Blocks\SitemapBlock::instance()->register();
 		}
@@ -125,6 +142,33 @@ final class Plugin {
 
 		if ( defined( 'WP_CLI' ) && WP_CLI && class_exists( Cli\PluginCommand::class ) ) {
 			Cli\PluginCommand::register();
+		}
+	}
+
+	/**
+	 * Flush rewrite rules once when the deferred flag is set (by a category
+	 * change or a strip-category-base toggle). Runs late on init, after the
+	 * rewrite filters have registered, so the regenerated rules are current.
+	 */
+	public function maybe_flush_rewrites(): void {
+		if ( '1' !== get_option( 'flexa_seo_aeo_flush_rewrite' ) ) {
+			return;
+		}
+
+		delete_option( 'flexa_seo_aeo_flush_rewrite' );
+		flush_rewrite_rules();
+	}
+
+	/**
+	 * Schedule a rewrite flush when the strip-category-base setting flips, so the
+	 * clean (or restored) category URLs take effect without re-saving permalinks.
+	 *
+	 * @param array<string, mixed> $new Settings after the write.
+	 * @param array<string, mixed> $old Settings before the write.
+	 */
+	public function flush_on_link_toggle( array $new, array $old ): void {
+		if ( ( $new['strip_category_base'] ?? null ) !== ( $old['strip_category_base'] ?? null ) ) {
+			update_option( 'flexa_seo_aeo_flush_rewrite', '1' );
 		}
 	}
 }

@@ -4,7 +4,7 @@ Tags: seo, schema, sitemap, aeo, woocommerce
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.4.1
+Stable tag: 0.5.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 WC requires at least: 8.0
@@ -38,6 +38,7 @@ This turns "AEO" from a file you generate once into a workflow your team improve
 * XML sitemaps (index + per-type sub-sitemaps, image entries) with a branded XSL stylesheet, plus an HTML sitemap shortcode `[flexa_seo_aeo_sitemap]` and a sitemap block.
 * Per-post editing in a classic metabox **and** a Gutenberg editor sidebar, with one-click **migration from Yoast / Rank Math / SEOPress** (and read-fallback so nothing breaks mid-move).
 * `robots.txt` management and optional **IndexNow** ping on publish/update (see *External services* below).
+* **Links** controls: strip the category base from archive URLs, redirect attachment pages to their parent (with an orphan fallback), and add `nofollow` / `target="_blank"` to external links at display time.
 
 **AI answer-engine tooling**
 
@@ -135,6 +136,9 @@ Yes. WooCommerce product schema is an optional layer that activates only when Wo
 
 == Changelog ==
 
+= 0.5.0 =
+* New: a **Links** settings section for cleaning up URLs and controlling link behavior on the front end. Strip Category Base removes `/category/` from category archive URLs (with a 301 from the old URL); Redirect Attachments sends media attachment pages to their parent post, with an optional fallback URL for attachments that have no parent. It also adds `rel="nofollow"` to external links, `rel="nofollow"` to links pointing at external image files, and `target="_blank"` to open external links in a new tab. The link attributes are applied when content is displayed, so your stored content is never changed.
+
 = 0.4.1 =
 * Fix: the deactivation feedback survey no longer opens more than one "Before you go" dialog. With several Flexa plugins active at once, each bundled its own copy of the survey script and every copy added a handler to the Deactivate link, so the dialog stacked and needed one click to dismiss each copy. Each Deactivate link now opens a single dialog.
 
@@ -157,6 +161,9 @@ Yes. WooCommerce product schema is an optional layer that activates only when Wo
 * Initial release: **Answer-Engine Readiness Score** (per-post 0–100 grade + actionable checklist in the block editor), title/meta templating, Open Graph & Twitter, canonical & robots, XML/HTML sitemaps, robots.txt, IndexNow, llms.txt, Agent Readiness Markdown export, JSON-LD schema (Article/WebPage/WebSite/Organization/FAQ), one-click migration from Yoast/Rank Math/SEOPress, optional WooCommerce Product schema, and a React admin app.
 
 == Upgrade Notice ==
+
+= 0.5.0 =
+Adds a Links settings section: strip the category base, redirect attachment pages, and control nofollow / new-tab behavior for external links.
 
 = 0.4.1 =
 Fixes the deactivation survey stacking multiple "Before you go" dialogs when several Flexa plugins are active.

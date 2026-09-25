@@ -13,3 +13,4 @@ declare(strict_types=1);
 defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
 
 delete_option( 'flexa_seo_aeo_settings' );
+delete_option( 'flexa_seo_aeo_flush_rewrite' );

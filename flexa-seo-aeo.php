@@ -2,9 +2,8 @@
 /**
  * Plugin Name:       Flexa SEO - AEO | AI SEO & Answer Engine Optimization
  * Description:       Complete WordPress SEO (schema, sitemaps, meta, Open Graph), plus a per-post Answer-Engine Readiness score and a site health dashboard for AI search.
- * Version:           0.4.1
+ * Version:           0.5.0
  * Requires at least: 6.5
- * Tested up to:      7.1
  * Requires PHP:      8.2
  * Author:            FlexaTech
  * License:           GPL v2 or later
@@ -31,7 +30,7 @@ if ( version_compare( PHP_VERSION, '8.2', '<' ) ) {
 	return;
 }
 
-define( 'FLEXA_SEO_AEO_VERSION', '0.4.1' );
+define( 'FLEXA_SEO_AEO_VERSION', '0.5.0' );
 define( 'FLEXA_SEO_AEO_FILE', __FILE__ );
 define( 'FLEXA_SEO_AEO_PATH', plugin_dir_path( __FILE__ ) );
 define( 'FLEXA_SEO_AEO_URL', plugin_dir_url( __FILE__ ) );
