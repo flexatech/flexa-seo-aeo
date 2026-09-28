@@ -57,6 +57,11 @@ final class Metas {
 			}
 
 			if ( '' !== $meta->canonical ) {
+				// Core prints its own canonical at `wp_head` priority 10 on singular
+				// views. This method runs at priority 1, so dropping it here stops the
+				// page carrying two canonical tags, which would contradict each other
+				// as soon as a custom canonical is set on the post.
+				remove_action( 'wp_head', 'rel_canonical' );
 				printf( "<link rel=\"canonical\" href=\"%s\" />\n", esc_url( $meta->canonical ) );
 			}
 		}

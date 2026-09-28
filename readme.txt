@@ -4,7 +4,7 @@ Tags: seo, schema, sitemap, aeo, woocommerce
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.5.0
+Stable tag: 0.5.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 WC requires at least: 8.0
@@ -136,6 +136,16 @@ Yes. WooCommerce product schema is an optional layer that activates only when Wo
 
 == Changelog ==
 
+= 0.5.2 =
+* Fix: author, search, 404, date and post type archives carried no meta description at all, which also cost them their Open Graph and Twitter descriptions. Each of those views now gets one, built from what WordPress already holds: the author's bio, the description a post type was registered with, or a short sentence naming the archive and the site. Category, tag and custom taxonomy pages still use the term description, and now fall back the same way when a term has none.
+* Fix: a blog index with nothing written on it (a separate Posts page, or a front page set to your latest posts) also came out with no description. It falls back to the tagline, then the AEO site summary, then a plain line naming the site.
+* New: a `flexa_seo_aeo/metas/description` filter, so you can replace any of this wording with your own.
+
+= 0.5.1 =
+* Fix: the front page could end up with no meta description at all. When the homepage is a static page, its own SEO fields were skipped, so unless you had filled the global Home description (or your site tagline), the description tag was dropped entirely, and Open Graph and Twitter lost their descriptions with it. The front page now falls back to the page's own SEO description, then its excerpt, then the tagline. The same page's SEO title, canonical, Open Graph image (including the featured image) and noindex/nofollow boxes are now honored too, instead of being ignored.
+* Fix: a separate Posts page never produced a meta description under any configuration. It now uses its own SEO description, then its excerpt, then the site tagline, and honors its SEO title, canonical, Open Graph image and robots settings.
+* Fix: pages carried two `<link rel="canonical">` tags, one from this plugin and one from WordPress itself. WordPress's copy is now removed whenever the plugin outputs its own, so a custom canonical set on a post is no longer contradicted by a second tag pointing at the default URL.
+
 = 0.5.0 =
 * New: a **Links** settings section for cleaning up URLs and controlling link behavior on the front end. Strip Category Base removes `/category/` from category archive URLs (with a 301 from the old URL); Redirect Attachments sends media attachment pages to their parent post, with an optional fallback URL for attachments that have no parent. It also adds `rel="nofollow"` to external links, `rel="nofollow"` to links pointing at external image files, and `target="_blank"` to open external links in a new tab. The link attributes are applied when content is displayed, so your stored content is never changed.
 
@@ -161,6 +171,12 @@ Yes. WooCommerce product schema is an optional layer that activates only when Wo
 * Initial release: **Answer-Engine Readiness Score** (per-post 0–100 grade + actionable checklist in the block editor), title/meta templating, Open Graph & Twitter, canonical & robots, XML/HTML sitemaps, robots.txt, IndexNow, llms.txt, Agent Readiness Markdown export, JSON-LD schema (Article/WebPage/WebSite/Organization/FAQ), one-click migration from Yoast/Rank Math/SEOPress, optional WooCommerce Product schema, and a React admin app.
 
 == Upgrade Notice ==
+
+= 0.5.2 =
+Author, search, 404, date and post type archives now output a meta description instead of none, and so does an empty blog index.
+
+= 0.5.1 =
+Fixes a missing meta description on the homepage and on a separate Posts page, makes those pages honor their own SEO fields, and removes the duplicate canonical tag.
 
 = 0.5.0 =
 Adds a Links settings section: strip the category base, redirect attachment pages, and control nofollow / new-tab behavior for external links.

@@ -9,6 +9,7 @@ use Flexa\SeoAeo\Domain\PostMetaRepository;
 use Flexa\SeoAeo\Support\Settings;
 use Flexa\SeoAeo\Support\SingletonTrait;
 use WP_Post;
+use WP_Post_Type;
 use WP_Term;
 use WP_User;
 
@@ -47,18 +48,61 @@ final class Metas {
 		$nofollow    = false;
 
 		if ( is_front_page() ) {
-			$home_title  = (string) Settings::get( 'home_title' );
-			$home_desc   = (string) Settings::get( 'home_description' );
-			$title_tpl   = '' !== $home_title ? $home_title : '%%sitename%% %%sep%% %%tagline%%';
-			$description = '' !== $home_desc ? $home_desc : (string) get_bloginfo( 'description' );
-			$canonical   = home_url( '/' );
-		} elseif ( is_home() ) {
-			$posts_page = get_queried_object();
-			$title_tpl  = '%%title%% %%sep%% %%sitename%%';
-			if ( $posts_page instanceof WP_Post ) {
-				$context['title'] = get_the_title( $posts_page );
-				$canonical        = (string) get_permalink( $posts_page );
+			$home_title = (string) Settings::get( 'home_title' );
+			$home_desc  = (string) Settings::get( 'home_description' );
+			$title_tpl  = '' !== $home_title ? $home_title : '%%sitename%% %%sep%% %%tagline%%';
+			$canonical  = home_url( '/' );
+
+			// A static front page is `is_singular()` as well, but this branch wins
+			// the chain, so its own SEO panel has to be read here or the page
+			// silently loses every override it was given. Null when the front page
+			// is the post index, in which case nothing below applies.
+			$front_page = $this->repository->current_post();
+			if ( $front_page instanceof WP_Post ) {
+				$meta               = $this->repository->get( $front_page->ID );
+				$noindex            = $meta->noindex;
+				$nofollow           = $meta->nofollow;
+				$context['title']   = get_the_title( $front_page );
+				$context['excerpt'] = $this->excerpt( $front_page );
+				$og_image           = $this->og_image( $meta, $front_page, $og_image );
+
+				if ( '' === $home_title && '' !== $meta->title ) {
+					$title_tpl = $meta->title;
+				}
+				if ( '' !== $meta->canonical ) {
+					$canonical = $meta->canonical;
+				}
 			}
+
+			// The global Home description keeps priority so installs that already
+			// filled it in see no change. Without a static page behind it the front
+			// page *is* the post index, so it borrows that wording as a last resort.
+			$last_resort = $front_page instanceof WP_Post
+				? $this->site_description()
+				: $this->blog_description();
+
+			$description = '' !== $home_desc
+				? $home_desc
+				: $this->describe( $meta, $context['excerpt'] ?? '', $last_resort );
+		} elseif ( is_home() ) {
+			$posts_page = $this->repository->current_post();
+			$title_tpl  = '%%title%% %%sep%% %%sitename%%';
+
+			if ( $posts_page instanceof WP_Post ) {
+				$meta               = $this->repository->get( $posts_page->ID );
+				$noindex            = $meta->noindex;
+				$nofollow           = $meta->nofollow;
+				$context['title']   = get_the_title( $posts_page );
+				$context['excerpt'] = $this->excerpt( $posts_page );
+				$canonical          = '' !== $meta->canonical ? $meta->canonical : (string) get_permalink( $posts_page );
+				$og_image           = $this->og_image( $meta, $posts_page, $og_image );
+
+				if ( '' !== $meta->title ) {
+					$title_tpl = $meta->title;
+				}
+			}
+
+			$description = $this->describe( $meta, $context['excerpt'] ?? '', $this->blog_description() );
 		} elseif ( is_singular() ) {
 			$post = get_queried_object();
 			if ( $post instanceof WP_Post ) {
@@ -68,25 +112,17 @@ final class Metas {
 				$context['title']   = get_the_title( $post );
 				$context['excerpt'] = $this->excerpt( $post );
 				$title_tpl          = '' !== $meta->title ? $meta->title : '%%title%% %%sep%% %%sitename%%';
-				$description        = '' !== $meta->description ? $meta->description : $context['excerpt'];
+				$description        = $this->describe( $meta, $context['excerpt'], '' );
 				$canonical          = '' !== $meta->canonical ? $meta->canonical : (string) get_permalink( $post );
 				$og_type            = 'post' === get_post_type( $post ) ? 'article' : 'website';
-
-				if ( '' !== $meta->og_image ) {
-					$og_image = $meta->og_image;
-				} else {
-					$featured = $this->featured_image( $post );
-					if ( '' !== $featured ) {
-						$og_image = $featured;
-					}
-				}
+				$og_image           = $this->og_image( $meta, $post, $og_image );
 			}
 		} elseif ( is_category() || is_tag() || is_tax() ) {
 			$term = get_queried_object();
 			if ( $term instanceof WP_Term ) {
 				$context['term_title'] = $term->name;
 				$title_tpl             = '%%term_title%% %%sep%% %%sitename%%';
-				$description           = wp_strip_all_tags( $term->description );
+				$description           = $this->term_description( $term );
 				$link                  = get_term_link( $term );
 				$canonical             = is_string( $link ) ? $link : '';
 			}
@@ -95,20 +131,40 @@ final class Metas {
 			if ( $author instanceof WP_User ) {
 				$context['author'] = $author->display_name;
 				$title_tpl         = '%%author%% %%sep%% %%sitename%%';
+				$description       = $this->author_description( $author );
 				$canonical         = (string) get_author_posts_url( $author->ID );
 			}
 		} elseif ( is_search() ) {
 			$context['searchphrase'] = get_search_query();
 			$title_tpl               = '%%searchphrase%% %%sep%% %%sitename%%';
+			$description             = $this->search_description();
 			$noindex                 = true;
 		} elseif ( is_404() ) {
 			$context['archive_title'] = __( 'Page not found', 'flexa-seo-aeo' );
 			$title_tpl                = '%%archive_title%% %%sep%% %%sitename%%';
+			$description              = $this->not_found_description();
 			$noindex                  = true;
 		} elseif ( is_archive() ) {
 			$context['archive_title'] = wp_strip_all_tags( get_the_archive_title() );
 			$title_tpl                = '%%archive_title%% %%sep%% %%sitename%%';
+			$description              = $this->archive_description();
 		}
+
+		// Every branch above can still come up empty: an author with no bio, an
+		// archive nobody described, a post with no content. A generic sentence beats
+		// a page with no description at all, so the tagline closes the gap.
+		if ( '' === $description ) {
+			$description = $this->site_description();
+		}
+
+		/**
+		 * Filters the resolved description before `%%token%%` substitution, e.g. to
+		 * supply per-view wording of your own.
+		 *
+		 * @param string                $description
+		 * @param array<string, string> $context
+		 */
+		$description = (string) apply_filters( 'flexa_seo_aeo/metas/description', $description, $context );
 
 		/**
 		 * Filters the raw title template (still containing `%%tokens%%`) before
@@ -223,8 +279,198 @@ final class Metas {
 		return array_filter( $twitter, static fn( string $v ): bool => '' !== $v );
 	}
 
+	/**
+	 * First non-empty description source, in order: the post's own SEO field,
+	 * its auto-excerpt, then whatever the caller offers as a last resort.
+	 */
+	private function describe( ?PostMeta $meta, string $excerpt, string $fallback ): string {
+		if ( null !== $meta && '' !== $meta->description ) {
+			return $meta->description;
+		}
+
+		if ( '' !== $excerpt ) {
+			return $excerpt;
+		}
+
+		return $fallback;
+	}
+
+	/**
+	 * Per-post OG image override, else the featured image, else the site default.
+	 */
+	private function og_image( PostMeta $meta, WP_Post $post, string $fallback ): string {
+		if ( '' !== $meta->og_image ) {
+			return $meta->og_image;
+		}
+
+		$featured = $this->featured_image( $post );
+
+		return '' !== $featured ? $featured : $fallback;
+	}
+
+	/**
+	 * Description for a taxonomy archive: the term's own description, else a
+	 * sentence naming the term so each archive still says something of its own.
+	 */
+	private function term_description( WP_Term $term ): string {
+		$own = $this->condense( (string) $term->description );
+		if ( '' !== $own ) {
+			return $own;
+		}
+
+		return sprintf(
+			/* translators: 1: taxonomy term name, 2: site name. */
+			__( 'Posts filed under %1$s on %2$s.', 'flexa-seo-aeo' ),
+			$term->name,
+			$this->site_name()
+		);
+	}
+
+	/**
+	 * Description for an author archive: their bio if they wrote one.
+	 */
+	private function author_description( WP_User $author ): string {
+		$bio = $this->condense( (string) get_the_author_meta( 'description', $author->ID ) );
+		if ( '' !== $bio ) {
+			return $bio;
+		}
+
+		return sprintf(
+			/* translators: 1: author display name, 2: site name. */
+			__( 'Posts written by %1$s on %2$s.', 'flexa-seo-aeo' ),
+			$author->display_name,
+			$this->site_name()
+		);
+	}
+
+	private function search_description(): string {
+		$phrase = trim( (string) get_search_query() );
+
+		if ( '' === $phrase ) {
+			return sprintf(
+				/* translators: %s: site name. */
+				__( 'Search results on %s.', 'flexa-seo-aeo' ),
+				$this->site_name()
+			);
+		}
+
+		return sprintf(
+			/* translators: 1: search phrase, 2: site name. */
+			__( 'Search results for “%1$s” on %2$s.', 'flexa-seo-aeo' ),
+			$phrase,
+			$this->site_name()
+		);
+	}
+
+	private function not_found_description(): string {
+		return sprintf(
+			/* translators: %s: site name. */
+			__( 'This page could not be found on %s. Try a search or start again from the homepage.', 'flexa-seo-aeo' ),
+			$this->site_name()
+		);
+	}
+
+	/**
+	 * Description for the archives that reach the generic branch: a post type
+	 * archive, which uses the description given at registration when there is
+	 * one, and date archives. Returns '' when there is no name to build a
+	 * sentence from, leaving the site-wide fallback to take over.
+	 */
+	private function archive_description(): string {
+		$object = get_queried_object();
+
+		if ( $object instanceof WP_Post_Type ) {
+			$registered = $this->condense( $object->description );
+			if ( '' !== $registered ) {
+				return $registered;
+			}
+
+			return sprintf(
+				/* translators: 1: post type plural label, 2: site name. */
+				__( 'All %1$s on %2$s.', 'flexa-seo-aeo' ),
+				$object->label,
+				$this->site_name()
+			);
+		}
+
+		$name = $this->archive_name();
+		if ( '' === $name ) {
+			return '';
+		}
+
+		if ( is_date() ) {
+			return sprintf(
+				/* translators: 1: a date or period such as "September 2026", 2: site name. */
+				__( 'Posts from %1$s on %2$s.', 'flexa-seo-aeo' ),
+				$name,
+				$this->site_name()
+			);
+		}
+
+		return sprintf(
+			/* translators: 1: archive name, 2: site name. */
+			__( 'The %1$s archive on %2$s.', 'flexa-seo-aeo' ),
+			$name,
+			$this->site_name()
+		);
+	}
+
+	/**
+	 * The archive title without the "Category:" / "Year:" prefix core prepends,
+	 * so it reads correctly inside a sentence.
+	 */
+	private function archive_name(): string {
+		add_filter( 'get_the_archive_title_prefix', '__return_empty_string', 99 );
+		$name = wp_strip_all_tags( (string) get_the_archive_title() );
+		remove_filter( 'get_the_archive_title_prefix', '__return_empty_string', 99 );
+
+		return trim( $name );
+	}
+
+	/**
+	 * What the site says about itself: the tagline, or the AEO site summary when
+	 * the tagline was never filled in. Both are empty on plenty of installs, so
+	 * callers still have to cope with ''.
+	 */
+	private function site_description(): string {
+		$tagline = trim( (string) get_bloginfo( 'description' ) );
+		if ( '' !== $tagline ) {
+			return $tagline;
+		}
+
+		return trim( (string) Settings::get_aeo( 'site_description' ) );
+	}
+
+	/**
+	 * Last resort for the blog index, which has no content of its own to quote
+	 * and is the one view where a bare "latest posts" line is accurate.
+	 */
+	private function blog_description(): string {
+		$site = $this->site_description();
+		if ( '' !== $site ) {
+			return $site;
+		}
+
+		return sprintf(
+			/* translators: %s: site name. */
+			__( 'The latest posts on %s.', 'flexa-seo-aeo' ),
+			$this->site_name()
+		);
+	}
+
+	private function site_name(): string {
+		return (string) get_bloginfo( 'name' );
+	}
+
 	private function excerpt( WP_Post $post ): string {
-		$raw = has_excerpt( $post ) ? $post->post_excerpt : $post->post_content;
+		return $this->condense( has_excerpt( $post ) ? $post->post_excerpt : $post->post_content );
+	}
+
+	/**
+	 * Squash arbitrary content down to a single line of plain text, short enough
+	 * for a meta description.
+	 */
+	private function condense( string $raw ): string {
 		$raw = wp_strip_all_tags( strip_shortcodes( $raw ) );
 		$raw = (string) preg_replace( '/\s+/', ' ', $raw );
 
