@@ -282,4 +282,44 @@ final class SettingsSchemaTest extends TestCase {
 
 		$this->assertSame( 'Flexa SEO', Settings::brand_name() );
 	}
+
+	/**
+	 * @param string $input    What the person pasted.
+	 * @param string $expected The code that must be stored.
+	 */
+	#[DataProvider( 'verification_inputs' )]
+	public function test_a_verification_code_is_lifted_out_of_what_was_pasted( string $input, string $expected ): void {
+		$clean = Settings::sanitize( [ 'verify_google' => $input ] );
+
+		$this->assertSame( $expected, $clean['verify_google'] );
+	}
+
+	/**
+	 * @return array<string, array{string, string}>
+	 */
+	public static function verification_inputs(): array {
+		return [
+			'bare code'           => [ 'abc123-XYZ_9', 'abc123-XYZ_9' ],
+			'padded code'         => [ "  abc123\n", 'abc123' ],
+			'google meta tag'     => [ '<meta name="google-site-verification" content="Ab-1_Cd=" />', 'Ab-1_Cd=' ],
+			'single-quoted tag'   => [ "<meta name='msvalidate.01' content='0F1E2D3C' />", '0F1E2D3C' ],
+			'quote cannot escape' => [ 'abc" onload="x', 'abconload=x' ],
+			'markup stripped'     => [ '<script>alert(1)</script>', 'scriptalert1/script' ],
+			'empty'               => [ '', '' ],
+		];
+	}
+
+	public function test_a_verification_code_is_capped_in_length(): void {
+		$clean = Settings::sanitize( [ 'verify_bing' => str_repeat( 'a', 300 ) ] );
+
+		$this->assertSame( 128, strlen( $clean['verify_bing'] ) );
+	}
+
+	public function test_every_verification_field_defaults_to_empty(): void {
+		$defaults = Settings::defaults();
+
+		foreach ( array_keys( Settings::VERIFICATION_TAGS ) as $key ) {
+			$this->assertSame( '', $defaults[ $key ] );
+		}
+	}
 }

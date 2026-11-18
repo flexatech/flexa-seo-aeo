@@ -20,6 +20,7 @@ import {
     Save,
     Search,
     Share2,
+    ShieldCheck,
     ShoppingBag,
     Tag,
     Tags,
@@ -71,9 +72,23 @@ const STRING_KEYS = [
     "redirect_orphan_attachments",
     "robots_txt",
     "whitelabel_name",
+    "verify_google",
+    "verify_bing",
+    "verify_yandex",
+    "verify_pinterest",
 ] as const;
 
 const ARRAY_KEYS = ["sitemap_post_types", "sitemap_taxonomies"] as const;
+
+const VERIFICATION_FIELDS: {
+    key: "verify_google" | "verify_bing" | "verify_yandex" | "verify_pinterest";
+    title: string;
+}[] = [
+    { key: "verify_google", title: __("Google Search Console") },
+    { key: "verify_bing", title: __("Bing Webmaster Tools") },
+    { key: "verify_yandex", title: __("Yandex Webmaster") },
+    { key: "verify_pinterest", title: __("Pinterest") },
+];
 
 const SEPARATORS = ["-", "–", "—", "·", "•", "|", "/", "»", ">"];
 
@@ -682,6 +697,30 @@ export function SettingsPage() {
                                             className={cn(TEXTAREA_CLS, "fsa:font-mono")}
                                         />
                                     </StackedField>
+                                </div>
+                                <div className={cn(ROW_DIVIDER, "fsa:space-y-5 fsa:p-5")}>
+                                    <p className="fsa:text-xs fsa:text-slate-500">
+                                        {__(
+                                            "Site verification codes. Paste the code or the whole meta tag from each console; only the code is kept. The tags are printed on the front page. Leave a field empty to skip it.",
+                                        )}
+                                    </p>
+                                    {VERIFICATION_FIELDS.map(({ key, title }) => (
+                                        <StackedField
+                                            key={key}
+                                            id={`flexa-seo-aeo-${key}`}
+                                            icon={ShieldCheck}
+                                            title={title}
+                                        >
+                                            <Input
+                                                id={`flexa-seo-aeo-${key}`}
+                                                value={form[key]}
+                                                onChange={(e) => setString(key, e.target.value)}
+                                                spellCheck={false}
+                                                autoComplete="off"
+                                                className="fsa:font-mono"
+                                            />
+                                        </StackedField>
+                                    ))}
                                 </div>
                             </div>
                         )}

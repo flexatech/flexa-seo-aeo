@@ -136,6 +136,17 @@ final class Metas {
 			}
 		}
 
+		// Ownership codes are read from the home page only, and they have no
+		// module toggle: an empty field is the off switch.
+		if ( is_front_page() ) {
+			foreach ( Settings::VERIFICATION_TAGS as $key => $name ) {
+				$code = (string) Settings::get( $key );
+				if ( '' !== $code ) {
+					$this->meta_tag( 'name', $name, $code );
+				}
+			}
+		}
+
 		echo "<!-- /Flexa SEO -->\n";
 	}
 

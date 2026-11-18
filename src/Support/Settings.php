@@ -70,6 +70,19 @@ final class Settings {
 	private const KNOWLEDGE_TYPES = [ 'organization', 'person' ];
 
 	/**
+	 * Webmaster verification settings => the `<meta name>` each one prints.
+	 * Every one is a site-ownership code pasted from the engine's console.
+	 *
+	 * @var array<string, string>
+	 */
+	public const VERIFICATION_TAGS = [
+		'verify_google'    => 'google-site-verification',
+		'verify_bing'      => 'msvalidate.01',
+		'verify_yandex'    => 'yandex-verification',
+		'verify_pinterest' => 'p:domain_verify',
+	];
+
+	/**
 	 * Defaults for the nested `aeo` group — the plugin's core differentiator.
 	 * All inert by default; the AEO endpoints self-gate on `enabled`.
 	 *
@@ -113,6 +126,10 @@ final class Settings {
 		$defaults['indexnow_key']                = '';   // Auto-generated on first IndexNow submission.
 		$defaults['whitelabel_name']             = '';   // Overrides the admin menu / brand label when white-label is on.
 		$defaults['aeo']                         = self::aeo_defaults();
+
+		foreach ( array_keys( self::VERIFICATION_TAGS ) as $key ) {
+			$defaults[ $key ] = ''; // Site-ownership code, printed on the front page only.
+		}
 
 		return $defaults;
 	}
@@ -303,6 +320,12 @@ final class Settings {
 			$clean['whitelabel_name'] = sanitize_text_field( (string) $incoming['whitelabel_name'] );
 		}
 
+		foreach ( array_keys( self::VERIFICATION_TAGS ) as $key ) {
+			if ( array_key_exists( $key, $incoming ) ) {
+				$clean[ $key ] = self::sanitize_verification( $incoming[ $key ] );
+			}
+		}
+
 		if ( array_key_exists( 'aeo', $incoming ) && is_array( $incoming['aeo'] ) ) {
 			$clean['aeo'] = self::sanitize_aeo( $incoming['aeo'] );
 		}
@@ -393,6 +416,11 @@ final class Settings {
 		}
 		if ( isset( $stored['whitelabel_name'] ) && is_string( $stored['whitelabel_name'] ) ) {
 			$out['whitelabel_name'] = $stored['whitelabel_name'];
+		}
+		foreach ( array_keys( self::VERIFICATION_TAGS ) as $key ) {
+			if ( isset( $stored[ $key ] ) ) {
+				$out[ $key ] = self::sanitize_verification( $stored[ $key ] );
+			}
 		}
 
 		$out['aeo'] = self::coerce_aeo( $stored['aeo'] ?? [] );
@@ -517,6 +545,23 @@ final class Settings {
 		$value = is_scalar( $value ) ? (string) $value : '';
 
 		return (string) preg_replace( '/[^a-zA-Z0-9-]/', '', $value );
+	}
+
+	/**
+	 * A webmaster verification code. Search consoles hand out the whole
+	 * `<meta name="…" content="…">` tag, and that is what most people paste,
+	 * so the content attribute is lifted out of it first. What is kept is the
+	 * character set every engine's codes use (letters, digits, `-`, `_`, `=`,
+	 * `.`, `+`, `/`), which also rules out a quote breaking the attribute.
+	 */
+	private static function sanitize_verification( mixed $value ): string {
+		$value = is_scalar( $value ) ? trim( (string) $value ) : '';
+
+		if ( preg_match( '/content\s*=\s*(["\'])(.*?)\1/i', $value, $m ) ) {
+			$value = $m[2];
+		}
+
+		return substr( (string) preg_replace( '/[^A-Za-z0-9_=.+\/-]/', '', $value ), 0, 128 );
 	}
 
 	/**

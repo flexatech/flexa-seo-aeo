@@ -72,10 +72,12 @@ export const SECTIONS: SectionMeta[] = [
     {
         id: "indexing",
         title: __("Indexing"),
-        subtitle: __("IndexNow & robots.txt"),
+        subtitle: __("IndexNow, robots.txt, verification"),
         icon: Rss,
         paneTitle: __("Indexing"),
-        paneSubtitle: __("Push instant index signals and tune the virtual robots.txt."),
+        paneSubtitle: __(
+            "Push instant index signals, tune the virtual robots.txt, and verify the site with search consoles.",
+        ),
     },
     {
         id: "links",

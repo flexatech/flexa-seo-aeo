@@ -52,6 +52,11 @@ export interface SettingsData {
     new_window_external_links: boolean;
     sitemap_post_types: string[];
     sitemap_taxonomies: string[];
+    /** Webmaster ownership codes, printed on the front page only. */
+    verify_google: string;
+    verify_bing: string;
+    verify_yandex: string;
+    verify_pinterest: string;
     aeo: AeoSettings;
 }
 
