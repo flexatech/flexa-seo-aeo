@@ -4,7 +4,7 @@ Tags: seo, schema, sitemap, aeo, woocommerce
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 WC requires at least: 8.0
@@ -38,6 +38,7 @@ This turns "AEO" from a file you generate once into a workflow your team improve
 * XML sitemaps (index + per-type sub-sitemaps, image entries) with a branded XSL stylesheet, plus an HTML sitemap shortcode `[flexa_seo_aeo_sitemap]` and a sitemap block.
 * Per-post editing in a classic metabox **and** a Gutenberg editor sidebar, with one-click **migration from Yoast, Rank Math and SEOPress**, and a read-fallback for all three so nothing breaks mid-move.
 * `robots.txt` management and optional **IndexNow** ping on publish/update (see *External services* below).
+* Site verification tags for Google Search Console, Bing, Yandex and Pinterest. Paste the code; nothing is sent anywhere.
 * **Links** controls: strip the category base from archive URLs, redirect attachment pages to their parent (with an orphan fallback), and add `nofollow` / `target="_blank"` to external links at display time.
 
 **AI answer-engine tooling**
@@ -153,6 +154,10 @@ Yes. WooCommerce product schema is an optional layer that activates only when Wo
 
 == Changelog ==
 
+= 1.1.0 =
+* New: site verification for Google Search Console, Bing Webmaster Tools, Yandex Webmaster and Pinterest, under Settings > Indexing. Paste either the code or the whole `<meta>` tag a console gives you; only the code is stored. The tags are printed on the front page, which is where each console looks for them, and an empty field prints nothing.
+* New: the warning about another active SEO plugin now says when that plugin will override a noindex. Rank Math and All in One SEO remove the `wp_robots` filter and print their own robots tag, so a post marked noindex here can still be indexed while they are active; SEOPress prints a second robots tag that disagrees with this one. If you dismissed the warning before, it comes back once so you can read the new part.
+
 = 1.0.0 =
 * New: one-click migration from SEOPress. Until now the plugin only read SEOPress meta as a fallback, so deactivating SEOPress took every custom title with it. Migration now copies the title, meta description, canonical URL, the noindex and nofollow boxes, and the Facebook and X title, description and image, then converts SEOPress variables such as `%%post_title%%` and `%%sitetitle%%` into their Flexa equivalents. It runs from Settings, from the Setup Assistant or with `wp flexa-seo-aeo migrate --source=seopress`, and posts already migrated are skipped on a second run.
 * New: the image sitemap lists the images in a post's content, not only its featured image. Every `<img>` saved by the Image, Gallery, Cover and Media & Text blocks or the classic editor is included, relative paths are made absolute, and duplicates are dropped, up to 1,000 images per URL. Images a shortcode or dynamic block adds at render time can still be supplied through `flexa_seo_aeo/sitemap/post_images`.
@@ -244,6 +249,9 @@ Yes. WooCommerce product schema is an optional layer that activates only when Wo
 * Initial release: **Answer-Engine Readiness Score** (per-post 0–100 grade + actionable checklist in the block editor), title/meta templating, Open Graph & Twitter, canonical & robots, XML/HTML sitemaps, robots.txt, IndexNow, llms.txt, Agent Readiness Markdown export, JSON-LD schema (Article/WebPage/WebSite/Organization/FAQ), one-click migration from Yoast and Rank Math, optional WooCommerce Product schema, and a React admin app.
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+Adds site verification codes for Google, Bing, Yandex and Pinterest, and warns when another SEO plugin would override a noindex set here.
 
 = 1.0.0 =
 Adds one-click migration from SEOPress, lists images from post content in the image sitemap, and restores structured data on the posts page. Leaving SEOPress? Run the migration before you deactivate it.
