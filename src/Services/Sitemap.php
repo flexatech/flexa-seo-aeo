@@ -466,7 +466,7 @@ final class Sitemap {
 		$ids = $this->noindexed_ids();
 
 		if ( false !== $ids ) {
-			$args['post__not_in'] = $ids;
+			$args['post__not_in'] = $ids; // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- capped at NOINDEX_ID_LIMIT ids; past that the exclusion moves to a posts_where filter.
 
 			return $args;
 		}
